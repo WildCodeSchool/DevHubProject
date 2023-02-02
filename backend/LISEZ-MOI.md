@@ -29,7 +29,7 @@ Bienvenue dans la documentation de notre API RESTful pour notre base de données
 **message :**
 
 - Récupérer tous les messages : **_GET /message_**
-- Récupérer tous les messages par ID user: **_GET /message/:id**
+- Récupérer tous les messages par ID user: **\_GET /message/:id**
 - Créer un nouveau message : **_POST /message_**
 - Supprimer un message : **_DELETE /message/:id_**
 
@@ -39,7 +39,7 @@ Bienvenue dans la documentation de notre API RESTful pour notre base de données
 
 **project :**
 
-- Récupérer tous les projets : **_GET /project**
+- Récupérer tous les projets : **\_GET /project**
 - Récupérer un projet par ID : **_GET /project/:id_**
 - Créer un projet : **_POST /project_**
 - Mettre à jour un projet : **_PUT /project/:id_**
@@ -49,10 +49,10 @@ Bienvenue dans la documentation de notre API RESTful pour notre base de données
 
 - Récupérer tous les user de tous les projets : **_GET /user_project_**
 - Récupérer les user par ID project : **_GET /user_project/:id_**
-- Créer un user dans liste user_project: **_POST /user_project_**
+- Créer un user dans liste user*project: \*\*\_POST /user_project*\*\*
 - Créer un user dans project par ID projet : **_POST /user_project/:id_**
-- Supprimer un user dans liste user_project : **_DELETE /user_project_**
-- Supprimer un user dans liste user_project par ID project : **_DELETE /user_project/:id_**
+- Supprimer un user dans liste user*project : \*\*\_DELETE /user_project*\*\*
+- Supprimer un user dans liste user*project par ID project : \*\*\_DELETE /user_project/:id*\*\*
 
 **task :**
 
@@ -92,7 +92,7 @@ Réponse :
             "email": "as@example.com",
             "phone":  "0602003252",
             "user_image": "https://example.com/images/1.jpg",
-            "biography": "Je suis développeur web",            
+            "biography": "Je suis développeur web",
             "hashed_password": "password",
             "github_page": "https://github.com/johndoe",
             "location": "Marseille"
@@ -104,7 +104,7 @@ Réponse :
             "email": "janesmith@example.com",
             "phone":  "0602003562",
             "user_image": "https://example.com/images/2.jpg",
-            "biography": "Je suis développeur mobile",            
+            "biography": "Je suis développeur mobile",
             "hashed_password": "password",
             "github_page": "https://github.com/janesmith",
             "location": "New york"
@@ -131,7 +131,7 @@ Réponse :
             "email": "as@example.com",
             "phone":  "0602003252",
             "user_image": "https://example.com/images/1.jpg",
-            "biography": "Je suis développeur web",            
+            "biography": "Je suis développeur web",
             "hashed_password": "password",
             "github_page": "https://github.com/johndoe",
             "location": "Marseille"
@@ -216,6 +216,7 @@ Avec un corps de requête :
 ```
 HTTP/1.1 200 OK
 ```
+
 ## Exemple Projects
 
 ### Récupérer un project by ID
@@ -243,6 +244,7 @@ Réponse :
     ]
 }
 ```
+
 ## Exemple Task
 
 ### Récupérer une tâche by ID
@@ -263,14 +265,15 @@ Réponse :
             "name": "Conception BDD",
             "task_start_date": "12/05/2013",
             "task_end_date": "31/07/2013",
-            "description" :"creation du bulle",  
-            "state" : "in progress",                      
+            "description" :"creation du bulle",
+            "state" : "in progress",
             "progress" : 50"%",
             "type" : "modelisation bdd",
             "user_id" : 3
     ]
 }
 ```
+
 ## Gestion des erreurs
 
 Pour la gestion des erreurs, l'API doit retourner le maximum d'informations pour que le développeur puisse comprendre l'erreur et effectuer une correction mais également suffisament d'informations pour que le développeur puisse les utiliser dans son programme pour retourner les problèmes fonctionnels à l'utilisateur final.
