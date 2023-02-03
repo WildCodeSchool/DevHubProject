@@ -35,7 +35,7 @@ description TEXT NOT NULL,
 state VARCHAR(255),
 progress INT,
 type VARCHAR(255) NOT NULL,
-user_id INT NOT NULL,
+user_id INT,
 CONSTRAINT fk_task_user
   FOREIGN KEY (user_id) 
   REFERENCES user(id)
@@ -216,3 +216,51 @@ VALUES
 (34, 8),
 (35, 9),
 (36, 10);
+
+-- Query SQL message
+INSERT INTO message (title, content, author, receiver, date_sent, state)
+VALUES 
+("Titre 1", "Contenu 1", "Auteur 1", "Destinataire 1", "2023-02-02", "Lu"),
+("Titre 2", "Contenu 2", "Auteur 2", "Destinataire 2", "2023-02-02", "Lu"),
+("Titre 3", "Contenu 3", "Auteur 3", "Destinataire 3", "2023-02-02", "Non Lu"),
+("Titre 4", "Contenu 4", "Auteur 4", "Destinataire 4", "2023-02-02", "Lu"),
+("Titre 5", "Contenu 5", "Auteur 5", "Destinataire 5", "2023-02-02", "Non Lu"),
+("Titre 6", "Contenu 6", "Auteur 6", "Destinataire 6", "2023-02-02", "Lu"),
+("Titre 7", "Contenu 7", "Auteur 7", "Destinataire 7", "2023-02-02", "Lu"),
+("Titre 8", "Contenu 8", "Auteur 8", "Destinataire 8", "2023-02-02", "Non Lu"),
+("Titre 9", "Contenu 9", "Auteur 9", "Destinataire 9", "2023-02-02", "Lu"),
+("Titre 10", "Contenu 10", "Auteur 10", "Destinataire 10", "2023-02-02", "Non Lu"),
+("Titre 11", "Contenu 11", "Auteur 11", "Destinataire 11", "2023-02-02", "Lu"),
+("Titre 12", "Contenu 12", "Auteur 12", "Destinataire 12", "2023-02-02", "Lu"),
+("Titre 13", "Contenu 13", "Auteur 13", "Destinataire 13", "2023-02-02", "Non Lu"),
+("Titre 14", "Contenu 14", "Auteur 14", "Destinataire 14", "2023-02-02", "Lu"),
+("Titre 15", "Contenu 15", "Auteur 15", "Destinataire 15", "2023-02-02", "Non Lu"),
+("Titre 16", "Contenu 16", "Auteur 16", "Destinataire 16", "2023-02-02", "Lu"),
+("Titre 17", "Contenu 17", "Auteur 17", "Destinataire 17", "2023-02-02", "Lu"),
+("Titre 18", "Contenu 18", "Auteur 18", "Destinataire 18", "2023-02-02", "Non Lu"),
+("Titre 19", "Contenu 19", "Auteur 19", "Destinataire 19", "2023-02-02", "Lu"),
+("Titre 20", "Contenu 20", "Auteur 20", "Destinataire 20", "2023-02-02", "Lu");
+
+-- Query SQL user_message
+INSERT INTO user_message (user_id, message_id) 
+VALUES 
+(11, 1),
+(12, 2),
+(13, 3),
+(14, 4),
+(15, 5),
+(16, 6),
+(17, 7),
+(18, 8),
+(19, 9),
+(20, 10),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(16, 16),
+(17, 17),
+(18, 18),
+(19, 19),
+(20, 20);

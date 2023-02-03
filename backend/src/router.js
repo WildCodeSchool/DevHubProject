@@ -10,4 +10,12 @@ router.put("/items/:id", itemControllers.edit);
 router.post("/items", itemControllers.add);
 router.delete("/items/:id", itemControllers.destroy);
 
+const messageControllers = require("./controllers/messageControllers");
+
+router.get("/messages", messageControllers.browse);
+router.get("/messages/:id", messageControllers.read);
+router.put("/messages/:id", messageControllers.edit);
+router.post("/messages", messageControllers.add);
+router.delete("/messages/:id", messageControllers.destroy);
+
 module.exports = router;
