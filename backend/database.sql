@@ -54,10 +54,12 @@ DROP TABLE IF EXISTS message ;
 CREATE TABLE message (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 title VARCHAR(255) NOT NULL,
 content TEXT NOT NULL,
-author VARCHAR(40) NOT NULL,
-receiver VARCHAR(40) NOT NULL,
 date_sent DATE NOT NULL,
 state VARCHAR(255)
+author_id INT,
+CONSTRAINT fk_author_id
+  FOREIGN KEY (author_id) 
+  REFERENCES user(id)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS user_message ;
