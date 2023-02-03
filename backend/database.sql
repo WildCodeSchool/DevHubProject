@@ -55,18 +55,18 @@ CREATE TABLE message (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 title VARCHAR(255) NOT NULL,
 content TEXT NOT NULL,
 date_sent DATE NOT NULL,
-state VARCHAR(255)
-author_id INT,
+state VARCHAR(255),
+author_id INT NOT NULL,
 CONSTRAINT fk_author_id
   FOREIGN KEY (author_id) 
   REFERENCES user(id)
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS user_message ;
-CREATE TABLE user_message (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-user_id INT NOT NULL,
+DROP TABLE IF EXISTS recipient ;
+CREATE TABLE recipient (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+recipient_id INT NOT NULL,
 message_id INT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+FOREIGN KEY (recipient_id) REFERENCES user(id) ON DELETE CASCADE,
 FOREIGN KEY (message_id) REFERENCES message(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
@@ -220,31 +220,31 @@ VALUES
 (36, 10);
 
 -- Query SQL message
-INSERT INTO message (title, content, author, receiver, date_sent, state)
+INSERT INTO message (title, content, date_sent, state, author_id)
 VALUES 
-("Titre 1", "Contenu 1", "Auteur 1", "Destinataire 1", "2023-02-02", "Lu"),
-("Titre 2", "Contenu 2", "Auteur 2", "Destinataire 2", "2023-02-02", "Lu"),
-("Titre 3", "Contenu 3", "Auteur 3", "Destinataire 3", "2023-02-02", "Non Lu"),
-("Titre 4", "Contenu 4", "Auteur 4", "Destinataire 4", "2023-02-02", "Lu"),
-("Titre 5", "Contenu 5", "Auteur 5", "Destinataire 5", "2023-02-02", "Non Lu"),
-("Titre 6", "Contenu 6", "Auteur 6", "Destinataire 6", "2023-02-02", "Lu"),
-("Titre 7", "Contenu 7", "Auteur 7", "Destinataire 7", "2023-02-02", "Lu"),
-("Titre 8", "Contenu 8", "Auteur 8", "Destinataire 8", "2023-02-02", "Non Lu"),
-("Titre 9", "Contenu 9", "Auteur 9", "Destinataire 9", "2023-02-02", "Lu"),
-("Titre 10", "Contenu 10", "Auteur 10", "Destinataire 10", "2023-02-02", "Non Lu"),
-("Titre 11", "Contenu 11", "Auteur 11", "Destinataire 11", "2023-02-02", "Lu"),
-("Titre 12", "Contenu 12", "Auteur 12", "Destinataire 12", "2023-02-02", "Lu"),
-("Titre 13", "Contenu 13", "Auteur 13", "Destinataire 13", "2023-02-02", "Non Lu"),
-("Titre 14", "Contenu 14", "Auteur 14", "Destinataire 14", "2023-02-02", "Lu"),
-("Titre 15", "Contenu 15", "Auteur 15", "Destinataire 15", "2023-02-02", "Non Lu"),
-("Titre 16", "Contenu 16", "Auteur 16", "Destinataire 16", "2023-02-02", "Lu"),
-("Titre 17", "Contenu 17", "Auteur 17", "Destinataire 17", "2023-02-02", "Lu"),
-("Titre 18", "Contenu 18", "Auteur 18", "Destinataire 18", "2023-02-02", "Non Lu"),
-("Titre 19", "Contenu 19", "Auteur 19", "Destinataire 19", "2023-02-02", "Lu"),
-("Titre 20", "Contenu 20", "Auteur 20", "Destinataire 20", "2023-02-02", "Lu");
+("Titre 1", "Contenu 1", "2023-02-02", "Lu", 1),
+("Titre 2", "Contenu 2", "2023-02-02", "Lu", 2),
+("Titre 3", "Contenu 3", "2023-02-02", "Non Lu", 3),
+("Titre 4", "Contenu 4", "2023-02-02", "Lu", 4),
+("Titre 5", "Contenu 5", "2023-02-02", "Non Lu", 5),
+("Titre 6", "Contenu 6", "2023-02-02", "Lu", 6),
+("Titre 7", "Contenu 7", "2023-02-02", "Lu", 7),
+("Titre 8", "Contenu 8", "2023-02-02", "Non Lu", 8),
+("Titre 9", "Contenu 9", "2023-02-02", "Lu", 9),
+("Titre 10", "Contenu 10", "2023-02-02", "Non Lu", 10),
+("Titre 11", "Contenu 11", "2023-02-02", "Lu", 11),
+("Titre 12", "Contenu 12", "2023-02-02", "Lu", 12),
+("Titre 13", "Contenu 13", "2023-02-02", "Non Lu", 13),
+("Titre 14", "Contenu 14", "2023-02-02", "Lu", 14),
+("Titre 15", "Contenu 15", "2023-02-02", "Non Lu", 15),
+("Titre 16", "Contenu 16", "2023-02-02", "Lu", 16),
+("Titre 17", "Contenu 17", "2023-02-02", "Lu", 17),
+("Titre 18", "Contenu 18", "2023-02-02", "Non Lu", 18),
+("Titre 19", "Contenu 19", "2023-02-02", "Lu", 19),
+("Titre 20", "Contenu 20", "2023-02-02", "Lu", 20);
 
 -- Query SQL user_message
-INSERT INTO user_message (user_id, message_id) 
+INSERT INTO recipient (recipient_id, message_id) 
 VALUES 
 (11, 1),
 (12, 2),

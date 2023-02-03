@@ -7,28 +7,26 @@ class MessageManager extends AbstractManager {
 
   insert(message) {
     return this.database.query(
-      `insert into ${this.table} (title, content, author, receiver, date_sent, state) values (?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (title, content, date_sent, state, author_id) values (?, ?, ?, ?, ?)`,
       [
         message.title,
         message.content,
-        message.author,
-        message.receiver,
         message.date_sent,
         message.state,
+        message.author_id,
       ]
     );
   }
 
   update(message) {
     return this.database.query(
-      `update ${this.table} set title = ?, content = ?, author = ?, receiver = ?, date_sent = ?, state = ? where id = ?`,
+      `update ${this.table} set title = ?, content = ?, date_sent = ?, state = ?, author_id = ? where id = ?`,
       [
         message.title,
         message.content,
-        message.author,
-        message.receiver,
         message.date_sent,
         message.state,
+        message.author_id,
         message.id,
       ]
     );
