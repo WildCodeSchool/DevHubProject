@@ -47,7 +47,7 @@ description VARCHAR(300) NOT NULL,
 user_id INT NOT NULL,
 CONSTRAINT fk_note_user 
   FOREIGN KEY (user_id)
-  REFERENCES user(id)
+  REFERENCES user(id) 
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS message ;
