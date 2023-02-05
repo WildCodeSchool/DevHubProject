@@ -24,8 +24,17 @@ class taskManager extends AbstractManager {
 
   update(task) {
     return this.database.query(
-      `update ${this.table} set name = ?,  state = ?, progress = ? where id = ?`,
-      [task.name, task.state, task.progress, task.id]
+      `update ${this.table} set name = ?, task_start_date= ?, state = ?, task_end_date = ?, state = ?, progress = ?, type = ?, user_id = ? where id = ?`,
+      [
+        task.name,
+        task.task_start_date,
+        task.task_end_date,
+        task.description,
+        task.state,
+        task.progress,
+        task.type,
+        task.user_id,
+      ]
     );
   }
 }
