@@ -87,7 +87,7 @@ FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 USE dbdevhubproject;
--- Query SQL USER
+-- Query to feed sql data in USER table
 INSERT INTO user (firstname, lastname, email, phone, user_image, biography, hashed_password, github_page, city)
 VALUES
 ('John', 'Doe', 'johndoe@email.com', '1234567890', NULL, 'A software developer', 'password123', 'johndoe', 'New York'),
@@ -111,7 +111,7 @@ VALUES
 ('Eve', 'Rousseau', 'everousseau@email.fr', '1111111111', NULL, 'Un ingénieur QA', 'motdepasse666', 'everousseau', 'Strasbourg'),
 ('Julie', 'Dumont', 'juliedumont@email.fr', '2222222222', NULL, 'Une rédactrice technique', 'motdepasse777', 'juliedumont', 'Montpellier');
 
--- Query SQL project
+-- Query to feed sql data in project table
 INSERT INTO project (name, state, description, project_start_date, project_end_date, progress, project_manager) 
 VALUES 
 ('Project A', 'Ongoing', 'A software development project', '2022-01-01', '2022-12-31', 50, 'John Doe'),
@@ -125,7 +125,7 @@ VALUES
 ('Project I', 'Ongoing', 'A QA engineering project', '2022-07-01', '2022-12-31', 70, 'William Lee'),
 ('Project J', 'Not Started', 'A technical writing project', '2023-01-01', '2023-06-30', 0, 'Olivia Parker');
 
--- Query SQL task
+-- Query to feed sql data in task table
 INSERT INTO task (name, task_start_date, task_end_date, description, state, progress, type, user_id)
 VALUES 
 ("Task 1", "2023-02-01", "2023-02-08", "Develop User Login Feature", "In Progress", 50, "IT Development", 11),
@@ -165,7 +165,7 @@ VALUES
 ("Task 35", "2023-03-06", "2023-03-13", "Develop User Data Synchronization Feature", "Not Started", 0, "IT Development", 19),
 ("Task 36", "2023-03-07", "2023-03-14", "Develop User Data Backup Management Feature", "Not Started", 0, "IT Development", 20);
 
--- Query SQL user_project
+-- Query to feed sql data in user_project table
 INSERT INTO user_project (user_id, project_id) 
 VALUES 
 (11, 1),
@@ -179,7 +179,7 @@ VALUES
 (19, 9),
 (20, 10);
 
--- Query SQL task_project
+-- Query to feed sql data in task_project table
 INSERT INTO task_project (task_id, project_id)
 VALUES 
 (1, 1),
@@ -219,7 +219,7 @@ VALUES
 (35, 9),
 (36, 10);
 
--- Query SQL message
+-- Query to feed sql data in message table
 INSERT INTO message (title, content, date_sent, state, author_id)
 VALUES 
 ("Titre 1", "Contenu 1", "2023-02-02", "Lu", 1),
@@ -243,7 +243,7 @@ VALUES
 ("Titre 19", "Contenu 19", "2023-02-02", "Lu", 19),
 ("Titre 20", "Contenu 20", "2023-02-02", "Lu", 20);
 
--- Query SQL user_message
+-- Query to feed sql data in recipient
 INSERT INTO recipient (recipient_id, message_id) 
 VALUES 
 (11, 1),
