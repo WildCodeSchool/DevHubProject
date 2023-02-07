@@ -26,4 +26,12 @@ router.post("/task", taskControllers.add);
 router.put("/task/:id", taskControllers.edit);
 router.delete("/task/:id", taskControllers.destroy);
 
+const messageControllers = require("./controllers/messageControllers");
+
+router.get("/messages", messageControllers.browse);
+router.get("/messages/:id", messageControllers.read);
+router.put("/messages/:id", messageControllers.edit);
+router.post("/messages", messageControllers.add);
+router.delete("/messages/:id", messageControllers.destroy);
+
 module.exports = router;

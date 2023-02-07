@@ -35,7 +35,7 @@ description TEXT NOT NULL,
 state VARCHAR(255),
 progress INT,
 type VARCHAR(255) NOT NULL,
-user_id INT NOT NULL,
+user_id INT,
 CONSTRAINT fk_task_user
   FOREIGN KEY (user_id) 
   REFERENCES user(id)
@@ -54,17 +54,19 @@ DROP TABLE IF EXISTS message ;
 CREATE TABLE message (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 title VARCHAR(255) NOT NULL,
 content TEXT NOT NULL,
-author VARCHAR(40) NOT NULL,
-receiver VARCHAR(40) NOT NULL,
 date_sent DATE NOT NULL,
-state VARCHAR(255)
+state VARCHAR(255),
+author_id INT NOT NULL,
+CONSTRAINT fk_author_id
+  FOREIGN KEY (author_id) 
+  REFERENCES user(id)
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS user_message ;
-CREATE TABLE user_message (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-user_id INT NOT NULL,
+DROP TABLE IF EXISTS recipient ;
+CREATE TABLE recipient (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+recipient_id INT NOT NULL,
 message_id INT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+FOREIGN KEY (recipient_id) REFERENCES user(id) ON DELETE CASCADE,
 FOREIGN KEY (message_id) REFERENCES message(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
@@ -85,7 +87,7 @@ FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 USE dbdevhubproject;
--- Query SQL USER
+-- Query to feed sql data in USER table
 INSERT INTO user (firstname, lastname, email, phone, user_image, biography, hashed_password, github_page, city)
 VALUES
 ('John', 'Doe', 'johndoe@email.com', '1234567890', NULL, 'A software developer', 'password123', 'johndoe', 'New York'),
@@ -109,7 +111,7 @@ VALUES
 ('Eve', 'Rousseau', 'everousseau@email.fr', '1111111111', NULL, 'Un ingénieur QA', 'motdepasse666', 'everousseau', 'Strasbourg'),
 ('Julie', 'Dumont', 'juliedumont@email.fr', '2222222222', NULL, 'Une rédactrice technique', 'motdepasse777', 'juliedumont', 'Montpellier');
 
--- Query SQL project
+-- Query to feed sql data in project table
 INSERT INTO project (name, state, description, project_start_date, project_end_date, progress, project_manager) 
 VALUES 
 ('Project A', 'Ongoing', 'A software development project', '2022-01-01', '2022-12-31', 50, 'John Doe'),
@@ -123,7 +125,7 @@ VALUES
 ('Project I', 'Ongoing', 'A QA engineering project', '2022-07-01', '2022-12-31', 70, 'William Lee'),
 ('Project J', 'Not Started', 'A technical writing project', '2023-01-01', '2023-06-30', 0, 'Olivia Parker');
 
--- Query SQL task
+-- Query to feed sql data in task table
 INSERT INTO task (name, task_start_date, task_end_date, description, state, progress, type, user_id)
 VALUES 
 ("Task 1", "2023-02-01", "2023-02-08", "Develop User Login Feature", "In Progress", 50, "IT Development", 11),
@@ -163,7 +165,7 @@ VALUES
 ("Task 35", "2023-03-06", "2023-03-13", "Develop User Data Synchronization Feature", "Not Started", 0, "IT Development", 19),
 ("Task 36", "2023-03-07", "2023-03-14", "Develop User Data Backup Management Feature", "Not Started", 0, "IT Development", 20);
 
--- Query SQL user_project
+-- Query to feed sql data in user_project table
 INSERT INTO user_project (user_id, project_id) 
 VALUES 
 (11, 1),
@@ -177,7 +179,7 @@ VALUES
 (19, 9),
 (20, 10);
 
--- Query SQL task_project
+-- Query to feed sql data in task_project table
 INSERT INTO task_project (task_id, project_id)
 VALUES 
 (1, 1),
@@ -216,3 +218,51 @@ VALUES
 (34, 8),
 (35, 9),
 (36, 10);
+
+-- Query to feed sql data in message table
+INSERT INTO message (title, content, date_sent, state, author_id)
+VALUES 
+("Titre 1", "Contenu 1", "2023-02-02", "Lu", 1),
+("Titre 2", "Contenu 2", "2023-02-02", "Lu", 2),
+("Titre 3", "Contenu 3", "2023-02-02", "Non Lu", 3),
+("Titre 4", "Contenu 4", "2023-02-02", "Lu", 4),
+("Titre 5", "Contenu 5", "2023-02-02", "Non Lu", 5),
+("Titre 6", "Contenu 6", "2023-02-02", "Lu", 6),
+("Titre 7", "Contenu 7", "2023-02-02", "Lu", 7),
+("Titre 8", "Contenu 8", "2023-02-02", "Non Lu", 8),
+("Titre 9", "Contenu 9", "2023-02-02", "Lu", 9),
+("Titre 10", "Contenu 10", "2023-02-02", "Non Lu", 10),
+("Titre 11", "Contenu 11", "2023-02-02", "Lu", 11),
+("Titre 12", "Contenu 12", "2023-02-02", "Lu", 12),
+("Titre 13", "Contenu 13", "2023-02-02", "Non Lu", 13),
+("Titre 14", "Contenu 14", "2023-02-02", "Lu", 14),
+("Titre 15", "Contenu 15", "2023-02-02", "Non Lu", 15),
+("Titre 16", "Contenu 16", "2023-02-02", "Lu", 16),
+("Titre 17", "Contenu 17", "2023-02-02", "Lu", 17),
+("Titre 18", "Contenu 18", "2023-02-02", "Non Lu", 18),
+("Titre 19", "Contenu 19", "2023-02-02", "Lu", 19),
+("Titre 20", "Contenu 20", "2023-02-02", "Lu", 20);
+
+-- Query to feed sql data in recipient
+INSERT INTO recipient (recipient_id, message_id) 
+VALUES 
+(11, 1),
+(12, 2),
+(13, 3),
+(14, 4),
+(15, 5),
+(16, 6),
+(17, 7),
+(18, 8),
+(19, 9),
+(20, 10),
+(11, 11),
+(12, 12),
+(13, 13),
+(14, 14),
+(15, 15),
+(16, 16),
+(17, 17),
+(18, 18),
+(19, 19),
+(20, 20);
