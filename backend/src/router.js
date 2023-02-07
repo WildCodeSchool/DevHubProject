@@ -18,4 +18,12 @@ router.put("/notes/:id", noteControllers.edit);
 router.post("/notes", noteControllers.add);
 router.delete("/notes/:id", noteControllers.destroy);
 
+const messageControllers = require("./controllers/messageControllers");
+
+router.get("/messages", messageControllers.browse);
+router.get("/messages/:id", messageControllers.read);
+router.put("/messages/:id", messageControllers.edit);
+router.post("/messages", messageControllers.add);
+router.delete("/messages/:id", messageControllers.destroy);
+
 module.exports = router;
