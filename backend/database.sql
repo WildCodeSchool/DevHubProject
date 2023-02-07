@@ -43,7 +43,7 @@ CONSTRAINT fk_task_user
 
 DROP TABLE IF EXISTS note ;
 CREATE TABLE note (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-desciption VARCHAR(300) NOT NULL,
+description VARCHAR(300) NOT NULL,
 user_id INT NOT NULL,
 CONSTRAINT fk_note_user 
   FOREIGN KEY (user_id)
