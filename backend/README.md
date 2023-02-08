@@ -60,7 +60,7 @@ Welcome in our API REST documentation for a management project database. This AP
 - Add user in user*project list : \*\*\_POST /user_project*\*\*
 - Add user in project by project ID : **_POST /user_project/:id_**
 - Delete user in user*project list : \*\*\_DELETE /user_project*\*\*
-- Delete user in user*project list by project ID : \*\*\_DELETE /user_project/:id***
+- Delete user in user\*project list by project ID : \*\*\_DELETE /user_project/:id**\*
   ​
   **task :\*\*
   ​

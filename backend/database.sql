@@ -1,5 +1,3 @@
--- npm run migrate
-
 USE dbdevhubproject;
 
 DROP TABLE IF EXISTS user;
@@ -37,17 +35,17 @@ progress INT,
 type VARCHAR(255) NOT NULL,
 user_id INT NOT NULL,
 CONSTRAINT fk_task_user
-  FOREIGN KEY (user_id) 
+  FOREIGN KEY (user_id)
   REFERENCES user(id)
  ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS note ;
 CREATE TABLE note (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-desciption VARCHAR(300) NOT NULL,
+description VARCHAR(300) NOT NULL,
 user_id INT NOT NULL,
-CONSTRAINT fk_note_user 
+CONSTRAINT fk_note_user
   FOREIGN KEY (user_id)
-  REFERENCES user(id)
+  REFERENCES user(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS message ;
@@ -64,24 +62,24 @@ DROP TABLE IF EXISTS user_message ;
 CREATE TABLE user_message (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 user_id INT NOT NULL,
 message_id INT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-FOREIGN KEY (message_id) REFERENCES message(id) ON DELETE CASCADE
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (message_id) REFERENCES message(id)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS task_project ;
 CREATE TABLE task_project (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 task_id INT NOT NULL,
 project_id INT NOT NULL,
-FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE,
-FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
+FOREIGN KEY (task_id) REFERENCES task(id),
+FOREIGN KEY (project_id) REFERENCES project(id)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS user_project ;
 CREATE TABLE user_project (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 user_id INT NOT NULL,
 project_id INT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
+FOREIGN KEY (user_id) REFERENCES user(id),
+FOREIGN KEY (project_id) REFERENCES project(id)
 ) ENGINE=InnoDB;
 
 USE dbdevhubproject;
@@ -108,10 +106,9 @@ VALUES
 ('Victor', 'Garcia', 'victorgarcia@email.fr', '0000000000', NULL, 'Un designer UX', 'motdepasse555', 'victorgarcia', 'Lille'),
 ('Eve', 'Rousseau', 'everousseau@email.fr', '1111111111', NULL, 'Un ingénieur QA', 'motdepasse666', 'everousseau', 'Strasbourg'),
 ('Julie', 'Dumont', 'juliedumont@email.fr', '2222222222', NULL, 'Une rédactrice technique', 'motdepasse777', 'juliedumont', 'Montpellier');
-
 -- Query SQL project
-INSERT INTO project (name, state, description, project_start_date, project_end_date, progress, project_manager) 
-VALUES 
+INSERT INTO project (name, state, description, project_start_date, project_end_date, progress, project_manager)
+VALUES
 ('Project A', 'Ongoing', 'A software development project', '2022-01-01', '2022-12-31', 50, 'John Doe'),
 ('Project B', 'Completed', 'A web design project', '2022-01-01', '2022-06-30', 100, 'Jane Doe'),
 ('Project C', 'Ongoing', 'A data analysis project', '2022-07-01', '2022-12-31', 75, 'Bob Smith'),
@@ -122,10 +119,9 @@ VALUES
 ('Project H', 'Completed', 'A UX design project', '2022-01-01', '2022-06-30', 100, 'Emily Taylor'),
 ('Project I', 'Ongoing', 'A QA engineering project', '2022-07-01', '2022-12-31', 70, 'William Lee'),
 ('Project J', 'Not Started', 'A technical writing project', '2023-01-01', '2023-06-30', 0, 'Olivia Parker');
-
 -- Query SQL task
 INSERT INTO task (name, task_start_date, task_end_date, description, state, progress, type, user_id)
-VALUES 
+VALUES
 ("Task 1", "2023-02-01", "2023-02-08", "Develop User Login Feature", "In Progress", 50, "IT Development", 11),
 ("Task 2", "2023-02-01", "2023-02-08", "Develop Dashboard Design", "Not Started", 0, "IT Development", 11),
 ("Task 3", "2023-02-02", "2023-02-09", "Develop Data Management System", "Not Started", 0, "IT Development", 11),
@@ -162,10 +158,9 @@ VALUES
 ("Task 34", "2023-03-05", "2023-03-12", "Develop User Data Decompression Feature", "Not Started", 0, "IT Development", 18),
 ("Task 35", "2023-03-06", "2023-03-13", "Develop User Data Synchronization Feature", "Not Started", 0, "IT Development", 19),
 ("Task 36", "2023-03-07", "2023-03-14", "Develop User Data Backup Management Feature", "Not Started", 0, "IT Development", 20);
-
 -- Query SQL user_project
-INSERT INTO user_project (user_id, project_id) 
-VALUES 
+INSERT INTO user_project (user_id, project_id)
+VALUES
 (11, 1),
 (12, 2),
 (13, 3),
@@ -176,10 +171,9 @@ VALUES
 (18, 8),
 (19, 9),
 (20, 10);
-
 -- Query SQL task_project
 INSERT INTO task_project (task_id, project_id)
-VALUES 
+VALUES
 (1, 1),
 (2, 1),
 (3, 1),
