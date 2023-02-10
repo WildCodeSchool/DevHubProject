@@ -14,6 +14,7 @@ class MessageManager extends AbstractManager {
         message.date_sent,
         message.state,
         message.author_id,
+        message.mapageIds,
       ]
     );
   }
