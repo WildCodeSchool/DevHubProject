@@ -48,10 +48,16 @@ const TaskManager = require("./TaskManager");
 
 models.task = new TaskManager();
 models.task.setDatabase(pool);
+
 const MessageManager = require("./messageManager");
 
 models.message = new MessageManager();
 models.message.setDatabase(pool);
+
+const RecipientManager = require("./RecipientManager");
+
+models.recipient = new RecipientManager();
+models.recipient.setDatabase(pool);
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model

@@ -81,11 +81,38 @@ const destroy = (req, res) => {
       res.sendStatus(500);
     });
 };
+const addMessage = (req, res) => {
+  const message = req.body;
+
+  models.message
+    .insert(message)
+    .then(([result]) => {
+      const message_id = result.insertId;
+      const { mapageIds } = message;
+      Promise.all(
+        mapageIds.map((recipient_id) => {
+          return models.recipient.insert({ message_id, recipient_id });
+        })
+      )
+        .then(() => {
+          res.location(`/messages/${message_id}`).sendStatus(201);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
 module.exports = {
   browse,
   read,
   edit,
+  addMessage,
   add,
   destroy,
 };

@@ -39,7 +39,15 @@ const messageControllers = require("./controllers/messageControllers");
 router.get("/messages", messageControllers.browse);
 router.get("/messages/:id", messageControllers.read);
 router.put("/messages/:id", messageControllers.edit);
-router.post("/messages", messageControllers.add);
+router.post("/messages", messageControllers.addMessage);
 router.delete("/messages/:id", messageControllers.destroy);
+
+const recipientControllers = require("./controllers/recipientControllers");
+
+router.get("/recipients", recipientControllers.browse);
+router.get("/recipients/:id", recipientControllers.read);
+router.put("/recipients/:id", recipientControllers.edit);
+router.post("/recipients", recipientControllers.add);
+router.delete("/recipients/:id", recipientControllers.destroy);
 
 module.exports = router;
