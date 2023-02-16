@@ -65,6 +65,58 @@ const add = (req, res) => {
       res.sendStatus(500);
     });
 };
+const addProject = (req, res) => {
+  const project = req.body;
+
+  models.project
+    .insert(project)
+    .then(([result]) => {
+      const project_id = result.insertId;
+      const { userIds } = project;
+      Promise.all(
+        userIds.map((user_id) => {
+          return models.userProject.insert({ user_id, project_id });
+        })
+      )
+        .then(() => {
+          res.location(`/projects/${project_id}`).sendStatus(201);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+const addTask = (req, res) => {
+  const project = req.body;
+
+  models.project
+    .insert(project)
+    .then(([result]) => {
+      const project_id = result.insertId;
+      const { taskIds } = project;
+      Promise.all(
+        taskIds.map((task_id) => {
+          return models.taskProject.insert({ task_id, project_id });
+        })
+      )
+        .then(() => {
+          res.location(`/projects/${project_id}`).sendStatus(201);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
 const destroy = (req, res) => {
   models.project
@@ -87,5 +139,7 @@ module.exports = {
   read,
   edit,
   add,
+  addProject,
+  addTask,
   destroy,
 };
