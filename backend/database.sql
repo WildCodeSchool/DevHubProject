@@ -80,10 +80,10 @@ FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
 
 DROP TABLE IF EXISTS user_project ;
 CREATE TABLE user_project (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-user_id INT NOT NULL,
-project_id INT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
+user_id INT ,
+project_id INT,
+FOREIGN KEY (user_id) REFERENCES user(id) ,
+FOREIGN KEY (project_id) REFERENCES project(id)
 ) ENGINE=InnoDB;
 
 USE dbdevhubproject;

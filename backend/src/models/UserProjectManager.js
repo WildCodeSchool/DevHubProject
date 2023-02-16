@@ -9,7 +9,7 @@ class UserProjectManager extends AbstractManager {
     return this.database.query(
       `insert into ${this.table} (user_id, project_id)
        values (?, ?)`,
-      [userProject.user_id, userProject.project_id]
+      [userProject.user_id, userProject.project_id, userProject.userIds]
     );
   }
 
