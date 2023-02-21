@@ -1,11 +1,11 @@
 import React from "react";
 
-function Login() {
+function NotFound() {
   return (
     <div>
-      <h1>Login</h1>
+      <h1>P400</h1>
     </div>
   );
 }
 
-export default Login;
+export default NotFound;

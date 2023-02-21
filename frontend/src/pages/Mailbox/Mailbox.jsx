@@ -1,7 +1,13 @@
 import React from "react";
 
 function Mailbox() {
-  return <div>Mailbox</div>;
+  return (
+    <div>
+      <h1>
+        <h1>Mailbox</h1>
+      </h1>
+    </div>
+  );
 }
 
 export default Mailbox;
