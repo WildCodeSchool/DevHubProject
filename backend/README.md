@@ -108,7 +108,7 @@ Response :
             "phone":  "0602003252",
             "user_image": "https://example.com/images/1.jpg",
             "biography": "Je suis développeur web",
-            "hashed_password": "password",
+            "hashedPassword": "password",
             "github_page": "https://github.com/johndoe",
             "location": "Marseille"
         },
@@ -120,7 +120,7 @@ Response :
             "phone":  "0602003562",
             "user_image": "https://example.com/images/2.jpg",
             "biography": "Je suis développeur mobile",
-            "hashed_password": "password",
+            "hashedPassword": "password",
             "github_page": "https://github.com/janesmith",
             "location": "New york"
         }
@@ -153,7 +153,7 @@ Response :
             "phone":  "0602003252",
             "user_image": "https://example.com/images/1.jpg",
             "biography": "Je suis développeur web",
-            "hashed_password": "password",
+            "hashedPassword": "password",
             "github_page": "https://github.com/johndoe",
             "location": "Marseille"
 }
@@ -181,7 +181,7 @@ With body request :
   "phone":  "0602003252",
   "biography": "A software developer with 5 years of experience.",
   "user_image": "image_data_as_a_blob",
-  "hashed_password": "password_hash",
+  "hashedPassword": "password_hash",
   "github_page": "https://github.com/johndoe",
   "location": "Nantes"
 }
@@ -204,7 +204,7 @@ Body :
     "phone":  "0603563252",
     "biography": "A software developer with 10 years of experience.",
     "user_image": "https://example.com/images/johndoe.jpg",
-    "hashed_password": "mysecretpassword",
+    "hashedPassword": "mysecretpassword",
     "github_page": "https://github.com/johndoe",
     "location": "Lyon"
 }
@@ -226,7 +226,7 @@ Body :
     "phone":  "0602003252",
     "biography": "A software developer with 10 years of experience.",
     "user_image": "https://example.com/images/johndoe.jpg",
-    "hashed_password": "mysecretpassword",
+    "hashedPassword": "mysecretpassword",
     "github_page": "https://github.com/johndoe",
     "location": "Lyon"
 }

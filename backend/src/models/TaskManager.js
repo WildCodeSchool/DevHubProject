@@ -34,6 +34,7 @@ class TaskManager extends AbstractManager {
         task.progress,
         task.type,
         task.user_id,
+        task.id,
       ]
     );
   }

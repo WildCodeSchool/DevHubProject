@@ -16,7 +16,7 @@ class RecipientManager extends AbstractManager {
   update(recipient) {
     return this.database.query(
       `update ${this.table} set recipient_id ?, message_id where id = ?`,
-      [recipient.recipient_id, recipient.message_id]
+      [recipient.recipient_id, recipient.message_id, recipient.id]
     );
   }
 }

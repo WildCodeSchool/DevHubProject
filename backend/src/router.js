@@ -2,13 +2,32 @@ const express = require("express");
 
 const router = express.Router();
 
+const {
+  hashPassword,
+  verifyPassword,
+  verifyToken,
+  verifyId,
+} = require("./middlewares/auth");
+
 const userControllers = require("./controllers/userControllers");
 
+// GET
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
-router.put("/users/:id", userControllers.edit);
-router.post("/users", userControllers.add);
-router.delete("/users/:id", userControllers.destroy);
+// REGISTER
+router.post("/users", hashPassword, userControllers.add);
+router.post(
+  "/users/login",
+  userControllers.getUserByEmailWithPasswordAndPassToNext,
+  verifyPassword
+);
+
+// POST,PUT & DELETE
+
+router.use(verifyToken); // Authentication Wall
+
+router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
+router.delete("/users/:id", verifyId, userControllers.destroy);
 
 const projectControllers = require("./controllers/projectControllers");
 

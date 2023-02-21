@@ -8,7 +8,7 @@ class UserManager extends AbstractManager {
   insert(user) {
     return this.database.query(
       `insert into ${this.table} (firstname, lastname, email, 
-      phone, user_image, biography, hashed_password, github_page, city)
+      phone, user_image, biography, hashedPassword, github_page, city)
        values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         user.firstname,
@@ -17,7 +17,7 @@ class UserManager extends AbstractManager {
         user.phone,
         user.user_image,
         user.biography,
-        user.hashed_password,
+        user.hashedPassword,
         user.github_page,
         user.city,
       ]
@@ -27,7 +27,7 @@ class UserManager extends AbstractManager {
   update(user) {
     return this.database.query(
       `update ${this.table} set firstname = ?, lastname = ?, email = ?, phone = ?, user_image = ?,
-      biography = ?, hashed_password = ?, github_page = ?, city = ? where id = ?`,
+      biography = ?, hashedPassword = ?, github_page = ?, city = ? where id = ?`,
       [
         user.firstname,
         user.lastname,
@@ -35,12 +35,18 @@ class UserManager extends AbstractManager {
         user.phone,
         user.user_image,
         user.biography,
-        user.hashed_password,
+        user.hashedPassword,
         user.github_page,
         user.city,
         user.id,
       ]
     );
+  }
+
+  findUser(email) {
+    return this.database.query(`select * from  ${this.table} where email = ?`, [
+      email,
+    ]);
   }
 }
 

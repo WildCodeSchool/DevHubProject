@@ -16,7 +16,7 @@ class UserProjectManager extends AbstractManager {
   update(userProject) {
     return this.database.query(
       `update ${this.table} set user_id ?, project_id where id = ?`,
-      [userProject.user_id, userProject.project_id]
+      [userProject.user_id, userProject.project_id, userProject.id]
     );
   }
 }
