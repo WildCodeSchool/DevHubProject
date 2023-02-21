@@ -66,6 +66,25 @@ const add = (req, res) => {
     });
 };
 
+const getUserByEmailWithPasswordAndPassToNext = (req, res, next) => {
+  const { email } = req.body;
+  models.user
+    .findUser(email)
+    .then(([users]) => {
+      if (users[0] != null) {
+        const [firstUser] = users;
+        req.user = firstUser;
+        next();
+      } else {
+        res.sendStatus(401);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error retrieving data from database");
+    });
+};
+
 const destroy = (req, res) => {
   models.user
     .delete(req.params.id)
@@ -88,4 +107,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  getUserByEmailWithPasswordAndPassToNext,
 };
