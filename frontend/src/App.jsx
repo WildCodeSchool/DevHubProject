@@ -9,7 +9,7 @@ import Login from "./pages/Login/Login";
 import Mailbox from "./pages/Mailbox/Mailbox";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import Roadmap from "./pages/Roadmap/Roadmap";
-import SignIn from "./pages/SignIn/SignIn";
+import Register from "./pages/Register/Register";
 import NotFound from "./pages/NotFound/NotFound";
 
 import "./App.css";
@@ -30,7 +30,7 @@ function App() {
           <Route path="/mailbox" element={<Mailbox />} />
           <Route path="/userprofile/:id" element={<UserProfile />} />
           <Route path="/roadmap" element={<Roadmap />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>
