@@ -13,6 +13,8 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import Roadmap from "./pages/Roadmap/Roadmap";
 import Register from "./pages/Register/Register";
 import NotFound from "./pages/NotFound/NotFound";
+import Topbar from "./pages/global/Topbar";
+// import Sidebar from "./pages/global/Sidebar";
 
 import "./App.css";
 
@@ -24,6 +26,7 @@ function App() {
         <CssBaseline />
         <div className="App">
           <main className="content">
+            <Topbar />
             <BrowserRouter>
               <Routes>
                 <Route path="*" element={<NotFound />} />
