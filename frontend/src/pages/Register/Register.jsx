@@ -109,12 +109,17 @@ function Register() {
                   autoComplete="new-password"
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="ConfirmPassword"
+                  label="Confirm password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
                 />
-              </Grid> */}
+              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -126,7 +131,7 @@ function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="Lien vers Log In" variant="body2">
+                <Link href="/Login" variant="body2">
                   Already have an account? Log in
                 </Link>
               </Grid>
