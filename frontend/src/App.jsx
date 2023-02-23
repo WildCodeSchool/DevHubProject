@@ -1,3 +1,4 @@
+// import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -13,13 +14,13 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import Roadmap from "./pages/Roadmap/Roadmap";
 import Register from "./pages/Register/Register";
 import NotFound from "./pages/NotFound/NotFound";
+import Progress from "./pages/Progress/Progress";
 import Topbar from "./pages/global/Topbar";
-// import Sidebar from "./pages/global/Sidebar";
-
-import "./App.css";
+import Sidebar from "./pages/global/Sidebar";
 
 function App() {
   const [theme, colorMode] = useMode();
+  // const [isSidebar, setIsSidebar] = useState(true);
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -28,10 +29,11 @@ function App() {
           <main className="content">
             <Topbar />
             <BrowserRouter>
+              <Sidebar />
               <Routes>
                 <Route path="*" element={<NotFound />} />
                 <Route path="/" element={<Home />} />
-                <Route path="add-project" element={<AddProject />} />
+                <Route path="/add-project" element={<AddProject />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/dashboard" element={<Dashboard />} />
@@ -41,6 +43,7 @@ function App() {
                 <Route path="/userprofile/:id" element={<UserProfile />} />
                 <Route path="/roadmap" element={<Roadmap />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/progress" element={<Progress />} />
               </Routes>
             </BrowserRouter>
           </main>
