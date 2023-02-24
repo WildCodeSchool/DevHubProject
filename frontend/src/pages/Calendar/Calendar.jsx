@@ -22,7 +22,8 @@ function Calendar() {
   const [currentEvents, setCurrentEvents] = useState([]);
 
   const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
+    // A modifier par une modal ou pop up
+    const title = console.info("Please enter a new title for your event");
     const calendarApi = selected.view.calendar;
     calendarApi.unselected();
 
@@ -38,7 +39,7 @@ function Calendar() {
   };
   const handleEventClick = (selected) => {
     if (
-      window.confirm(
+      console.info(
         `Are you sure you want to delete the event '${selected.event.title}'`
       )
     ) {

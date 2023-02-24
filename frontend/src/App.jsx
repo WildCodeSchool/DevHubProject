@@ -17,7 +17,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Progress from "./pages/Progress/Progress";
 import Topbar from "./components/Topbar/Topbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import "./app.css";
+import "./App.css";
 
 function App() {
   const [theme, colorMode] = useMode();
