@@ -25,7 +25,11 @@ function Note({ id, title, date, handleDeleteNote }) {
       <Typography variant="h5">{title}</Typography>
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h7">{date}</Typography>
-        <DeleteForeverIcon size="1.3em" onClick={() => handleDeleteNote(id)} />
+        <DeleteForeverIcon
+          cursor="pointer"
+          size="1.3em"
+          onClick={() => handleDeleteNote(id)}
+        />
       </Box>
     </Box>
   );
