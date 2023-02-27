@@ -1,10 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Card, CardContent } from "@material-ui/core";
-import Informations from "../../components/UserProfile/Informations/Informations";
-import UserImage from "../../components/UserProfile/UserImage/UserImage";
-import ProjectsList from "../../components/UserProfile/ProjectsList/ProjectsList";
-import SendMessage from "../../components/UserProfile/SendMessage/SendMessage";
+import Informations from "../../components/Informations/Informations";
+import UserImage from "../../components/UserImage/UserImage";
+import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import SendMessage from "../../components/SendMessage/SendMessage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
