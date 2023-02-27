@@ -14,19 +14,30 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     textAlign: "center",
     backgroundImage: `url(${trainBackground})`,
-    backgroundSize: "cover",
+    backgroundSize: "100%",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    [theme.breakpoints.down("sm")]: {
+      backgroundSize: "100% auto",
+    },
   },
   title: {
-    fontWeight: 1000,
-    marginBottom: theme.spacing(2),
-    color: "white",
-    textShadow: "1px 1px 2px black",
-  },
-  subtitle: {
     fontWeight: 600,
     marginBottom: theme.spacing(2),
     color: "white",
     textShadow: "1px 1px 2px black",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "3rem",
+    },
+  },
+  subtitle: {
+    fontWeight: 400,
+    marginBottom: theme.spacing(2),
+    color: "white",
+    textShadow: "1px 1px 2px black",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.5rem",
+    },
   },
   button: {
     marginTop: theme.spacing(2),
