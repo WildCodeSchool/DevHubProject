@@ -3,7 +3,7 @@ import React from "react";
 function AddProject() {
   return (
     <div>
-      <h1>AddProject</h1>
+      <h1>Add Project</h1>
     </div>
   );
 }
