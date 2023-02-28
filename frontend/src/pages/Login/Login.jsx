@@ -76,7 +76,7 @@ function Login() {
             <Grid container justifyContent="flex-end">
               {/* faire le lien vers register */}
               <Grid item>
-                <Link href="/Register" variant="body2">
+                <Link href="/register" variant="body2">
                   Don't have an account? Create your account
                 </Link>
               </Grid>

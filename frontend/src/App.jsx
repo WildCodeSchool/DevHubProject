@@ -23,7 +23,7 @@ function App() {
   const [theme, colorMode] = useMode();
   const { pathname } = useLocation();
   const showSidebar = !["/", "/login", "/register"].includes(pathname);
-  const showTopbar = !["/login", "/register", "/"].includes(pathname);
+  const showTopbar = !["/", "/login", "/register"].includes(pathname);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

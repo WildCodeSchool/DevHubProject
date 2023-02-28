@@ -49,7 +49,7 @@ function Home() {
               Log In
             </Button>
             <Grid item>
-              <Link href="/Login" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Log in
               </Link>
             </Grid>
@@ -62,7 +62,7 @@ function Home() {
               Register
             </Button>
             <Grid item>
-              <Link href="/Register" variant="body2">
+              <Link href="/register" variant="body2">
                 Don't have an account? Create your account
               </Link>
             </Grid>
