@@ -35,8 +35,8 @@ function AddNote({ handleAddNote }) {
       }}
     >
       <TextField
-        id="filled-multiline-static"
-        label="Multiline"
+        id="demo-helper-text-misaligned-no-helper"
+        label="Your Notes"
         multiline
         rows={4}
         defaultValue="Default Value"

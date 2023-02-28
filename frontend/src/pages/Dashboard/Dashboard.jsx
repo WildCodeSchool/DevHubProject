@@ -2,35 +2,38 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import Header from "../../components/Header/Header";
 import NoteList from "../../components/NotesList/NotesList";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 function Dashboard() {
   const [notes, setNotes] = useState([
     {
       id: 1,
-      title: "Your first note",
-      date: "27/02/2023",
+      noteText: "This is my first note!",
+      date: "15/04/2021",
     },
     {
       id: 2,
-      title: "Your second note",
-      date: "10/03/2023",
+      noteText: "This is my second note!",
+      date: "21/04/2021",
     },
     {
       id: 3,
-      title: "Your third note",
-      date: "12/03/2023",
+      noteText: "This is my third note!",
+      date: "28/04/2021",
     },
     {
       id: 4,
-      title: "Your fourth note",
-      date: "13/03/2023",
+      noteText: "This is my new note!",
+      date: "30/04/2021",
     },
   ]);
+  const [searchText, setSearchText] = useState("");
+
   const addNote = (text) => {
     const date = new Date();
     const newNote = {
       id: 1,
-      title: text,
+      noteText: text,
       date: date.toLocaleDateString(),
     };
     const newNotes = [...notes, newNote];
@@ -46,8 +49,13 @@ function Dashboard() {
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
       </Box>
       <Box>
+        <Box sx={{ mb: "1em" }}>
+          <SearchBar handleSearchNote={setSearchText} />
+        </Box>
         <NoteList
-          notes={notes}
+          notes={notes.filter((note) =>
+            note.noteText.toLowerCase().includes(searchText)
+          )}
           handleAddNote={addNote}
           handleDeleteNote={deleteNote}
         />
