@@ -1,5 +1,5 @@
 // import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Home from "./pages/Home/Home";
@@ -21,15 +21,18 @@ import "./App.css";
 
 function App() {
   const [theme, colorMode] = useMode();
-  // const [isSidebar, setIsSidebar] = useState(true);
+  const { pathname } = useLocation();
+  const showSidebar = !["/", "/login", "/register"].includes(pathname);
+  const showTopbar = !["/login", "/register", "/"].includes(pathname);
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar />
+          {showSidebar && <Sidebar />}
           <main className="content">
-            <Topbar />
+            {showTopbar && <Topbar />}
             <Routes>
               <Route path="*" element={<NotFound />} />
               <Route path="/" element={<Home />} />
