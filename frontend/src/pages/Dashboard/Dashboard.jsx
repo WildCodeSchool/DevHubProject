@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import Header from "../../components/Header/Header";
 import NoteList from "../../components/NotesList/NotesList";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import SliderTeam from "../../components/SliderTeam/SliderTeam";
 
 function Dashboard() {
   const [notes, setNotes] = useState([
@@ -48,7 +49,10 @@ function Dashboard() {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
       </Box>
-      <Box>
+      <Box sx={{ width: "50%" }}>
+        <SliderTeam />
+      </Box>
+      <Box mt="20px">
         <Box sx={{ mb: "1em" }}>
           <SearchBar handleSearchNote={setSearchText} />
         </Box>

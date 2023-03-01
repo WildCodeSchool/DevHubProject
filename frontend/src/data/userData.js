@@ -1,10 +1,13 @@
-const mockDataTeam = [
+import user from "../assets/user.png";
+
+const userDataTeam = [
   {
     firstname: "John",
     lastname: "Doe",
     email: "johndoe@gmail.com",
     phone: "5551234567",
-    user_image: "blob1",
+    user_image: { user },
+    role: "Project manager",
     biography: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     github_page: "https://github.com/johndoe",
     city: "New York",
@@ -14,7 +17,8 @@ const mockDataTeam = [
     lastname: "Smith",
     email: "janesmith@gmail.com",
     phone: "5559876543",
-    user_image: "blob2",
+    user_image: { user },
+    role: "Designer",
     biography:
       "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
     github_page: "https://github.com/janesmith",
@@ -25,7 +29,8 @@ const mockDataTeam = [
     lastname: "Johnson",
     email: "bobjohnson@gmail.com",
     phone: "5555555555",
-    user_image: "blob3",
+    user_image: { user },
+    role: "Developer",
     biography:
       "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
     github_page: "https://github.com/bobjohnson",
@@ -36,7 +41,8 @@ const mockDataTeam = [
     lastname: "Jones",
     email: "maryjones@gmail.com",
     phone: "5551112222",
-    user_image: "blob4",
+    user_image: { user },
+    role: "Integrator",
     biography:
       "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
     github_page: "https://github.com/maryjones",
@@ -47,7 +53,8 @@ const mockDataTeam = [
     lastname: "Lee",
     email: "davidlee@gmail.com",
     phone: "5552223333",
-    user_image: "blob5",
+    user_image: { user },
+    role: "tester",
     biography:
       "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
     github_page: "https://github.com/davidlee",
@@ -58,7 +65,8 @@ const mockDataTeam = [
     lastname: "Garcia",
     email: "lisagarcia@gmail.com",
     phone: "5557778888",
-    user_image: "blob6",
+    user_image: { user },
+    role: "System Administrator",
     biography:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.",
     github_page: "https://github.com/lisagarcia",
@@ -69,11 +77,12 @@ const mockDataTeam = [
     lastname: "Brown",
     email: "chrisbrown@gmail.com",
     phone: "5554445555",
-    user_image: "blob7",
+    user_image: { user },
+    role: "System Administrator",
     biography: "Et harum quidem rerum facilis est et expedita distinctio.",
     github_page: "https://github.com/chrisbrown",
     city: "San Antonio",
   },
 ];
 
-export default mockDataTeam;
+export default userDataTeam;
