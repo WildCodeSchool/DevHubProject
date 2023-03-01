@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -22,8 +22,18 @@ import "./App.css";
 function App() {
   const [theme, colorMode] = useMode();
   const { pathname } = useLocation();
-  const showSidebar = !["/", "/login", "/register"].includes(pathname);
-  const showTopbar = !["/", "/login", "/register"].includes(pathname);
+  const routesWithSidebarAndTopbar = [
+    "/add-project",
+    "/calendar",
+    "/dashboard",
+    "/join-project",
+    "/mailbox",
+    "/user-profile/:id",
+    "/roadmap",
+    "/progress",
+  ];
+  const showSidebar = routesWithSidebarAndTopbar.includes(pathname);
+  const showTopbar = routesWithSidebarAndTopbar.includes(pathname);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
