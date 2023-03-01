@@ -29,12 +29,13 @@ function App() {
     "/dashboard",
     "/join-project",
     "/mailbox",
-    "/user-profile/:id",
     "/roadmap",
     "/progress",
   ];
-  const showSidebar = routesWithSidebarAndTopbar.includes(pathname);
-  const showTopbar = routesWithSidebarAndTopbar.includes(pathname);
+  const showSidebar =
+    routesWithSidebarAndTopbar.some((route) => pathname.startsWith(route)) ||
+    pathname.startsWith("/user-profile/");
+  const showTopbar = showSidebar;
 
   return (
     <ColorModeContext.Provider value={colorMode}>
