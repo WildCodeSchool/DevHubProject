@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
 import Note from "../Note/Note";
-import AddNote from "../AddNote/AddNote";
 
-function NotesList({ notes, handleAddNote, handleDeleteNote }) {
+function NotesList({ notes, handleDeleteNote }) {
   return (
     <Box
       display="grid"
@@ -17,7 +16,6 @@ function NotesList({ notes, handleAddNote, handleDeleteNote }) {
           handleDeleteNote={handleDeleteNote}
         />
       ))}
-      <AddNote handleAddNote={handleAddNote} />
     </Box>
   );
 }
