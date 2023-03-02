@@ -67,7 +67,7 @@ function Sidebar() {
         },
       }}
     >
-      <ProSidebar className="sidebar" collapsed={isCollapsed}>
+      <ProSidebar className="sidebar" collapsed={isCollapsed} position="fixed">
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem

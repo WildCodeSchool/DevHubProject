@@ -1,24 +1,18 @@
-import { Box } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 import Note from "../Note/Note";
-import AddNote from "../AddNote/AddNote";
 
-function NotesList({ notes, handleAddNote, handleDeleteNote }) {
+function NotesList({ notes, handleDeleteNote }) {
   return (
-    <Box
-      display="grid"
-      gap="1rem"
-      gridTemplateColumns="repeat(auto-fit, minmax(250px, 1fr))"
-    >
+    <Carousel>
       {notes.map((note) => (
         <Note
-          id={note.id}
+          key={note.id}
           noteText={note.noteText}
           date={note.date}
           handleDeleteNote={handleDeleteNote}
         />
       ))}
-      <AddNote handleAddNote={handleAddNote} />
-    </Box>
+    </Carousel>
   );
 }
 
