@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Card, CardContent } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import Informations from "../../components/Informations/Informations";
 import UserImage from "../../components/UserImage/UserImage";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
@@ -10,21 +10,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    marginBottom: 0,
   },
-  card: {
-    marginBottom: theme.spacing(2),
+  paper: {
+    padding: theme.spacing(2),
   },
-
   userImageContainer: {
     marginBottom: theme.spacing(5),
   },
-  projectsListContainer: {
-    marginBottom: theme.spacing(2),
-  },
-  sendMessage: {
+  sendMessageContainer: {
+    marginTop: theme.spacing(2),
     display: "flex",
     justifyContent: "center",
-    marginTop: theme.spacing(1),
   },
 }));
 
@@ -50,40 +47,48 @@ function UserProfile() {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Informations
-            firstName={userProfile.firstName}
-            lastName={userProfile.lastName}
-            gender={userProfile.gender}
-            phoneNumber={userProfile.phoneNumber}
-            city={userProfile.city}
-            country={userProfile.country}
-            nationality={userProfile.nationality}
-            email={userProfile.email}
-            website={userProfile.website}
-            githubPage={userProfile.githubPage}
-            biography={userProfile.biography}
-          />
+          <Paper className={classes.paper}>
+            <Informations
+              firstName={userProfile.firstName}
+              lastName={userProfile.lastName}
+              gender={userProfile.gender}
+              phoneNumber={userProfile.phoneNumber}
+              city={userProfile.city}
+              country={userProfile.country}
+              nationality={userProfile.nationality}
+              email={userProfile.email}
+              website={userProfile.website}
+              githubPage={userProfile.githubPage}
+              biography={userProfile.biography}
+            />
+          </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card className={classes.card}>
-            <CardContent>
-              <div className={classes.userImageContainer}>
-                <UserImage
-                  firstName={userProfile.firstName}
-                  lastName={userProfile.lastName}
-                />
-              </div>
-              <div className={classes.projectsListContainer}>
+          <Grid container direction="column" spacing={3}>
+            <Grid item xs={12}>
+              <UserImage
+                firstName={userProfile.firstName}
+                lastName={userProfile.lastName}
+              />
+            </Grid>
+            <Grid item>
+              <Paper className={classes.paper}>
                 <ProjectsList />
-              </div>
-            </CardContent>
-          </Card>
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} className={classes.sendMessage}>
-          <SendMessage
-            firstName={userProfile.firstName}
-            lastName={userProfile.lastName}
-          />
+        <Grid item xs={12}>
+          <Grid
+            container
+            justify="center"
+            className={classes.sendMessageContainer}
+          >
+            <SendMessage
+              firstName={userProfile.firstName}
+              lastName={userProfile.lastName}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </div>
