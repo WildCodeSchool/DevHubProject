@@ -5,6 +5,7 @@ import NoteList from "../../components/NotesList/NotesList";
 import SliderTeam from "../../components/SliderTeam/SliderTeam";
 import { tokens } from "../../theme";
 import AddNote from "../../components/AddNote/AddNote";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 function Dashboard() {
   const theme = useTheme();
@@ -37,7 +38,7 @@ function Dashboard() {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
   };
-
+  const [searchText, setSearchText] = useState("");
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -46,7 +47,8 @@ function Dashboard() {
       <Box sx={{ width: "50%" }}>
         <SliderTeam />
       </Box>
-      <Box mt="20px" sx={{ width: "50%" }}>
+      <Box sx={{ width: "50%", m: "30px 0 0 10px" }}>
+        <SearchBar handleSearchNote={setSearchText} />
         <Box display="flex" justifyContent="space-between">
           <Box
             display="flex"
@@ -64,10 +66,14 @@ function Dashboard() {
               Your notes
             </Typography>
           </Box>
-
           <AddNote handleAddNote={addNote} />
         </Box>
-        <NoteList notes={notes} handleDeleteNote={deleteNote} />
+        <NoteList
+          notes={notes.filter((note) =>
+            note.noteText.toLocaleLowerCase().includes(searchText)
+          )}
+          handleDeleteNote={deleteNote}
+        />
       </Box>
     </Box>
   );
