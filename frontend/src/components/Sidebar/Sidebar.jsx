@@ -201,7 +201,7 @@ function Sidebar() {
 
             <Item
               title="Pie Chart"
-              to="/pie"
+              to="/progress"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
