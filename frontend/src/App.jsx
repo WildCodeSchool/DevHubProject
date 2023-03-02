@@ -22,8 +22,20 @@ import "./App.css";
 function App() {
   const [theme, colorMode] = useMode();
   const { pathname } = useLocation();
-  const showSidebar = !["/", "/login", "/register"].includes(pathname);
-  const showTopbar = !["/", "/login", "/register"].includes(pathname);
+  const routesWithSidebarAndTopbar = [
+    "/contact",
+    "/add-project",
+    "/calendar",
+    "/dashboard",
+    "/join-project",
+    "/mailbox",
+    "/roadmap",
+    "/progress",
+  ];
+  const showSidebar =
+    routesWithSidebarAndTopbar.some((route) => pathname.startsWith(route)) ||
+    pathname.startsWith("/user-profile/");
+  const showTopbar = showSidebar;
 
   return (
     <ColorModeContext.Provider value={colorMode}>
