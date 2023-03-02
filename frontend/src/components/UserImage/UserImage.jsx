@@ -6,8 +6,8 @@ import PersonIcon from "@material-ui/icons/Person";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    width: theme.spacing(25),
-    height: theme.spacing(25),
+    width: theme.spacing(30),
+    height: theme.spacing(30),
     margin: "auto",
     fontSize: theme.spacing(18),
     backgroundColor: theme.palette.primary.main,

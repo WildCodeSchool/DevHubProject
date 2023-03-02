@@ -1,55 +1,91 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import * as React from "react";
+import { Box, Grid, Typography } from "@mui/material";
+import { amber, blue, green, red } from "@mui/material/colors";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(2),
+const projects = [
+  { name: "Projet A", description: "Fatigue", progress: 60 },
+  {
+    name: "Dev Hub Connect",
+    description: "Fanny et fred G ne font rien",
+    progress: 20,
   },
-}));
+  { name: "Dev Hub Project", description: "Au top les poulets", progress: 100 },
+  { name: "Projet D", description: "Bienveillance", progress: 45 },
+  {
+    name: "Dev Hub Share",
+    description: "Heureusement les filles sont là",
+    progress: 75,
+  },
+];
 
 function ProjectsList() {
-  const classes = useStyles();
-
-  const projects = [
-    {
-      id: 1,
-      name: "Project 1",
-      description: "Lorem ipsum dolor sit amet",
-    },
-    {
-      id: 2,
-      name: "Project 2",
-      description: "Consectetur adipiscing elit",
-    },
-    {
-      id: 3,
-      name: "Project 3",
-      description: "Sed do eiusmod tempor incididunt",
-    },
-    {
-      id: 4,
-      name: "Project 4",
-      description: "Ut labore et dolore magna aliqua",
-    },
-    {
-      id: 5,
-      name: "Project 5",
-      description: "Ut enim ad minim veniam",
-    },
-  ];
+  const getColor = (progress) => {
+    if (progress < 25) {
+      return red[500]; // Rouge pour une valeur de progress <= 25
+    }
+    if (progress < 50) {
+      return amber[500]; // Orange pour une valeur de progress > 25 et <= 50
+    }
+    if (progress < 75) {
+      return blue[500]; // Bleu pour une valeur de progress > 50 et <= 75
+    }
+    return green[500]; // Vert pour une valeur de progress > 75
+  };
 
   return (
-    <div className={classes.root}>
-      <h3>Projects List</h3>
-      <List>
-        {projects.map(({ id, name, description }) => (
-          <ListItem key={id}>
-            <ListItemText primary={name} secondary={description} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    <Grid container spacing={2} justifyContent="center">
+      <Grid item xs={12} md={6}>
+        <Box sx={{ mt: 3 }}>
+          {projects.map((project) => (
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              <Box sx={{ width: "100%", mr: 1 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  {project.name}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  {project.description}
+                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
+                  <Box
+                    sx={{
+                      flexGrow: 1,
+                      height: 8,
+                      borderRadius: 5,
+                      overflow: "hidden",
+                      background: "#ccc",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        height: "100%",
+                        borderRadius: 5,
+                        background: getColor(project.progress), // La couleur de fond dépend de la valeur de progress
+                        backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.2)), ${getColor(
+                          project.progress
+                        )}`,
+                        width: `${project.progress}%`, // La largeur dépend de la valeur de progress
+                      }}
+                    />
+                  </Box>
+                  <Box sx={{ ml: 1, Width: 70 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        textAlign: "right",
+                        color: getColor(project.progress),
+                      }}
+                    >
+                      {`${project.progress}%`}{" "}
+                      {/* La valeur affichée dépend de la valeur de progress */}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      </Grid>
+    </Grid>
   );
 }
 
