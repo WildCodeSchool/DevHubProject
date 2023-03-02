@@ -200,7 +200,7 @@ function Sidebar() {
             </Typography>
 
             <Item
-              title="Pie Chart"
+              title="Project Progress"
               to="/progress"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}

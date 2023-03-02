@@ -49,7 +49,7 @@ function PieChart() {
       }}
       arcLinkLabelsSkipAngle={10}
       arcLinkLabelsTextOffset={5}
-      arcLinkLabelsTextColor="#333333"
+      arcLinkLabelsTextColor={colors.grey[100]}
       arcLinkLabelsDiagonalLength={15}
       arcLinkLabelsStraightLength={15}
       arcLinkLabelsThickness={2}
