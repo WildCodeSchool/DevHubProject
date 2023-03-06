@@ -14,10 +14,9 @@ function Topbar() {
   const { toggleColorMode } = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2} position="sticky">
+    <Box display="flex" justifyContent="space-between" p={2}>
       {/* SEARCH BAR */}
       <SearchBar />
-
       {/* ICONS */}
       <Box display="flex">
         <IconButton onClick={toggleColorMode}>

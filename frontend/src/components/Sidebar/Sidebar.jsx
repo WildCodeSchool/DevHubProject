@@ -9,7 +9,6 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import user from "../../assets/user.png";
@@ -22,7 +21,7 @@ function Item({ title, to, icon, selected, setSelected }) {
     <MenuItem
       active={selected === title}
       style={{
-        color: colors.grey[100],
+        color: colors.secondary[500],
       }}
       onClick={() => setSelected(title)}
       icon={icon}
@@ -51,7 +50,7 @@ function Sidebar() {
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-          background: `${colors.primary[400]} !important`,
+          background: `${colors.primary[500]} !important`,
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -75,7 +74,7 @@ function Sidebar() {
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",
-              color: colors.grey[100],
+              color: colors.secondary[500],
             }}
           >
             {!isCollapsed && (
@@ -85,7 +84,7 @@ function Sidebar() {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.grey[100]}>
+                <Typography variant="h3" color={colors.secondary[500]}>
                   DevHub Project
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -110,13 +109,13 @@ function Sidebar() {
               <Box textAlign="center">
                 <Typography
                   variant="h2"
-                  color={colors.grey[100]}
+                  color={colors.secondary[400]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
                   User Name
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" color={colors.secondary[300]}>
                   User Role
                 </Typography>
               </Box>
@@ -147,13 +146,7 @@ function Sidebar() {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Roadmap"
-              to="/roadmap"
-              icon={<AssignmentOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
             <Item
               title="Calendar"
               to="/calendar"
@@ -176,13 +169,7 @@ function Sidebar() {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Join Project"
-              to="/join-project"
-              icon={<AddCircleOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
             <Item
               title="Contact Us"
               to="/contact"
