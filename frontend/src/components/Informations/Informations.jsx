@@ -127,7 +127,7 @@ function Informations({
             label="Biography"
             value={biography}
             multiline
-            rows={8}
+            rows={6}
             fullWidth
             disabled
           />

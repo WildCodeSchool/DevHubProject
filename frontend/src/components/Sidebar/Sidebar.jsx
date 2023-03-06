@@ -67,7 +67,7 @@ function Sidebar() {
         },
       }}
     >
-      <ProSidebar className="sidebar" collapsed={isCollapsed}>
+      <ProSidebar className="sidebar" collapsed={isCollapsed} position="fixed">
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -200,8 +200,8 @@ function Sidebar() {
             </Typography>
 
             <Item
-              title="Pie Chart"
-              to="/pie"
+              title="Project Progress"
+              to="/progress"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

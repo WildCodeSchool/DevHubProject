@@ -1,8 +1,15 @@
+import { Box } from "@mui/material";
+import Header from "../../components/Header/Header";
+import PieChart from "../../components/PieChart/PieChart";
+
 function Progress() {
   return (
-    <div>
-      <h1>Progress</h1>
-    </div>
+    <Box m="20px">
+      <Header title="PieChart" subtitle="Simple Pie Chart" />
+      <Box height="75vh">
+        <PieChart />
+      </Box>
+    </Box>
   );
 }
 
