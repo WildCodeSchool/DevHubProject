@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     aligncontent: "center",
     justifycontent: "space-around",
     width: "50%",
-    height: "12em",
+    height: "20em",
   },
   title: {
     fontSize: 14,
@@ -29,24 +29,40 @@ const useStyles = makeStyles(() => ({
     textDecoration: "line-through",
   },
 }));
-function Task({ name, startDate, endDate, user, onDelete, completed }) {
+function Task({ task, onDelete }) {
   const classes = useStyles();
   return (
     <Card>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          {name}
+      <CardContent sx={{ maxWidth: "30em" }}>
+        <Typography variant="h5" component="h4">
+          {task.name}
+        </Typography>
+        <Typography
+          variant="h6"
+          component="h3"
+          maxwidth="120"
+          multiline
+          maxRows={4}
+        >
+          {task.description}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Début : {startDate} - Fin : {endDate} - Utilisateur : {user}
+          Début : {task.startDate} - Fin : {task.endDate} - Utilisateur :{" "}
+          {task.user}
+        </Typography>
+        <Typography variant="h6" component="h4">
+          {task.type}
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="small" onClick={onDelete}>
           Supprimer
         </Button>
-        <Button size="small" className={completed ? classes.completed : ""}>
-          {completed ? "Terminé" : "En cours"}
+        <Button
+          size="small"
+          className={task.completed ? classes.completed : ""}
+        >
+          {task.completed ? "Terminé" : "En cours"}
         </Button>
       </CardActions>
     </Card>
@@ -54,8 +70,10 @@ function Task({ name, startDate, endDate, user, onDelete, completed }) {
 }
 Task.propTypes = {
   name: PropTypes.string.isRequired,
-  startDate: PropTypes.instanceOf(Date).isRequired,
-  endDate: PropTypes.instanceOf(Date).isRequired,
+  description: PropTypes.string.isRequired,
+  startDate: PropTypes.string.isRequired,
+  endDate: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
   completed: PropTypes.string.isRequired,
 };

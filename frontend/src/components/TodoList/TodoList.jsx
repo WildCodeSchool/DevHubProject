@@ -34,8 +34,10 @@ function ToDoList() {
   const classes = useStyles();
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [taskType, setTaskType] = useState("");
   const [user, setUser] = useState("");
 
   const handleAddTask = () => {
@@ -43,15 +45,19 @@ function ToDoList() {
       ...tasks,
       {
         name: taskName,
+        description: taskDescription,
         startDate,
         endDate,
+        type: taskType,
         user,
         completed: false,
       },
     ]);
     setTaskName("");
+    setTaskDescription("");
     setStartDate("");
     setEndDate("");
+    setTaskType("");
     setUser("");
   };
   const handleDeleteTask = (index) => {
@@ -59,6 +65,7 @@ function ToDoList() {
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
+
   return (
     <>
       <Stack className={classes.root}>
@@ -71,12 +78,21 @@ function ToDoList() {
           wrap="nowrap"
           justifycontent="space-between"
         >
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={3}>
             <TextField
               id="taskName"
-              label="Nom de la tâche"
+              label="Task name"
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="taskDescription"
+              label="Describe your Task"
+              value={taskDescription}
+              inputProps={{ maxLength: 100 }}
+              onChange={(e) => setTaskDescription(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -103,7 +119,26 @@ function ToDoList() {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="taskType"
+              label="Enter Task Type"
+              value={taskType}
+              InputProps={{
+                sx: {
+                  "& input": {
+                    id: "outlined-multiline-flexible",
+                    textAlign: "center",
+                    height: "8em",
+                    margin: "0.5em",
+                  },
+                },
+              }}
+              maxRows={5}
+              onChange={(e) => setTaskType(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
             <FormControl className={classes.formControl}>
               <InputLabel id="user-label">Utilisateur</InputLabel>
               <Select
@@ -118,13 +153,20 @@ function ToDoList() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={3}>
             <Button
               variant="contained"
               backgroundColor="yellow"
               className={classes.button}
               onClick={handleAddTask}
-              disabled={!taskName || !startDate || !endDate || !user}
+              disabled={
+                !taskName ||
+                !taskDescription ||
+                !startDate ||
+                !endDate ||
+                !taskType ||
+                !user
+              }
             >
               Ajouter
             </Button>

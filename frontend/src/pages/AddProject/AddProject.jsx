@@ -1,4 +1,4 @@
-// import React, { useState } from "react";
+import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 // import Input from "@mui/material/Input";
@@ -13,6 +13,8 @@ import Header from "../../components/Header/Header";
 function AddProject() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   return (
     <Box m="20">
@@ -21,23 +23,46 @@ function AddProject() {
         <Box
           p={1}
           display="flex"
-          justifyContent="space-between"
+          justifyContent="center"
           backgroundColor={colors.primary[300]}
           width="100%"
           height="5em"
         >
           <TextField
-            label="Select Project Manager"
-            size="normal"
-            color="primary"
-            helperText="Please select the Project Manager"
+            required
+            id="outlined-required"
+            label="Project Manager"
+            defaultValue="Project Manager"
+            helperText="Enter Project Manager"
           />
-
           <TextField
-            label="Select Project Title"
-            size="normal"
-            color="primary"
-            helperText="Please select the Project Title"
+            required
+            id="outlined-required"
+            label="Project Name"
+            defaultValue="Project Name"
+            helperText="Enter Project Name"
+          />
+          <TextField
+            id="outlined-required"
+            label="Start Date"
+            type="date"
+            defaultValue={startDate}
+            helperText="Select Start Date"
+            onBlur={(e) => setStartDate(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            id="outlined-required"
+            label="End Date"
+            type="date"
+            defaultValue={endDate}
+            helperText="Select End Date"
+            onBlur={(e) => setEndDate(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </Box>
         <Box
