@@ -3,15 +3,22 @@ import { Box, Grid, Typography } from "@mui/material";
 import { amber, blue, green, red } from "@mui/material/colors";
 
 const projects = [
-  { name: "Projet A", description: "Fatigue", progress: 60 },
+  { id: 1, name: "Projet A", description: "Fatigue", progress: 60 },
   {
+    id: 2,
     name: "Dev Hub Connect",
     description: "Fanny et fred G ne font rien",
     progress: 20,
   },
-  { name: "Dev Hub Project", description: "Au top les poulets", progress: 100 },
-  { name: "Projet D", description: "Bienveillance", progress: 45 },
   {
+    id: 3,
+    name: "Dev Hub Project",
+    description: "Au top les poulets",
+    progress: 100,
+  },
+  { id: 4, name: "Projet D", description: "Bienveillance", progress: 45 },
+  {
+    id: 5,
     name: "Dev Hub Share",
     description: "Heureusement les filles sont là",
     progress: 75,
@@ -37,7 +44,10 @@ function ProjectsList() {
       <Grid item xs={12} md={6}>
         <Box sx={{ mt: 3 }}>
           {projects.map((project) => (
-            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+            <Box
+              key={project.id}
+              sx={{ display: "flex", alignItems: "center", mb: 2 }}
+            >
               <Box sx={{ width: "100%", mr: 1 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                   {project.name}
@@ -67,7 +77,7 @@ function ProjectsList() {
                       }}
                     />
                   </Box>
-                  <Box sx={{ ml: 1, Width: 70 }}>
+                  <Box sx={{ ml: 1, width: 70 }}>
                     <Typography
                       variant="body2"
                       sx={{

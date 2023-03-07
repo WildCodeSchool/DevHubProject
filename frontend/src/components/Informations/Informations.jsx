@@ -4,8 +4,8 @@ import { Grid, Paper, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2.5),
-    marginBottom: theme.spacing(2),
+    padding: theme.spacing(1.5),
+    marginBottom: theme.spacing(1),
   },
   field: {
     marginTop: theme.spacing(1),
@@ -13,19 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Informations({
-  firstName,
-  lastName,
-  gender,
-  phoneNumber,
-  city,
-  country,
-  nationality,
-  email,
-  website,
-  githubPage,
-  biography,
-}) {
+function Informations(props) {
+  const { firstName, lastName, phone, city, email, githubPage, biography } =
+    props;
+
   const classes = useStyles();
 
   return (
@@ -52,17 +43,8 @@ function Informations({
         <Grid item xs={12} md={6}>
           <TextField
             className={classes.field}
-            label="Gender"
-            value={gender}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
             label="Phone Number"
-            value={phoneNumber}
+            value={phone}
             fullWidth
             disabled
           />
@@ -79,35 +61,8 @@ function Informations({
         <Grid item xs={12} md={6}>
           <TextField
             className={classes.field}
-            label="Country"
-            value={country}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
-            label="Nationality"
-            value={nationality}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
             label="Email"
             value={email}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
-            label="Website"
-            value={website}
             fullWidth
             disabled
           />
@@ -127,7 +82,7 @@ function Informations({
             label="Biography"
             value={biography}
             multiline
-            rows={6}
+            minRows={6}
             fullWidth
             disabled
           />
