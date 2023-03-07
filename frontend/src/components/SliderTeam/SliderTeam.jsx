@@ -1,15 +1,30 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Slider from "react-slick";
-import Team from "../../data/userData";
+import axios from "axios";
+// import Team from "../../data/userData";
 import UserCard from "../UserCard/UserCard";
 
 function SliderTeam() {
+  const [users, setUsers] = useState([]);
+
+  const getUser = () => {
+    axios
+      .get("http://localhost:5000/users")
+      .then((response) => response.data)
+      .then((data) => {
+        setUsers(data);
+      });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     centerMode: true,
     centerPadding: "50px",
     variableWidth: false,
@@ -43,15 +58,14 @@ function SliderTeam() {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Slider {...settings}>
-      {Team.map((user, index) => {
+      {users.map((user) => {
         return (
           <UserCard
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
+            key={user.id}
             firstname={user.firstname}
             lastname={user.lastname}
             email={user.email}
-            user_image={user.userImage}
+            user_image={user.user_image}
             role={user.role}
           />
         );
