@@ -34,14 +34,14 @@ function Calendar() {
               <ListItem
                 Key={event.id}
                 sx={{
-                  backgroundColor: colors.secondary[500],
+                  backgroundColor: colors.greenAccent[500],
                   margin: "10x 0",
                   borderRadius: "2px",
                 }}
               >
                 <ListItemText
                   primary={event.title}
-                  secondary={
+                  greenAccent={
                     <Typography>
                       {formatDate(event.start, {
                         year: "numeric",

@@ -41,7 +41,7 @@ function UserCard(props) {
               <Typography gutterBottom variant="h3" component="div">
                 {`${firstname} ${lastname}`}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.greenAccent">
                 {email}
               </Typography>
               <Typography gutterBottom variant="h5" component="div">

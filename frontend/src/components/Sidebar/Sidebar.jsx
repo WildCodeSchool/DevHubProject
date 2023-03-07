@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import user from "../../assets/user.png";
+import UserCard from "../UserCard/UserCard";
 import { tokens } from "../../theme";
+// import user from "../../assets/user.png";
 
 function Item({ title, to, icon, selected, setSelected }) {
   const theme = useTheme();
@@ -21,7 +23,7 @@ function Item({ title, to, icon, selected, setSelected }) {
     <MenuItem
       active={selected === title}
       style={{
-        color: colors.secondary[500],
+        color: colors.grey[100],
       }}
       onClick={() => setSelected(title)}
       icon={icon}
@@ -45,12 +47,26 @@ function Sidebar() {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [currentUser, setCurrentUser] = useState({});
+  const { id } = useParams();
+
+  const getUser = () => {
+    axios
+      .get(`http://localhost:5000/users/${id}`)
+      .then((response) => response.data)
+      .then((data) => {
+        setCurrentUser(data);
+      });
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-          background: `${colors.primary[500]} !important`,
+          background: `${colors.primary[400]} !important`,
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -66,7 +82,7 @@ function Sidebar() {
         },
       }}
     >
-      <ProSidebar className="sidebar" collapsed={isCollapsed} position="fixed">
+      <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -74,7 +90,7 @@ function Sidebar() {
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",
-              color: colors.secondary[500],
+              color: colors.grey[100],
             }}
           >
             {!isCollapsed && (
@@ -84,7 +100,7 @@ function Sidebar() {
                 alignItems="center"
                 ml="15px"
               >
-                <Typography variant="h3" color={colors.secondary[500]}>
+                <Typography variant="h4" color={colors.grey[100]}>
                   DevHub Project
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -98,31 +114,29 @@ function Sidebar() {
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={user}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
+                <Box key={currentUser.id} user_image={currentUser.user_image} />
               </Box>
               <Box textAlign="center">
                 <Typography
                   variant="h2"
-                  color={colors.secondary[400]}
+                  color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  User Name
+                  <UserCard
+                    key={currentUser.id}
+                    firstname={currentUser.firstname}
+                    lastname={currentUser.lastname}
+                  />
                 </Typography>
-                <Typography variant="h5" color={colors.secondary[300]}>
-                  User Role
+                <Typography variant="h5" color={colors.greenAccent[500]}>
+                  <UserCard role={currentUser.role} />
                 </Typography>
               </Box>
             </Box>
           )}
-
           {/* MENU ITEMS  */}
+
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
@@ -140,17 +154,16 @@ function Sidebar() {
               Data
             </Typography>
             <Item
-              title="MailBox"
+              title="Mailbox"
               to="/mailbox"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<MailOutlineIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
             <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
+              title="Contacts "
+              to="/contact"
+              icon={<AlternateEmailOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -169,11 +182,10 @@ function Sidebar() {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Item
-              title="Contact Us"
-              to="/contact"
-              icon={<ContactsOutlinedIcon />}
+              title="Calendar"
+              to="/calendar"
+              icon={<CalendarTodayOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -185,7 +197,6 @@ function Sidebar() {
             >
               Charts
             </Typography>
-
             <Item
               title="Project Progress"
               to="/progress"

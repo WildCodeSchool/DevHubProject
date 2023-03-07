@@ -42,7 +42,7 @@ function ProjectsList() {
                 <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                   {project.name}
                 </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography variant="body2" sx={{ color: "text.greenAccent" }}>
                   {project.description}
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>

@@ -14,11 +14,11 @@ function Topbar() {
   const { toggleColorMode } = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
+    <Box display="flex" justifyContent="space-between" p={2} sx={{ border: 1 }}>
       {/* SEARCH BAR */}
       <SearchBar />
       {/* ICONS */}
-      <Box display="flex">
+      <Box display="flex" sx={{ border: 1 }}>
         <IconButton onClick={toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
