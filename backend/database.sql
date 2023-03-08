@@ -10,7 +10,7 @@ CREATE TABLE
         firstname VARCHAR(60) NOT NULL,
         lastname VARCHAR(60) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
-        phone VARCHAR(10) UNIQUE,
+        phone VARCHAR(10) UNIQUE,        
         user_image BLOB,
         biography VARCHAR(255),
         hashedPassword VARCHAR(255),
@@ -107,6 +107,7 @@ CREATE TABLE
 USE dbdevhubproject;
 
 -- Query to feed sql data in USER table
+
 
 INSERT INTO
     user (
@@ -322,6 +323,25 @@ VALUES (
         'Montpellier'
     );
 
+ALTER TABLE user
+ADD user_role VARCHAR(50);
+
+UPDATE user SET user_role = 'Développeur full-stack'
+ WHERE user_role IS NULL;
+
+UPDATE user SET user_role = 'Développeur front-end'
+ WHERE id IN ('3','5','17','19');
+
+UPDATE user SET user_role = 'Développeur back-end'
+ WHERE id IN ('4','6','12','18');
+
+UPDATE user SET user_role = 'Gestionnaire de projets'
+ WHERE id IN ('1','8','13','20');
+
+UPDATE user SET user_role = 'Designer UI/UX'
+ WHERE id IN ('9','14','16');
+
+
 -- Query to feed sql data in project table
 
 INSERT INTO
@@ -415,6 +435,36 @@ VALUES (
         0,
         'Olivia Parker'
     );
+
+UPDATE project SET name = 'Bookworm'
+ WHERE name = ('Project A');
+
+UPDATE project SET name = 'EatWell'
+ WHERE name = ('Project B');
+
+UPDATE project SET name = 'Greenify'
+ WHERE name = ('Project C');
+
+UPDATE project SET name = 'Mindful'
+ WHERE name = ('Project D');
+
+UPDATE project SET name = 'RecycleNow'
+ WHERE name = ('Project E');
+
+UPDATE project SET name = 'TalkTogether'
+ WHERE name = ('Project F');
+
+UPDATE project SET name = 'TimeTrack'
+ WHERE name = ('Project G');
+
+UPDATE project SET name = 'FitBuddy'
+ WHERE name = ('Project H');
+
+UPDATE project SET name = 'Wanderlust'
+ WHERE name = ('Project I');
+
+UPDATE project SET name = 'YumYum'
+ WHERE name = ('Project J');
 
 -- Query to feed sql data in task table
 
@@ -754,6 +804,36 @@ VALUES (
         "IT Development",
         20
     );
+UPDATE task SET name = 'Élaboration du cahier des charges'
+WHERE name IN ('Task 1', 'Task 7','Task 13', 'Task 19','Task 25', 'Task 31');
+UPDATE task SET type = 'Planification'
+WHERE name = 'Élaboration du cahier des charges';
+
+UPDATE task SET name = 'Évaluation des ressources nécessaires'
+WHERE name IN ('Task 2', 'Task 8','Task 14', 'Task 20','Task 26', 'Task 32');
+UPDATE task SET type = 'Gestion'
+WHERE name = 'Évaluation des ressources nécessaires';
+
+UPDATE task SET name = 'Gestion des modifications du projet'
+WHERE name IN ('Task 3', 'Task 9','Task 15', 'Task 21','Task 27', 'Task 33');
+UPDATE task SET type = 'Front-end'
+WHERE name = 'Gestion des modifications du projet';
+
+UPDATE task SET name = 'Planification de la maintenance du projet'
+WHERE name IN ('Task 4', 'Task 10','Task 16', 'Task 22','Task 28', 'Task 34');
+UPDATE task SET type = 'Back-end'
+WHERE name = 'Planification de la maintenance du projet';
+
+UPDATE task SET name = 'Gestion des versions des livrables'
+WHERE name IN ('Task 5', 'Task 11','Task 17', 'Task 23','Task 29', 'Task 35');
+UPDATE task SET type = 'UX design'
+WHERE name = 'Gestion des versions des livrables';
+
+UPDATE task SET name = 'Retour interface utilisateur'
+WHERE name IN ('Task 6', 'Task 12','Task 18', 'Task 24','Task 30', 'Task 36');
+UPDATE task SET type = 'UI design'
+WHERE name = 'Retour interface utilisateur';
+
 
 -- Query to feed sql data in user_project table
 

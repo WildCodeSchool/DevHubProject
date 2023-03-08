@@ -94,7 +94,7 @@ function AddProject() {
             flex-direction="column"
             justify-content="center"
             align-items="center"
-            backgroundColor={colors.primary[100]}
+            backgroundColor={colors.grey[100]}
           >
             <TextField
               InputProps={{
