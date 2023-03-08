@@ -47,7 +47,7 @@ function Task({ task, onDelete }) {
           {task.description}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Début : {task.startDate} - Fin : {task.endDate} - Utilisateur :{" "}
+          Début : {task.startDate} - Fin : {task.endDate}- Utilisateur :
           {task.user}
         </Typography>
         <Typography variant="h6" component="h4">
@@ -74,6 +74,7 @@ Task.propTypes = {
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
   completed: PropTypes.string.isRequired,
 };

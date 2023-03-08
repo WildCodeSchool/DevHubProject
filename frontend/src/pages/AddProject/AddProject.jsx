@@ -24,7 +24,7 @@ function AddProject() {
           p={1}
           display="flex"
           justifyContent="center"
-          backgroundColor={colors.primary[300]}
+          backgroundColor="#0088CE"
           width="100%"
           height="5em"
         >
@@ -69,7 +69,7 @@ function AddProject() {
           p={1}
           display="flex"
           justifyContent="space-between"
-          backgroundColor={colors.primary[300]}
+          backgroundColor="#0088CE"
           width="100%"
           height="2em"
         />
@@ -112,120 +112,10 @@ function AddProject() {
             />
           </Box>
         </Box>
-        {/* <Box  
-                display="flex"
-                justifyContent="center"
-                component="div"               
-                width="100%"
-                height="6em"
-                backgroundColor={colors.greenAccent[500]}>
-                <TextField 
-                    helperText=" Please Select Task Type" 
-                    label='Task' 
-                    width="5em" 
-                    select >
-                  <MenuItem value="Front">Frontend</MenuItem>
-                  <MenuItem value="Back">Backend</MenuItem>
-                  <MenuItem value="Design">Design</MenuItem>
-                  <MenuItem value="Wireframe">Wireframe</MenuItem>
-                </TextField>
-                <TextField
-                    label="Start Date"            
-                    size="normal"
-                    color='primary'
-                    helperText="Please Select Start Date">
-                </TextField>
-                <TextField
-                    label="End Date"            
-                    size="normal"
-                    color='primary'
-                    helperText="Please Select End Date">
-                </TextField>
-                <TextField 
-                    helperText="Please Select Team User" 
-                    label='User' 
-                    select >
-                  <MenuItem value="Cri">Christophe</MenuItem>
-                  <MenuItem value="Roro">Roland</MenuItem>
-                  <MenuItem value="Pulp">Pulpy</MenuItem>
-                </TextField>
-              </Box> */}
-
-        {/* <TableContainer component={Paper}
-                height="8em">
-                <Table aria-label="simple table" >                
-                  <TableHead>
-                    <TableRow sx={{
-                      backgroundColor: "yellow",
-                      borderBottom: "1px solid black",
-                      "& th": {
-                      fontSize: "1rem",
-                      color: "rgba(96, 96, 96)"
-                      }
-                      }}>
-                      <TableCell>Id</TableCell>
-                      <TableCell>Tasks</TableCell>
-                      <TableCell>Start date</TableCell>
-                      <TableCell>End date</TableCell>
-                      <TableCell>Users</TableCell>                      
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {tableData.map((row) => (
-                    <TableRow 
-                      key={row.id}
-                      sx={{'&:last-child td, &:last-child th': {border:0}}}>
-                      <TableCell sx={{backgroundColor: "blue"}}>{row.id}</TableCell>
-                      <TableCell sx={{backgroundColor: "grey"}}>{row.task}</TableCell>
-                      <TableCell sx={{backgroundColor: "grey"}}>{row.start}</TableCell>
-                      <TableCell sx={{backgroundColor: "grey"}}>{row.end}</TableCell>
-                      <TableCell sx={{backgroundColor: "grey"}}>{row.user}</TableCell>                      
-                    </TableRow>))}
-                  </TableBody>
-                </Table>
-              </TableContainer> 
-      </Box> */}
       </Box>
       <ToDoList />
     </Box>
   );
 }
-// const tableData = [
-//   {
-//     id: 1,
-//     task: "Task 1",
-//     start: "2023-02-01",
-//     end: "2023-02-08",
-//     user: "bob",
-//   },
-//   {
-//     id: 2,
-//     task: "Task 2",
-//     start: "2023-02-01",
-//     end: "2023-02-08",
-//     user: "bobboy",
-//   },
-//   {
-//     id: 3,
-//     task: "Task 3",
-//     start: "2023-05-03",
-//     end: "2023-02-08",
-//     user: "bobbyby",
-//   },
-//   {
-//     id: 4,
-//     task: "Task 4",
-//     start: "2023-02-01",
-//     end: "2023-02-08",
-//     user: "bobus",
-//   },
-//   {
-//     id: 5,
-//     task: "Task 5",
-//     start: "2023-02-01",
-//     end: "2023-02-08",
-//     user: "bobabbba",
-//   },
-// ];
 
 export default AddProject;

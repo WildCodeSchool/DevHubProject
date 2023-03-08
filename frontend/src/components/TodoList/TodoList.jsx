@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  TextField,
-  Button,
-  // FormControl,
-  // InputLabel,
-  // Select,
-  MenuItem,
-  Grid,
-} from "@material-ui/core";
+import { TextField, Button, MenuItem, Grid, Select } from "@material-ui/core";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SendIcon from "@mui/icons-material/Send";
 import { Stack } from "@mui/material";
 import axios from "axios";
 import Task from "../Task/Task";
@@ -28,7 +22,15 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
-    backgroundColor: "yellow",
+    backgroundColor: "#FFA300",
+  },
+  buttonCreate: {
+    margin: theme.spacing(1),
+    backgroundColor: "#FFB612",
+  },
+  buttonDelete: {
+    margin: theme.spacing(1),
+    backgroundColor: "#E05206",
   },
 }));
 function ToDoList() {
@@ -39,6 +41,7 @@ function ToDoList() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [taskType, setTaskType] = useState("");
+  const [taskUser, setTaskUser] = useState("");
   const [user, setUser] = useState([]);
 
   useEffect(() => {
@@ -59,7 +62,7 @@ function ToDoList() {
         startDate,
         endDate,
         type: taskType,
-        user,
+        user: taskUser,
         completed: false,
       },
     ]);
@@ -68,7 +71,7 @@ function ToDoList() {
     setStartDate("");
     setEndDate("");
     setTaskType("");
-    setUser("");
+    setTaskUser("");
   };
   const handleDeleteTask = (index) => {
     const newTasks = [...tasks];
@@ -83,7 +86,6 @@ function ToDoList() {
           container
           m={4}
           spacing={2}
-          backgroundcolor="grey"
           alignItems="center"
           wrap="nowrap"
           justifycontent="space-between"
@@ -149,28 +151,33 @@ function ToDoList() {
             />
           </Grid>
           <Grid item xs={12} sm={3}>
-            <TextField
+            <Select
               label="Select user"
-              select
-              id="user"
-              value={user}
               fullWidth
-              SelectProps={{ multiple: true }}
+              value={taskUser}
+              onChange={(e) => setTaskUser(e.target.value)}
+              sx={{
+                marginTop: 35,
+                width: 250,
+                height: 50,
+              }}
             >
               {user.map((users) => {
                 return (
-                  <MenuItem value={`${users.firstname} ${users.lastname}`}>
+                  <MenuItem
+                    key={user.id}
+                    value={`${users.firstname} ${users.lastname}`}
+                  >
                     {`${users.firstname} ${users.lastname}`}
                   </MenuItem>
                 );
               })}
-              ;
-            </TextField>
+            </Select>
           </Grid>
           <Grid item xs={12} sm={3}>
             <Button
               variant="contained"
-              backgroundColor="yellow"
+              backgroundColor="#82BE00"
               className={classes.button}
               onClick={handleAddTask}
               disabled={
@@ -179,7 +186,7 @@ function ToDoList() {
                 !startDate ||
                 !endDate ||
                 !taskType ||
-                !user
+                !taskUser
               }
             >
               Ajouter
@@ -200,6 +207,32 @@ function ToDoList() {
             onDelete={() => handleDeleteTask(index)}
           />
         ))}
+      </Stack>
+      <Stack
+        direction="row"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        spacing={2}
+      >
+        <Button
+          variant="outlined"
+          className={classes.buttonDelete}
+          backgroundColor="red"
+          startIcon={<DeleteIcon />}
+        >
+          Delete
+        </Button>
+        <Button
+          variant="outlined"
+          className={classes.buttonCreate}
+          backgroundColor="yellow"
+          endIcon={<SendIcon />}
+        >
+          Create
+        </Button>
       </Stack>
     </>
   );
