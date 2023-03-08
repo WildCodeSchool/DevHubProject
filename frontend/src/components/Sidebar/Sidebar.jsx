@@ -12,9 +12,8 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import UserCard from "../UserCard/UserCard";
 import { tokens } from "../../theme";
-// import user from "../../assets/user.png";
+import defaultUserImage from "../../assets/user.png";
 
 function Item({ title, to, icon, selected, setSelected }) {
   const theme = useTheme();
@@ -114,7 +113,21 @@ function Sidebar() {
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <Box key={currentUser.id} user_image={currentUser.user_image} />
+                <Box key={currentUser.id}>
+                  {currentUser.user_image ? (
+                    <img
+                      style={{ width: "150px" }}
+                      src={currentUser.user_image}
+                      alt="user"
+                    />
+                  ) : (
+                    <img
+                      style={{ width: "150px" }}
+                      src={defaultUserImage}
+                      alt="default user"
+                    />
+                  )}
+                </Box>
               </Box>
               <Box textAlign="center">
                 <Typography
@@ -123,14 +136,13 @@ function Sidebar() {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  <UserCard
-                    key={currentUser.id}
-                    firstname={currentUser.firstname}
-                    lastname={currentUser.lastname}
-                  />
+                  <Box key={currentUser.id}>
+                    {currentUser.firstname}
+                    {currentUser.lastname}
+                  </Box>
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  <UserCard role={currentUser.role} />
+                  <Box key={currentUser.id}>Role{currentUser.role}</Box>
                 </Typography>
               </Box>
             </Box>
