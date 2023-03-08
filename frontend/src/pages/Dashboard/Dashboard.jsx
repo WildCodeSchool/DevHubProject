@@ -58,45 +58,55 @@ function Dashboard() {
           <SelectProject />
         </Box>
       </Grid>
+
       <Grid
         display="flex "
         justifyContent="flexStart"
         flexDirection="column"
         item
         xs={5}
-        sx={{ border: 1 }}
+        sx={{ border: 1, p: "1em" }}
       >
-        <Box
+        <Grid
+          xs={12}
           display="flex"
-          justifyContent="space-evenly"
+          justifyContent="space-between"
           alignItems="center"
           sx={{
-            border: 1,
             height: "50px",
             borderRadius: "5px",
             width: "100%",
+            marginBottom: "1em",
           }}
         >
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Typography
-              variant="h4"
-              color={colors.grey[100]}
-              fontWeight="bold"
-              letterSpacing="0.15em"
-              sx={{
-                border: 1,
-                borderRadius: "5px",
-
-                padding: "0.4em",
-              }}
-            >
-              Selected Team
-            </Typography>
-            <Box sx={{ width: "250px", border: 1, borderRadius: "5px" }}>
+          <Grid
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+          >
+            <Box>
+              <Typography
+                variant="h4"
+                color={colors.grey[100]}
+                fontWeight="bold"
+                letterSpacing="0.15em"
+                textAlign="center"
+                sx={{
+                  border: 1,
+                  borderRadius: "5px",
+                  padding: "0.4em",
+                  width: "300px",
+                }}
+              >
+                Selected Team
+              </Typography>
+            </Box>
+            <Box sx={{ border: 1, borderRadius: "5px" }}>
               <SelectRole />
             </Box>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
         <Box sx={{ border: 1, padding: "1em" }}>
           <SliderTeam />
         </Box>
@@ -131,7 +141,7 @@ function Dashboard() {
             <ProjectsList />
           </Box>
         </Box>
-        <Box sx={{ m: "10px" }}>
+        <Box sx={{ mt: "10px", border: 1 }}>
           <SearchBar handleSearchNote={setSearchText} />
           <Box display="flex" justifyContent="space-between">
             <Box
