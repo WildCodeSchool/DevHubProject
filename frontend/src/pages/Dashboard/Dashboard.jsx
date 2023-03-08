@@ -115,7 +115,7 @@ function Dashboard() {
               }}
             >
               <Typography variant="h5" color={colors.primary[500]}>
-                Vos notes
+                Your notes
               </Typography>
             </Box>
             <AddNote handleAddNote={addNote} />
@@ -143,13 +143,19 @@ function Dashboard() {
         display="flex"
         justifyContent="flexStart"
         flexDirection="column"
+        alignItems="center"
         sx={{ border: 1 }}
       >
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
-          sx={{ borderBottom: 1, height: "100px", width: "100%" }}
+          sx={{
+            borderBottom: 1,
+            height: "100px",
+            width: "100%",
+            padding: "10px",
+          }}
         >
           <Box
             display="flex"
@@ -160,6 +166,7 @@ function Dashboard() {
               border: 1,
               height: "50px",
               borderRadius: "5px",
+              padding: "10px",
             }}
           >
             <Typography
@@ -176,18 +183,51 @@ function Dashboard() {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          sx={{ borderBottom: 1, paddingBottom: "10px" }}
+          sx={{ borderBottom: 1, paddingBottom: "10px", width: "100%" }}
         >
           <PieChart />
         </Box>
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            border: 1,
+            height: "50px",
+            borderRadius: "5px",
+            width: "90%",
+            marginTop: "10px",
+            padding: "10px",
+          }}
+        >
           <Typography
             variant="h4"
             color={colors.grey[100]}
             fontWeight="bold"
             letterSpacing="0.15em"
           >
-            TASK LIST
+            Project Task List
+          </Typography>
+        </Box>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            border: 1,
+            height: "100%",
+            borderRadius: "5px",
+            width: "90%",
+            marginTop: "10px",
+          }}
+        >
+          <Typography
+            variant="h4"
+            color={colors.grey[100]}
+            fontWeight="bold"
+            letterSpacing="0.15em"
+          >
+            TASK LIST COMPONENT
           </Typography>
         </Box>
       </Grid>
