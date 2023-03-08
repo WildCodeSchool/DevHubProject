@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   TextField,
   Button,
-  FormControl,
-  InputLabel,
-  Select,
+  // FormControl,
+  // InputLabel,
+  // Select,
   MenuItem,
   Grid,
 } from "@material-ui/core";
 import { Stack } from "@mui/material";
+import axios from "axios";
 import Task from "../Task/Task";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +39,16 @@ function ToDoList() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [taskType, setTaskType] = useState("");
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/users")
+      .then((response) => response.data)
+      .then((data) => {
+        setUser(data);
+      });
+  }, []);
 
   const handleAddTask = () => {
     setTasks([
@@ -139,19 +149,23 @@ function ToDoList() {
             />
           </Grid>
           <Grid item xs={12} sm={3}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="user-label">Utilisateur</InputLabel>
-              <Select
-                labelId="user-label"
-                id="user"
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
-              >
-                <MenuItem value="Alice">Alice</MenuItem>
-                <MenuItem value="Bob">Bob</MenuItem>
-                <MenuItem value="Charlie">Charlie</MenuItem>
-              </Select>
-            </FormControl>
+            <TextField
+              label="Select user"
+              select
+              id="user"
+              value={user}
+              fullWidth
+              SelectProps={{ multiple: true }}
+            >
+              {user.map((users) => {
+                return (
+                  <MenuItem value={`${users.firstname} ${users.lastname}`}>
+                    {`${users.firstname} ${users.lastname}`}
+                  </MenuItem>
+                );
+              })}
+              ;
+            </TextField>
           </Grid>
           <Grid item xs={12} sm={3}>
             <Button
@@ -190,4 +204,5 @@ function ToDoList() {
     </>
   );
 }
+
 export default ToDoList;
