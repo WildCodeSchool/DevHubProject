@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
@@ -48,16 +48,16 @@ function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [currentUser, setCurrentUser] = useState({});
-  const { id } = useParams();
 
   const getUser = () => {
     axios
-      .get(`http://localhost:5000/users/${id}`)
+      .get(`http://localhost:5000/users/1`)
       .then((response) => response.data)
       .then((data) => {
         setCurrentUser(data);
       });
   };
+
   useEffect(() => {
     getUser();
   }, []);

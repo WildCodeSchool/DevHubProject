@@ -10,13 +10,17 @@ import {
 import defaultUserImage from "../../assets/user.png";
 
 function UserCard(props) {
-  const { firstname, lastname, email, userImage, role } = props;
+  const { firstname, lastname, email, role, userImage } = props;
   const userDefautImage = userImage || defaultUserImage;
 
   return (
-    <Box display="flex" justify-content="center" sx={{ width: "200px" }}>
+    <Box
+      display="flex"
+      justify-content="center"
+      sx={{ width: "200px", height: "350px" }}
+    >
       <Box>
-        <Card sx={{ height: "200px", width: "200px" }}>
+        <Card sx={{ height: "100%", width: "200px" }}>
           <CardActionArea>
             <Box display="flex" justifyContent="center">
               <CardMedia
@@ -24,9 +28,9 @@ function UserCard(props) {
                   cursor: "pointer",
                   borderRadius: "50%",
                   width: "50%",
+                  height: "50%",
                 }}
                 component="img"
-                height="100"
                 image={userDefautImage}
                 alt={`${firstname} ${lastname}`}
               />

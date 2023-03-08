@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import axios from "axios";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 // import Team from "../../data/userData";
 import UserCard from "../UserCard/UserCard";
 
@@ -20,22 +22,17 @@ function SliderTeam() {
   }, []);
 
   const settings = {
-    dots: true,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
-    slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "50px",
-    variableWidth: false,
+    slidesToScroll: 3,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 3,
           infinite: true,
-          dots: true,
         },
       },
       {

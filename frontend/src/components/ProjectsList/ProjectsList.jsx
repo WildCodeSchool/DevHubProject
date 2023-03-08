@@ -33,7 +33,7 @@ function ProjectsList() {
   };
 
   return (
-    <Grid container spacing={2} justifyContent="center" sx={{ width: "300px" }}>
+    <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
         <Box sx={{ mt: 3 }}>
           {projects.map((project) => (
