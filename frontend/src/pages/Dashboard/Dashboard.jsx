@@ -8,6 +8,7 @@ import AddNote from "../../components/AddNote/AddNote";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import PieChart from "../../components/PieChart/PieChart";
 import SelectProject from "../../components/SelectProject/SelectProject";
+import SelectRole from "../../components/SelectRole/SelectRole";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
 import { tokens } from "../../theme";
 
@@ -65,6 +66,37 @@ function Dashboard() {
         xs={5}
         sx={{ border: 1 }}
       >
+        <Box
+          display="flex"
+          justifyContent="space-evenly"
+          alignItems="center"
+          sx={{
+            border: 1,
+            height: "50px",
+            borderRadius: "5px",
+            width: "100%",
+          }}
+        >
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Typography
+              variant="h4"
+              color={colors.grey[100]}
+              fontWeight="bold"
+              letterSpacing="0.15em"
+              sx={{
+                border: 1,
+                borderRadius: "5px",
+
+                padding: "0.4em",
+              }}
+            >
+              Selected Team
+            </Typography>
+            <Box sx={{ width: "250px", border: 1, borderRadius: "5px" }}>
+              <SelectRole />
+            </Box>
+          </Box>
+        </Box>
         <Box sx={{ border: 1, padding: "1em" }}>
           <SliderTeam />
         </Box>

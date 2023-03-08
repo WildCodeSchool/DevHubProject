@@ -6,10 +6,15 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  useTheme,
 } from "@mui/material";
+import { tokens } from "../../theme";
 import defaultUserImage from "../../assets/user.png";
 
 function UserCard(props) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const { firstname, lastname, email, role, userImage } = props;
   const userDefautImage = userImage || defaultUserImage;
 
@@ -17,10 +22,16 @@ function UserCard(props) {
     <Box
       display="flex"
       justify-content="center"
-      sx={{ width: "200px", height: "350px" }}
+      sx={{ width: "180px", height: "200px" }}
     >
       <Box>
-        <Card sx={{ height: "100%", width: "200px" }}>
+        <Card
+          sx={{
+            height: "200px",
+            width: "100%",
+            background: colors.primary[400],
+          }}
+        >
           <CardActionArea>
             <Box display="flex" justifyContent="center">
               <CardMedia
@@ -42,7 +53,7 @@ function UserCard(props) {
                 alignItems: "center",
               }}
             >
-              <Typography gutterBottom variant="h3" component="div">
+              <Typography gutterBottom variant="h4" component="div">
                 {`${firstname} ${lastname}`}
               </Typography>
               <Typography variant="body2" color="text.greenAccent">
