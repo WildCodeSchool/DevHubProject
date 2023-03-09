@@ -1,9 +1,7 @@
 import React from "react";
 import { Box, useTheme, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-
 import { tokens } from "../../theme";
 
 function Note({ id, noteText, date, handleDeleteNote }) {

@@ -81,7 +81,7 @@ function UserProfile() {
         <Grid item xs={12}>
           <Grid
             container
-            justify="center"
+            justifyContent="center"
             className={classes.sendMessageContainer}
           >
             <SendMessage
