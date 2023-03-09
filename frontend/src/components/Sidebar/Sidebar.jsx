@@ -137,8 +137,8 @@ function Sidebar() {
                   sx={{ m: "10px 0 0 0" }}
                 >
                   <Box key={currentUser.id}>
-                    {currentUser.firstname}
-                    {currentUser.lastname}
+                    {`${currentUser.firstname} 
+                    ${currentUser.lastname}`}
                   </Box>
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>

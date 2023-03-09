@@ -26,12 +26,22 @@ function Dashboard() {
       noteText: "This is my second note!",
       date: "21/04/2021",
     },
+    {
+      id: 3,
+      noteText: "This is my third note!",
+      date: "21/05/2021",
+    },
+    {
+      id: 5,
+      noteText: "This is my second note!",
+      date: "21/02/2023",
+    },
   ]);
 
   const addNote = (text) => {
     const date = new Date();
     const newNote = {
-      id: notes.length + 1,
+      id: 1,
       noteText: text,
       date: date.toLocaleDateString(),
     };
@@ -43,6 +53,7 @@ function Dashboard() {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
   };
+
   const [searchText, setSearchText] = useState("");
   return (
     <Grid container>
