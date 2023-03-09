@@ -152,7 +152,7 @@ function ToDoList() {
           </Grid>
           <Grid item xs={12} sm={3}>
             <Select
-              label="Select user"
+              label="Select"
               fullWidth
               value={taskUser}
               onChange={(e) => setTaskUser(e.target.value)}

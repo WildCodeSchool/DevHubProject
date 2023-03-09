@@ -834,12 +834,18 @@ WHERE name IN ('Task 6', 'Task 12','Task 18', 'Task 24','Task 30', 'Task 36');
 UPDATE task SET type = 'UI design'
 WHERE name = 'Retour interface utilisateur';
 
+UPDATE task SET user_id = '1'
+WHERE user_id = '11';
+
 
 -- Query to feed sql data in user_project table
 
 INSERT INTO
     user_project (user_id, project_id)
 VALUES (11, 1), (12, 2), (13, 3), (14, 4), (15, 5), (16, 6), (17, 7), (18, 8), (19, 9), (20, 10);
+
+UPDATE user_project SET user_id ='1'
+WHERE project_id IN ('1','3','7');
 
 -- Query to feed sql data in task_project table
 
@@ -984,3 +990,16 @@ VALUES (
 INSERT INTO
     recipient (recipient_id, message_id)
 VALUES (11, 1), (12, 2), (13, 3), (14, 4), (15, 5), (16, 6), (17, 7), (18, 8), (19, 9), (20, 10), (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20);
+
+
+INSERT INTO note (id, description, user_id) 
+VALUES 	(1,"Correction de bug : J'ai identifié et corrigé un bug qui empêchait les utilisateurs de se connecter à leur compte.", 1),
+		(2,"Optimisation des performances : J'ai optimisé la vitesse de chargement de la page d'accueil de notre site web en réduisant la taille des images.", 1),
+        (3,"Amélioration de l'interface utilisateur : J'ai mis à jour l'interface utilisateur de notre application mobile pour la rendre plus intuitive et facile à utiliser.", 1),
+        (4,"J'ai développé une nouvelle fonctionnalité qui permet aux utilisateurs de partager des articles sur les réseaux sociaux.", 1),
+        (5,"Intégration d'une API : J'ai intégré une API tierce pour permettre à notre application de se connecter à d'autres services.", 1),
+        (6,"Mise à jour de la base de données : J'ai mis à jour notre base de données pour prendre en charge de nouveaux types de données.", 1),
+        (7,"Correction de vulnérabilité de sécurité : J'ai corrigé une vulnérabilité de sécurité qui aurait pu permettre à des pirates informatiques d'accéder aux données sensibles des utilisateurs.", 1),
+		(8,"Réécriture de code : J'ai réécrit une partie de notre code pour améliorer sa lisibilité et sa maintenabilité.", 1),
+        (9,"Refonte de l'architecture : J'ai repensé l'architecture de notre application pour la rendre plus évolutive et plus facile à déployer.", 1),
+        (10,"Déploiement de la version : J'ai déployé la dernière version de notre application sur le serveur de production.", 1);
