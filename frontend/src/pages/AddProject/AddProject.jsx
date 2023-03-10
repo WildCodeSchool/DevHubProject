@@ -1,26 +1,23 @@
-import React, { useState } from "react";
-import { Box, useTheme } from "@mui/material";
-import TextField from "@mui/material/TextField";
-// import Input from "@mui/material/Input";
+// import React, { useState } from "react";
+import { Box } from "@mui/material";
+// import TextField from "@mui/material/TextField";
 import ToDoList from "@components/TodoList/TodoList";
-import { tokens } from "../../theme";
+import AddProjectForm from "@components/TodoList/HandleSubmitProject";
+import AddTaskCard from "@components/TodoList/HandleSubmitTest";
+// import { tokens } from "../../theme";
 import Header from "../../components/Header/Header";
-// import { Stack, Avatar, MenuItem } from "@mui/material";
-// import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper,} from "@mui/material"
-
-// import { Form, FormControl, Button } from '@material-ui/core'
 
 function AddProject() {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  // const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
+  // const [startDate, setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
 
   return (
     <Box m="20">
       <Header title="CREATE PROJECT" subtitle="Create your new project here" />
-      <Box display="flex" flexDirection="column" height="100%">
-        <Box
+      <Box display="flex" flexDirection="column" height="100%" my="12px">
+        {/* <Box
           p={1}
           display="flex"
           justifyContent="center"
@@ -111,9 +108,17 @@ function AddProject() {
               maxRows={15}
             />
           </Box>
-        </Box>
+        </Box> */}
+        <AddProjectForm />
       </Box>
-      <ToDoList />
+
+      <Box>
+        <AddTaskCard />
+      </Box>
+
+      <Box>
+        <ToDoList />
+      </Box>
     </Box>
   );
 }
