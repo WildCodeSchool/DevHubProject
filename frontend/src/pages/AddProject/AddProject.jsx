@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 // import Input from "@mui/material/Input";
-import ToDoList from "@components/TodoList/TodoList";
+import ToDoList from "../../components/TodoList/TodoList";
 import { tokens } from "../../theme";
 import Header from "../../components/Header/Header";
 // import { Stack, Avatar, MenuItem } from "@mui/material";

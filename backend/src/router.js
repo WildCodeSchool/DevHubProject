@@ -5,8 +5,8 @@ const router = express.Router();
 const {
   hashPassword,
   verifyPassword,
-  verifyToken,
-  verifyId,
+  // verifyToken,
+  // verifyId,
 } = require("./middlewares/auth");
 
 const userControllers = require("./controllers/userControllers");
@@ -25,10 +25,10 @@ router.post(
 
 // POST,PUT & DELETE
 
-router.use(verifyToken); // Authentication Wall
+// router.use(verifyToken); // Authentication Wall
 
-router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
-router.delete("/users/:id", verifyId, userControllers.destroy);
+// router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
+// router.delete("/users/:id", verifyId, userControllers.destroy);
 
 const projectControllers = require("./controllers/projectControllers");
 

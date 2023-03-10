@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Box, Grid, useTheme, Typography } from "@mui/material";
-// import CalendarComponent from "../../components/Calendar/Calendar";
+import axios from "axios";
 import Header from "../../components/Header/Header";
 import NoteList from "../../components/NotesList/NotesList";
 import SliderTeam from "../../components/SliderTeam/SliderTeam";
@@ -15,34 +16,26 @@ import { tokens } from "../../theme";
 function Dashboard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [notes, setNotes] = useState([
-    {
-      id: 1,
-      noteText: "This is my first note!",
-      date: "15/04/2021",
-    },
-    {
-      id: 2,
-      noteText: "This is my second note!",
-      date: "21/04/2021",
-    },
-    {
-      id: 3,
-      noteText: "This is my third note!",
-      date: "21/05/2021",
-    },
-    {
-      id: 5,
-      noteText: "This is my second note!",
-      date: "21/02/2023",
-    },
-  ]);
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/notes");
+
+        setNotes(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNotes();
+  }, []);
 
   const addNote = (text) => {
     const date = new Date();
     const newNote = {
-      id: 1,
-      noteText: text,
+      id: uuidv4(),
+      description: text,
       date: date.toLocaleDateString(),
     };
     const newNotes = [...notes, newNote];
@@ -175,7 +168,7 @@ function Dashboard() {
           </Box>
           <NoteList
             notes={notes.filter((note) =>
-              note.noteText.toLocaleLowerCase().includes(searchText)
+              note.description.toLocaleLowerCase().includes(searchText)
             )}
             handleDeleteNote={deleteNote}
           />

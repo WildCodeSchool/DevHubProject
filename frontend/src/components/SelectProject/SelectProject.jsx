@@ -17,7 +17,7 @@ function SelectProject() {
 
   const getProject = () => {
     axios
-      .get(`http://localhost:5000/userProjects`)
+      .get(`http://localhost:5000/userProjects`, { user_id: 1, project_id: 1 })
       .then((response) => response.data)
       .then((data) => {
         setProjectList(data);

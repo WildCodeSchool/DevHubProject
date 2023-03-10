@@ -64,7 +64,7 @@ function SliderTeam() {
             lastname={user.lastname}
             email={user.email}
             user_image={user.user_image}
-            role={user.role}
+            role={user.user_role}
           />
         );
       })}

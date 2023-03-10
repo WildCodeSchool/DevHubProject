@@ -1,3 +1,4 @@
+// import Carousel from "react-material-ui-carousel";
 import Slider from "react-slick";
 import Note from "../Note/Note";
 
@@ -7,7 +8,7 @@ function NotesList({ notes, handleDeleteNote }) {
       {notes.map((note) => (
         <Note
           id={note.id}
-          noteText={note.noteText}
+          description={note.description}
           date={note.date}
           handleDeleteNote={handleDeleteNote}
         />

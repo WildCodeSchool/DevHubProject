@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { tokens } from "../../theme";
 
-function Note({ id, noteText, date, handleDeleteNote }) {
+function Note({ id, description, date, handleDeleteNote }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -27,7 +27,7 @@ function Note({ id, noteText, date, handleDeleteNote }) {
         label="Your Notes"
         multiline
         rows={4}
-        value={noteText}
+        value={description}
         variant="filled"
       />
       <Box display="flex" alignItems="center" justifyContent="space-between">

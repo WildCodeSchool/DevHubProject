@@ -20,7 +20,11 @@ function SelectRole() {
       .get(`http://localhost:5000/users`)
       .then((response) => response.data)
       .then((data) => {
-        setRoleList(data);
+        const roles = new Set();
+        data.forEach((roleMap) => {
+          roles.add(roleMap.user_role);
+        });
+        setRoleList(Array.from(roles));
       });
   };
 
@@ -42,8 +46,8 @@ function SelectRole() {
         }}
       >
         {roleList.map((roleMap) => (
-          <MenuItem key={roleMap.id} value={roleMap.name}>
-            {roleMap.name}
+          <MenuItem key={roleMap} value={roleMap}>
+            {roleMap}
           </MenuItem>
         ))}
       </TextField>

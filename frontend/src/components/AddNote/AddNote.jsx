@@ -7,6 +7,7 @@ import {
   TextField,
   useTheme,
 } from "@mui/material";
+import axios from "axios";
 import { tokens } from "../../theme";
 
 function AddNote({ handleAddNote }) {
@@ -30,9 +31,17 @@ function AddNote({ handleAddNote }) {
 
   const handleSaveClick = () => {
     if (noteText.trim().length > 0) {
-      handleAddNote(noteText);
-      setNoteText("");
-      handleClose();
+      axios
+        .post("http://localhost:5000/notes", {
+          description: noteText,
+          user_id: 1,
+        })
+        .then((response) => {
+          handleAddNote(response.data);
+          setNoteText("");
+          handleClose();
+        })
+        .catch((error) => console.info(error));
     }
   };
 
