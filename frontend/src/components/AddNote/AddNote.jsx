@@ -29,19 +29,24 @@ function AddNote({ handleAddNote }) {
     }
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    // ajouter async
     if (noteText.trim().length > 0) {
-      axios
-        .post("http://localhost:5000/notes", {
+      try {
+        const response = await axios.post("http://localhost:5000/notes", {
           description: noteText,
           user_id: 1,
-        })
-        .then((response) => {
-          handleAddNote(response.data);
-          setNoteText("");
-          handleClose();
-        })
-        .catch((error) => console.info(error));
+        });
+        handleAddNote(response.data);
+        setNoteText("");
+        handleClose();
+        const getResponse = await axios.get("http://localhost:5000/notes", {
+          user_id: 1,
+        });
+        console.info(getResponse.data);
+      } catch (error) {
+        console.info(error);
+      }
     }
   };
 

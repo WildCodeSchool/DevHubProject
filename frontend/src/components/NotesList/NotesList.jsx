@@ -1,4 +1,3 @@
-// import Carousel from "react-material-ui-carousel";
 import Slider from "react-slick";
 import Note from "../Note/Note";
 

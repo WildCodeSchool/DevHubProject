@@ -58,7 +58,16 @@ const add = (req, res) => {
   models.note
     .insert(note)
     .then(([result]) => {
-      res.location(`/notes/${result.insertId}`).sendStatus(201);
+      // Récupérer la note qui vient d'être ajoutée
+      models.note
+        .find(result.insertId)
+        .then(([rows]) => {
+          res.status(201).json(rows[0]); // Envoyer la note dans la réponse
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
     })
     .catch((err) => {
       console.error(err);

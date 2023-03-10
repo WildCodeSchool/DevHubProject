@@ -7,7 +7,7 @@ import { tokens } from "../../theme";
 function Note({ id, description, date, handleDeleteNote }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  console.info(description, "description dans NOTE.JSX");
   return (
     <Box
       display="flex"
@@ -23,7 +23,6 @@ function Note({ id, description, date, handleDeleteNote }) {
       }}
     >
       <TextField
-        id="demo-helper-text-misaligned-no-helper"
         label="Your Notes"
         multiline
         rows={4}

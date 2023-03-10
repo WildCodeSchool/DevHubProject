@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Box, Grid, useTheme, Typography } from "@mui/material";
 import axios from "axios";
 import Header from "../../components/Header/Header";
@@ -34,17 +33,22 @@ function Dashboard() {
   const addNote = (text) => {
     const date = new Date();
     const newNote = {
-      id: uuidv4(),
-      description: text,
+      noteText: text,
       date: date.toLocaleDateString(),
     };
     const newNotes = [...notes, newNote];
     setNotes(newNotes);
+    console.info(newNotes, "NEWNOTES");
   };
 
-  const deleteNote = (id) => {
-    const newNotes = notes.filter((note) => note.id !== id);
-    setNotes(newNotes);
+  const deleteNote = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/notes/${id}`);
+      const newNotes = notes.filter((note) => note.id !== id);
+      setNotes(newNotes);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const [searchText, setSearchText] = useState("");
@@ -167,8 +171,10 @@ function Dashboard() {
             <AddNote handleAddNote={addNote} />
           </Box>
           <NoteList
-            notes={notes.filter((note) =>
-              note.description.toLocaleLowerCase().includes(searchText)
+            notes={notes.filter(
+              (note) =>
+                typeof note.description === "string" &&
+                note.description.toLocaleLowerCase().includes(searchText)
             )}
             handleDeleteNote={deleteNote}
           />
