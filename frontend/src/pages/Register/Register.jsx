@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { Link as RouterLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme();
 
 function Register() {
+  const [showAcceptance, setShowAcceptance] = useState(false);
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -24,7 +25,9 @@ function Register() {
       email: "",
       password: "",
       confirmPassword: "",
+      gcu: false,
     },
+
     validationSchema: Yup.object({
       firstName: Yup.string()
         .max(15, "Must be 15 characters or less")
@@ -42,6 +45,7 @@ function Register() {
     }),
     onSubmit: (values) => {
       console.error(JSON.stringify(values, null, 2));
+      setShowAcceptance(true);
     },
   });
 
@@ -102,7 +106,11 @@ function Register() {
                   error={
                     formik.touched.lastName && Boolean(formik.errors.lastName)
                   }
-                  helperText={formik.touched.lastName && formik.errors.lastName}
+                  helperText={
+                    formik.touched.lastName &&
+                    Boolean(formik.errors.lastName) &&
+                    formik.errors.lastName
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -126,7 +134,8 @@ function Register() {
                   name="password"
                   label="Password"
                   type="password"
-                  id="new-password"
+                  id="password"
+                  autoComplete="new-password"
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   error={
@@ -142,7 +151,8 @@ function Register() {
                   name="confirmPassword"
                   label="Confirm Password"
                   type="password"
-                  id="new-password"
+                  id="confirmPassword"
+                  autoComplete="new-password"
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
                   error={
@@ -162,15 +172,24 @@ function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Submit
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  Already have an account? Log in
-                </Link>
+            <Box sx={{ mt: 2 }}>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Link component={RouterLink} to="/register" variant="body2">
+                    Don't have an account? Register
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
+
+            {showAcceptance && (
+              <Typography variant="body2" color="text.secondary" align="center">
+                By registering, you accept our
+                <Link to="/login">terms of service and privacy policy </Link>.
+              </Typography>
+            )}
           </Box>
         </Box>
       </Container>

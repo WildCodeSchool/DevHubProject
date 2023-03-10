@@ -1,35 +1,59 @@
-import React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React, { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
 
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email address").required("Required"),
+  password: Yup.string().required("Required"),
+});
+
 function Login() {
-  const initialValues = {
-    email: "",
-    password: "",
-  };
+  const navigate = useNavigate();
+  const [err, setErr] = useState("");
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().required("Required"),
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: async (/* values */) => {
+      try {
+        const response = await axios.post("http://localhost:5000/users/login", {
+          email: formik.values.email,
+          password: formik.values.password,
+        });
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId);
+
+        console.info("Token:", response.data.token);
+        console.info("UserId:", response.data.user);
+
+        navigate("/dashboard");
+      } catch (error) {
+        setErr("Invalid email or password");
+        console.error(error);
+      }
+    },
   });
-
-  const handleSubmit = (values, { setSubmitting }) => {
-    console.error(values);
-    setSubmitting(false);
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -47,66 +71,65 @@ function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Log in
           </Typography>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            noValidate
+            sx={{ mt: 3 }}
           >
-            {({ isSubmitting }) => (
-              <Form noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                    />
-                    <ErrorMessage name="email">
-                      {(msg) => <div style={{ color: "red" }}>{msg}</div>}
-                    </ErrorMessage>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                    />
-                    <ErrorMessage name="password">
-                      {(msg) => <div style={{ color: "red" }}>{msg}</div>}
-                    </ErrorMessage>
-                  </Grid>
-                </Grid>
-                <Button
-                  type="submit"
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="email"
+                  name="email"
+                  required
                   fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Submitting..." : "Log In"}
-                </Button>
-              </Form>
-            )}
-          </Formik>
-          <Grid container justifyContent="flex-end">
-            {/* faire le lien vers register */}
-            <Grid item>
-              <Link href="/register" variant="body2">
-                Don't have an account? Create your account
-              </Link>
+                  id="email"
+                  label="Email Address"
+                  autoFocus
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="current-password"
+                  name="password"
+                  required
+                  fullWidth
+                  id="password"
+                  label="Password"
+                  type="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
+                />
+              </Grid>
             </Grid>
-          </Grid>
+            {err && <Typography component="p">{err}</Typography>}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Log In
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  Don't have an account? Sign up
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
         </Box>
       </Container>
     </ThemeProvider>

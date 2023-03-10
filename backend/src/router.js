@@ -22,7 +22,7 @@ router.post(
   verifyPassword
 );
 
-// POST,PUT & DELETE
+// // POST,PUT & DELETE
 
 router.use(verifyToken); // Authentication Wall
 

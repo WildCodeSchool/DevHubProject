@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Box } from "@material-ui/core";
 import axios from "axios";
@@ -32,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
 
 function UserProfile() {
   const classes = useStyles();
-  const { id } = useParams(); // extrait l'ID de l'URL
-  const [user, setUser] = useState(null);
+  // const { id } = useParams(); // extrait l'ID de l'URL
+  const [user, setUser] = useState();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/${id}`) // utilise l'ID pour appeler l'API
+      .get(`http://localhost:5000/users/1`)
+      // utilise l'ID pour appeler l'API
 
       .then((response) => {
         setUser(response.data); // stocke les informations de l'utilisateur dans l'état local
@@ -45,7 +46,7 @@ function UserProfile() {
       .catch((error) => {
         console.error(error);
       });
-  }, [id]);
+  }, []);
 
   console.error("user state:", user);
 
