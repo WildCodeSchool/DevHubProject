@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, TextField } from "@material-ui/core";
 
@@ -13,9 +13,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Informations(props) {
-  const { firstName, lastName, phone, city, email, githubPage, biography } =
-    props;
+function Informations() {
+  const [user] = useState({});
 
   const classes = useStyles();
 
@@ -26,7 +25,7 @@ function Informations(props) {
           <TextField
             className={classes.field}
             label="First Name"
-            value={firstName}
+            value={user.firstname || ""}
             fullWidth
             disabled
           />
@@ -35,7 +34,7 @@ function Informations(props) {
           <TextField
             className={classes.field}
             label="Last Name"
-            value={lastName}
+            value={user.lastname || ""}
             fullWidth
             disabled
           />
@@ -44,7 +43,7 @@ function Informations(props) {
           <TextField
             className={classes.field}
             label="Phone Number"
-            value={phone}
+            value={user.phone || ""}
             fullWidth
             disabled
           />
@@ -53,7 +52,7 @@ function Informations(props) {
           <TextField
             className={classes.field}
             label="City"
-            value={city}
+            value={user.city || ""}
             fullWidth
             disabled
           />
@@ -62,7 +61,7 @@ function Informations(props) {
           <TextField
             className={classes.field}
             label="Email"
-            value={email}
+            value={user.email || ""}
             fullWidth
             disabled
           />
@@ -71,7 +70,7 @@ function Informations(props) {
           <TextField
             className={classes.field}
             label="Git-Hub Page"
-            value={githubPage}
+            value={user.github_page || ""}
             fullWidth
             disabled
           />
@@ -80,7 +79,7 @@ function Informations(props) {
           <TextField
             className={classes.field}
             label="Biography"
-            value={biography}
+            value={user.biography || ""}
             multiline
             minRows={6}
             fullWidth

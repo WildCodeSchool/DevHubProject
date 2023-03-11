@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Box } from "@material-ui/core";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import Informations from "../../components/Informations/Informations";
 import userimage from "../../assets/user.png";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
@@ -14,11 +14,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     marginBottom: 0,
     width: "100%",
+    backgroundColor: theme.palette.background.paper,
   },
   paper: {
     padding: theme.spacing(2),
     height: "75vh",
     width: "100%",
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.primary.contrastText,
   },
   userImageContainer: {
     marginBottom: theme.spacing(5),
@@ -32,29 +35,32 @@ const useStyles = makeStyles((theme) => ({
 
 function UserProfile() {
   const classes = useStyles();
-  // const { id } = useParams(); // extrait l'ID de l'URL
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
+  const [projects, setProjects] = useState([]);
+
+  const { id } = useParams();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/1`)
-      // utilise l'ID pour appeler l'API
-
+      .get(`http://localhost:5000/users/${id}`)
       .then((response) => {
-        setUser(response.data); // stocke les informations de l'utilisateur dans l'état local
+        console.info(response.data);
+        setUser(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.info(error);
       });
-  }, []);
 
-  console.error("user state:", user);
-
-  if (!user) {
-    return <div>Loading...</div>; // affiche "Loading..." si l'API n'a pas encore renvoyé les informations de l'utilisateur
-  }
-
-  console.error("user data:", user);
+    axios
+      .get(`http://localhost:5000/projects/user/${id}`)
+      .then((response) => {
+        console.info(response.data);
+        setProjects(response.data);
+      })
+      .catch((error) => {
+        console.info(error);
+      });
+  }, [id]);
 
   return (
     <div className={classes.root}>
@@ -74,13 +80,12 @@ function UserProfile() {
             </Grid>
             <Grid item>
               <Informations
-                key={user.id}
-                firstName={user.firstName}
-                lastName={user.lastName}
+                firstname={user.firstname}
+                lastname={user.lastname}
                 phone={user.phone}
                 city={user.city}
                 email={user.email}
-                github_page={user.github_page}
+                githubPage={user.github_page}
                 biography={user.biography}
               />
             </Grid>
@@ -90,10 +95,20 @@ function UserProfile() {
           <Paper className={classes.paper}>
             <Grid container direction="column" spacing={3}>
               <Grid item>
-                <ProjectsList />
+                {projects.map((project) => (
+                  <ProjectsList
+                    key={project.id}
+                    name={project.name}
+                    description={project.description}
+                    progress={project.progress}
+                  />
+                ))}
               </Grid>
               <Grid item className={classes.sendMessageContainer}>
-                <SendMessage />
+                <SendMessage
+                  firstname={user.firstName}
+                  lastname={user.lastName}
+                />
               </Grid>
             </Grid>
           </Paper>

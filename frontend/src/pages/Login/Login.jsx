@@ -37,7 +37,7 @@ function Login() {
     validationSchema,
     onSubmit: async (/* values */) => {
       try {
-        const response = await axios.post("http://localhost:5000/users/login", {
+        const response = await axios.get("http://localhost:5000/users/login", {
           email: formik.values.email,
           password: formik.values.password,
         });
@@ -124,8 +124,8 @@ function Login() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  Don't have an account? Sign up
+                <Link href="/register" variant="body2">
+                  Don't have an account? Register
                 </Link>
               </Grid>
             </Grid>

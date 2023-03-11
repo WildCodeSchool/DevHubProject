@@ -14,6 +14,7 @@ const userControllers = require("./controllers/userControllers");
 // GET
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
+
 // REGISTER
 router.post("/users", hashPassword, userControllers.add);
 router.post(
@@ -22,7 +23,7 @@ router.post(
   verifyPassword
 );
 
-// // POST,PUT & DELETE
+// POST,PUT & DELETE
 
 router.use(verifyToken); // Authentication Wall
 

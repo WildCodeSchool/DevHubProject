@@ -13,11 +13,24 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 
 const theme = createTheme();
 
 function Register() {
   const [showAcceptance, setShowAcceptance] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  const sendFormData = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:5000/users", data);
+      console.info(response.data);
+      setIsRegistered(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -45,6 +58,7 @@ function Register() {
     }),
     onSubmit: (values) => {
       console.error(JSON.stringify(values, null, 2));
+      sendFormData(values);
       setShowAcceptance(true);
     },
   });
@@ -67,6 +81,11 @@ function Register() {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
+          {isRegistered ? (
+            <Typography variant="body1">
+              You have been registered successfully!
+            </Typography>
+          ) : null}
           <Box
             component="form"
             noValidate
@@ -106,11 +125,7 @@ function Register() {
                   error={
                     formik.touched.lastName && Boolean(formik.errors.lastName)
                   }
-                  helperText={
-                    formik.touched.lastName &&
-                    Boolean(formik.errors.lastName) &&
-                    formik.errors.lastName
-                  }
+                  helperText={formik.touched.lastName && formik.errors.lastName}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -165,31 +180,47 @@ function Register() {
                   }
                 />
               </Grid>
+              <Grid item xs={12}>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="gcu"
+                    name="gcu"
+                    checked={formik.values.gcu}
+                    onChange={formik.handleChange}
+                    style={{ marginRight: "5px" }}
+                  />
+                  <label htmlFor="gcu">
+                    I accept the{" "}
+                    <Link component={RouterLink} to="/gcu">
+                      General Conditions of Use
+                    </Link>
+                  </label>
+                </div>
+              </Grid>
             </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={!formik.isValid || !formik.values.gcu}
             >
-              Submit
+              Register
             </Button>
-            <Box sx={{ mt: 2 }}>
-              <Grid container justifyContent="center">
-                <Grid item>
-                  <Link component={RouterLink} to="/register" variant="body2">
-                    Don't have an account? Register
-                  </Link>
-                </Grid>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/Login" variant="body2">
+                  You have an account? Login
+                </Link>
               </Grid>
-            </Box>
-
-            {showAcceptance && (
-              <Typography variant="body2" color="text.secondary" align="center">
-                By registering, you accept our
-                <Link to="/login">terms of service and privacy policy </Link>.
+            </Grid>
+            {showAcceptance ? (
+              <Typography variant="body2" align="center">
+                We confirm your registration on the DevHubProject application,
+                you can log in.
               </Typography>
-            )}
+            ) : null}
           </Box>
         </Box>
       </Container>
