@@ -19,6 +19,16 @@ class UserProjectManager extends AbstractManager {
       [userProject.user_id, userProject.project_id, userProject.id]
     );
   }
+
+  findProjectNameByUserId(userId) {
+    return this.database.query(
+      `SELECT project.name
+       FROM project
+       INNER JOIN user_project ON project.id = user_project.project_id
+       WHERE user_project.user_id = ?`,
+      [userId]
+    );
+  }
 }
 
 module.exports = UserProjectManager;

@@ -74,6 +74,7 @@ const userProjectControllers = require("./controllers/userProjectControllers");
 
 router.get("/userProjects", userProjectControllers.browse);
 router.get("/userProjects/:id", userProjectControllers.read);
+router.get("/userProjects/user_id/:id", userProjectControllers.readUserProject);
 router.post("/userProjects", userProjectControllers.add);
 router.delete("/userProjects/:id", userProjectControllers.destroy);
 

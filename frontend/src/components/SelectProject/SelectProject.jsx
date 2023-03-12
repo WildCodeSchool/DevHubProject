@@ -15,23 +15,24 @@ function SelectProject() {
     setProject(event.target.value);
   };
 
-  const getProject = () => {
-    axios
-      .get(`http://localhost:5000/userProjects`, { user_id: 1, project_id: 1 })
-      .then((response) => response.data)
-      .then((data) => {
-        setProjectList(data);
-      });
+  const getProjects = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/userProjects");
+      setProjectList(response.data);
+      console.info("Projects retrieved successfully:", response.data);
+    } catch (error) {
+      console.info(error);
+    }
   };
 
   useEffect(() => {
-    getProject();
+    getProjects();
   }, []);
 
   return (
     <Box width="250px">
       <TextField
-        label="Project List"
+        label="Liste de projets"
         select
         value={project}
         onChange={handleChange}
@@ -40,7 +41,7 @@ function SelectProject() {
         style={{
           color: colors.grey[100],
         }}
-        helperText="Please Select your Project"
+        helperText="Veuillez sélectionner votre projet"
       >
         {projectList.map((projectMap) => (
           <MenuItem key={projectMap.id} value={projectMap.name}>

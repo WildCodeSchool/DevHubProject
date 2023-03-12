@@ -10,7 +10,7 @@ CREATE TABLE
         firstname VARCHAR(60) NOT NULL,
         lastname VARCHAR(60) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
-        phone VARCHAR(10) UNIQUE,        
+        phone VARCHAR(10) UNIQUE,
         user_image BLOB,
         biography VARCHAR(255),
         hashedPassword VARCHAR(255),
@@ -107,7 +107,6 @@ CREATE TABLE
 USE dbdevhubproject;
 
 -- Query to feed sql data in USER table
-
 
 INSERT INTO
     user (
@@ -323,24 +322,35 @@ VALUES (
         'Montpellier'
     );
 
-ALTER TABLE user
-ADD user_role VARCHAR(50);
+ALTER TABLE user ADD user_role VARCHAR(50);
 
-UPDATE user SET user_role = 'Développeur full-stack'
- WHERE user_role IS NULL;
+UPDATE user
+SET
+    user_role = 'Développeur full-stack'
+WHERE user_role IS NULL;
 
-UPDATE user SET user_role = 'Développeur front-end'
- WHERE id IN ('3','5','17','19');
+UPDATE user
+SET
+    user_role = 'Développeur front-end'
+WHERE
+    id IN ('3', '5', '17', '19');
 
-UPDATE user SET user_role = 'Développeur back-end'
- WHERE id IN ('4','6','12','18');
+UPDATE user
+SET
+    user_role = 'Développeur back-end'
+WHERE
+    id IN ('4', '6', '12', '18');
 
-UPDATE user SET user_role = 'Gestionnaire de projets'
- WHERE id IN ('1','8','13','20');
+UPDATE user
+SET
+    user_role = 'Gestionnaire de projets'
+WHERE
+    id IN ('1', '8', '13', '20');
 
-UPDATE user SET user_role = 'Designer UI/UX'
- WHERE id IN ('9','14','16');
-
+UPDATE user
+SET
+    user_role = 'Designer UI/UX'
+WHERE id IN ('9', '14', '16');
 
 -- Query to feed sql data in project table
 
@@ -436,35 +446,25 @@ VALUES (
         'Olivia Parker'
     );
 
-UPDATE project SET name = 'Bookworm'
- WHERE name = ('Project A');
+UPDATE project SET name = 'Bookworm' WHERE name = ('Project A');
 
-UPDATE project SET name = 'EatWell'
- WHERE name = ('Project B');
+UPDATE project SET name = 'EatWell' WHERE name = ('Project B');
 
-UPDATE project SET name = 'Greenify'
- WHERE name = ('Project C');
+UPDATE project SET name = 'Greenify' WHERE name = ('Project C');
 
-UPDATE project SET name = 'Mindful'
- WHERE name = ('Project D');
+UPDATE project SET name = 'Mindful' WHERE name = ('Project D');
 
-UPDATE project SET name = 'RecycleNow'
- WHERE name = ('Project E');
+UPDATE project SET name = 'RecycleNow' WHERE name = ('Project E');
 
-UPDATE project SET name = 'TalkTogether'
- WHERE name = ('Project F');
+UPDATE project SET name = 'TalkTogether' WHERE name = ('Project F');
 
-UPDATE project SET name = 'TimeTrack'
- WHERE name = ('Project G');
+UPDATE project SET name = 'TimeTrack' WHERE name = ('Project G');
 
-UPDATE project SET name = 'FitBuddy'
- WHERE name = ('Project H');
+UPDATE project SET name = 'FitBuddy' WHERE name = ('Project H');
 
-UPDATE project SET name = 'Wanderlust'
- WHERE name = ('Project I');
+UPDATE project SET name = 'Wanderlust' WHERE name = ('Project I');
 
-UPDATE project SET name = 'YumYum'
- WHERE name = ('Project J');
+UPDATE project SET name = 'YumYum' WHERE name = ('Project J');
 
 -- Query to feed sql data in task table
 
@@ -804,39 +804,116 @@ VALUES (
         "IT Development",
         20
     );
-UPDATE task SET name = 'Élaboration du cahier des charges'
-WHERE name IN ('Task 1', 'Task 7','Task 13', 'Task 19','Task 25', 'Task 31');
-UPDATE task SET type = 'Planification'
-WHERE name = 'Élaboration du cahier des charges';
 
-UPDATE task SET name = 'Évaluation des ressources nécessaires'
-WHERE name IN ('Task 2', 'Task 8','Task 14', 'Task 20','Task 26', 'Task 32');
-UPDATE task SET type = 'Gestion'
-WHERE name = 'Évaluation des ressources nécessaires';
+UPDATE task
+SET
+    name = 'Élaboration du cahier des charges'
+WHERE
+    name IN (
+        'Task 1',
+        'Task 7',
+        'Task 13',
+        'Task 19',
+        'Task 25',
+        'Task 31'
+    );
 
-UPDATE task SET name = 'Gestion des modifications du projet'
-WHERE name IN ('Task 3', 'Task 9','Task 15', 'Task 21','Task 27', 'Task 33');
-UPDATE task SET type = 'Front-end'
-WHERE name = 'Gestion des modifications du projet';
+UPDATE task
+SET type = 'Planification'
+WHERE
+    name = 'Élaboration du cahier des charges';
 
-UPDATE task SET name = 'Planification de la maintenance du projet'
-WHERE name IN ('Task 4', 'Task 10','Task 16', 'Task 22','Task 28', 'Task 34');
-UPDATE task SET type = 'Back-end'
-WHERE name = 'Planification de la maintenance du projet';
+UPDATE task
+SET
+    name = 'Évaluation des ressources nécessaires'
+WHERE
+    name IN (
+        'Task 2',
+        'Task 8',
+        'Task 14',
+        'Task 20',
+        'Task 26',
+        'Task 32'
+    );
 
-UPDATE task SET name = 'Gestion des versions des livrables'
-WHERE name IN ('Task 5', 'Task 11','Task 17', 'Task 23','Task 29', 'Task 35');
-UPDATE task SET type = 'UX design'
-WHERE name = 'Gestion des versions des livrables';
+UPDATE task
+SET type = 'Gestion'
+WHERE
+    name = 'Évaluation des ressources nécessaires';
 
-UPDATE task SET name = 'Retour interface utilisateur'
-WHERE name IN ('Task 6', 'Task 12','Task 18', 'Task 24','Task 30', 'Task 36');
-UPDATE task SET type = 'UI design'
-WHERE name = 'Retour interface utilisateur';
+UPDATE task
+SET
+    name = 'Gestion des modifications du projet'
+WHERE
+    name IN (
+        'Task 3',
+        'Task 9',
+        'Task 15',
+        'Task 21',
+        'Task 27',
+        'Task 33'
+    );
 
-UPDATE task SET user_id = '1'
-WHERE user_id = '11';
+UPDATE task
+SET type = 'Front-end'
+WHERE
+    name = 'Gestion des modifications du projet';
 
+UPDATE task
+SET
+    name = 'Planification de la maintenance du projet'
+WHERE
+    name IN (
+        'Task 4',
+        'Task 10',
+        'Task 16',
+        'Task 22',
+        'Task 28',
+        'Task 34'
+    );
+
+UPDATE task
+SET type = 'Back-end'
+WHERE
+    name = 'Planification de la maintenance du projet';
+
+UPDATE task
+SET
+    name = 'Gestion des versions des livrables'
+WHERE
+    name IN (
+        'Task 5',
+        'Task 11',
+        'Task 17',
+        'Task 23',
+        'Task 29',
+        'Task 35'
+    );
+
+UPDATE task
+SET type = 'UX design'
+WHERE
+    name = 'Gestion des versions des livrables';
+
+UPDATE task
+SET
+    name = 'Retour interface utilisateur'
+WHERE
+    name IN (
+        'Task 6',
+        'Task 12',
+        'Task 18',
+        'Task 24',
+        'Task 30',
+        'Task 36'
+    );
+
+UPDATE task
+SET type = 'UI design'
+WHERE
+    name = 'Retour interface utilisateur';
+
+UPDATE task SET user_id = '1' WHERE user_id = '11';
 
 -- Query to feed sql data in user_project table
 
@@ -844,8 +921,10 @@ INSERT INTO
     user_project (user_id, project_id)
 VALUES (11, 1), (12, 2), (13, 3), (14, 4), (15, 5), (16, 6), (17, 7), (18, 8), (19, 9), (20, 10);
 
-UPDATE user_project SET user_id ='1'
-WHERE project_id IN ('1','3','7');
+UPDATE user_project
+SET user_id = '1'
+WHERE
+    project_id IN ('1', '3', '7');
 
 -- Query to feed sql data in task_project table
 
@@ -991,15 +1070,53 @@ INSERT INTO
     recipient (recipient_id, message_id)
 VALUES (11, 1), (12, 2), (13, 3), (14, 4), (15, 5), (16, 6), (17, 7), (18, 8), (19, 9), (20, 10), (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20);
 
+INSERT INTO
+    note (id, description, user_id)
+VALUES (
+        1,
+        "Correction de bug : J'ai identifié et corrigé un bug qui empêchait les utilisateurs de se connecter à leur compte.",
+        1
+    ), (
+        2,
+        "Optimisation des performances : J'ai optimisé la vitesse de chargement de la page d'accueil de notre site web en réduisant la taille des images.",
+        1
+    ), (
+        3,
+        "Amélioration de l'interface utilisateur : J'ai mis à jour l'interface utilisateur de notre application mobile pour la rendre plus intuitive et facile à utiliser.",
+        1
+    ), (
+        4,
+        "J'ai développé une nouvelle fonctionnalité qui permet aux utilisateurs de partager des articles sur les réseaux sociaux.",
+        1
+    ), (
+        5,
+        "Intégration d'une API : J'ai intégré une API tierce pour permettre à notre application de se connecter à d'autres services.",
+        1
+    ), (
+        6,
+        "Mise à jour de la base de données : J'ai mis à jour notre base de données pour prendre en charge de nouveaux types de données.",
+        1
+    ), (
+        7,
+        "Correction de vulnérabilité de sécurité : J'ai corrigé une vulnérabilité de sécurité qui aurait pu permettre à des pirates informatiques d'accéder aux données sensibles des utilisateurs.",
+        1
+    ), (
+        8,
+        "Réécriture de code : J'ai réécrit une partie de notre code pour améliorer sa lisibilité et sa maintenabilité.",
+        1
+    ), (
+        9,
+        "Refonte de l'architecture : J'ai repensé l'architecture de notre application pour la rendre plus évolutive et plus facile à déployer.",
+        1
+    ), (
+        10,
+        "Déploiement de la version : J'ai déployé la dernière version de notre application sur le serveur de production.",
+        1
+    );
 
-INSERT INTO note (id, description, user_id) 
-VALUES 	(1,"Correction de bug : J'ai identifié et corrigé un bug qui empêchait les utilisateurs de se connecter à leur compte.", 1),
-		(2,"Optimisation des performances : J'ai optimisé la vitesse de chargement de la page d'accueil de notre site web en réduisant la taille des images.", 1),
-        (3,"Amélioration de l'interface utilisateur : J'ai mis à jour l'interface utilisateur de notre application mobile pour la rendre plus intuitive et facile à utiliser.", 1),
-        (4,"J'ai développé une nouvelle fonctionnalité qui permet aux utilisateurs de partager des articles sur les réseaux sociaux.", 1),
-        (5,"Intégration d'une API : J'ai intégré une API tierce pour permettre à notre application de se connecter à d'autres services.", 1),
-        (6,"Mise à jour de la base de données : J'ai mis à jour notre base de données pour prendre en charge de nouveaux types de données.", 1),
-        (7,"Correction de vulnérabilité de sécurité : J'ai corrigé une vulnérabilité de sécurité qui aurait pu permettre à des pirates informatiques d'accéder aux données sensibles des utilisateurs.", 1),
-		(8,"Réécriture de code : J'ai réécrit une partie de notre code pour améliorer sa lisibilité et sa maintenabilité.", 1),
-        (9,"Refonte de l'architecture : J'ai repensé l'architecture de notre application pour la rendre plus évolutive et plus facile à déployer.", 1),
-        (10,"Déploiement de la version : J'ai déployé la dernière version de notre application sur le serveur de production.", 1);
+SELECT project.name
+FROM project
+    INNER JOIN user_project ON project.id = user_project.project_id
+WHERE user_project.user_id = 1;
+
+USE dbdevhubproject;
