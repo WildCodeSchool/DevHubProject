@@ -117,6 +117,19 @@ const addTask = (req, res) => {
       res.sendStatus(500);
     });
 };
+const getProjectsByUserId = (req, res) => {
+  const userId = req.params.id;
+
+  models.project
+    .getProjectsByUserId(userId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
 const destroy = (req, res) => {
   models.project
@@ -141,5 +154,6 @@ module.exports = {
   add,
   addProject,
   addTask,
+  getProjectsByUserId,
   destroy,
 };

@@ -15,9 +15,11 @@ function SelectProject() {
     setProject(event.target.value);
   };
 
-  const getProjects = async () => {
+  const getProjectsByUserID = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/userProjects");
+      const response = await axios.get(
+        "http://localhost:5000/users/1/projects"
+      );
       setProjectList(response.data);
       console.info("Projects retrieved successfully:", response.data);
     } catch (error) {
@@ -26,7 +28,7 @@ function SelectProject() {
   };
 
   useEffect(() => {
-    getProjects();
+    getProjectsByUserID();
   }, []);
 
   return (
