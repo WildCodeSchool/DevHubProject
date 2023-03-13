@@ -32,11 +32,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SendMessage({ firstname, lastname }) {
+function SendMessage(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const { firstname, lastname } = props;
+  console.info(firstname, lastname, "nom et prénom");
 
   const handleOpen = () => {
     setOpen(true);
@@ -48,7 +50,7 @@ function SendMessage({ firstname, lastname }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.info(`Sending message "${message}" to ${firstname} ${lastname}`);
+    console.info(`Sending message ${message} to "${firstname} ${lastname}"`);
     handleClose();
   };
 
@@ -60,7 +62,7 @@ function SendMessage({ firstname, lastname }) {
         endIcon={<SendIcon />}
         onClick={handleOpen}
       >
-        Send Message to {firstname} {lastname}
+        Send Message to "{firstname} {lastname}
       </Button>
       <Modal
         open={open}

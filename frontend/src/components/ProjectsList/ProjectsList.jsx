@@ -1,10 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { amber, blue, green, red } from "@mui/material/colors";
+import axios from "axios";
 
 function ProjectsList() {
-  const [projectState] = useState([]);
-  const [error] = useState(null);
+  const [projectState, setProjectState] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/projects");
+        console.info("Projects:", response.data);
+        setProjectState(response.data);
+      } catch (err) {
+        setError(error);
+      }
+    };
+    console.info("Fetching projects...");
+    fetchProjects();
+  }, []);
 
   const getColor = (progress) => {
     if (progress < 25) {
@@ -20,6 +35,7 @@ function ProjectsList() {
   };
 
   if (error) {
+    console.error("Error fetching projects:", error);
     return <div>Error: {error}</div>;
   }
 
@@ -53,23 +69,12 @@ function ProjectsList() {
                       sx={{
                         height: "100%",
                         borderRadius: 5,
-                        backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${getColor(
-                          project.progress
-                        )}`,
-                        width: `${project.progress}%`,
+                        background: getColor(project.progress),
                       }}
                     />
                   </Box>
-                  <Box sx={{ ml: 1, width: 70 }}>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        textAlign: "right",
-                        color: getColor(project.progress),
-                      }}
-                    >
-                      {`${project.progress}%`}
-                    </Typography>
+                  <Box sx={{ ml: 1 }}>
+                    <Typography variant="caption">{`${project.progress}%`}</Typography>
                   </Box>
                 </Box>
               </Box>

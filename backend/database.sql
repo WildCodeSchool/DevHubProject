@@ -1,3 +1,4 @@
+-- Active: 1678616074625@@127.0.0.1@3306@dbdevhubproject
 --- npm run migrate
 
 USE dbdevhubproject;

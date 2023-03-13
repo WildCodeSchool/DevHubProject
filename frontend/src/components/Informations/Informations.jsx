@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, TextField } from "@material-ui/core";
 
@@ -13,10 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Informations() {
-  const [user] = useState({});
-
+function Informations(props) {
   const classes = useStyles();
+  const { firstname, lastname, phone, city, email, githubPage, biography } =
+    props;
 
   return (
     <Paper className={classes.root}>
@@ -25,7 +25,7 @@ function Informations() {
           <TextField
             className={classes.field}
             label="First Name"
-            value={user.firstname || ""}
+            value={firstname || ""}
             fullWidth
             disabled
           />
@@ -34,7 +34,7 @@ function Informations() {
           <TextField
             className={classes.field}
             label="Last Name"
-            value={user.lastname || ""}
+            value={lastname || ""}
             fullWidth
             disabled
           />
@@ -43,7 +43,7 @@ function Informations() {
           <TextField
             className={classes.field}
             label="Phone Number"
-            value={user.phone || ""}
+            value={phone || ""}
             fullWidth
             disabled
           />
@@ -52,7 +52,7 @@ function Informations() {
           <TextField
             className={classes.field}
             label="City"
-            value={user.city || ""}
+            value={city || ""}
             fullWidth
             disabled
           />
@@ -61,7 +61,7 @@ function Informations() {
           <TextField
             className={classes.field}
             label="Email"
-            value={user.email || ""}
+            value={email || ""}
             fullWidth
             disabled
           />
@@ -70,7 +70,7 @@ function Informations() {
           <TextField
             className={classes.field}
             label="Git-Hub Page"
-            value={user.github_page || ""}
+            value={githubPage || ""}
             fullWidth
             disabled
           />
@@ -79,7 +79,7 @@ function Informations() {
           <TextField
             className={classes.field}
             label="Biography"
-            value={user.biography || ""}
+            value={biography || ""}
             multiline
             minRows={6}
             fullWidth

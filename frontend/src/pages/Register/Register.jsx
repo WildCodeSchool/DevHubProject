@@ -1,149 +1,139 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Link as RouterLink } from "react-router-dom";
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-nested-ternary */
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import Container from "@mui/material/Container";
+import { FormControlLabel, Checkbox } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
 
-const theme = createTheme();
+const lightheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
 
-function Register() {
-  const [showAcceptance, setShowAcceptance] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
-  const sendFormData = async (data) => {
-    try {
-      const response = await axios.post("http://localhost:5000/users", data);
-      console.info(response.data);
-      setIsRegistered(true);
-    } catch (error) {
-      console.error(error);
-    }
+export default function SignUp() {
+  const [userData, setUserData] = useState([]);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const classes = useStyles();
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/users").then((response) => {
+      setUserData(response.data);
+    });
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate("/login");
+    const newUser = {
+      firstname: firstName,
+      lastname: lastName,
+      email,
+      password,
+      confirmPassword,
+    };
+
+    axios
+      .post("http://localhost:5000/users/login", newUser)
+      .then((response) => {
+        setUserData([...userData, response.data]);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      });
   };
-
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      gcu: false,
-    },
-
-    validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Required"),
-      lastName: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string()
-        .min(8, "Password must be at least 8 characters")
-        .required("Required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Required"),
-    }),
-    onSubmit: (values) => {
-      console.error(JSON.stringify(values, null, 2));
-      sendFormData(values);
-      setShowAcceptance(true);
-    },
-  });
-
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={lightheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          {isRegistered ? (
-            <Typography variant="body1">
-              You have been registered successfully!
-            </Typography>
-          ) : null}
-          <Box
-            component="form"
-            noValidate
-            onSubmit={formik.handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <form className={classes.form} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.firstName && Boolean(formik.errors.firstName)
-                  }
-                  helperText={
-                    formik.touched.firstName && formik.errors.firstName
-                  }
+                  name="firstName"
+                  label="FirstName"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  variant="outlined"
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
                   name="lastName"
-                  autoComplete="family-name"
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.lastName && Boolean(formik.errors.lastName)
-                  }
-                  helperText={formik.touched.lastName && formik.errors.lastName}
+                  label="LastName"
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  variant="outlined"
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email adress"
                   name="email"
                   autoComplete="email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  variant="outlined"
                   required
                   fullWidth
                   name="password"
@@ -151,52 +141,31 @@ function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                  helperText={formik.touched.password && formik.errors.password}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  variant="outlined"
                   required
                   fullWidth
                   name="confirmPassword"
-                  label="Confirm Password"
+                  label="Confirm the password"
                   type="password"
                   id="confirmPassword"
                   autoComplete="new-password"
-                  value={formik.values.confirmPassword}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.confirmPassword &&
-                    Boolean(formik.errors.confirmPassword)
-                  }
-                  helperText={
-                    formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword
-                  }
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="gcu"
-                    name="gcu"
-                    checked={formik.values.gcu}
-                    onChange={formik.handleChange}
-                    style={{ marginRight: "5px" }}
-                  />
-                  <label htmlFor="gcu">
-                    I accept the{" "}
-                    <Link component={RouterLink} to="/gcu">
-                      General Conditions of Use
-                    </Link>
-                  </label>
-                </div>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I want to receive exclusive offers and updates by email."
+                />
               </Grid>
             </Grid>
             <Button
@@ -204,28 +173,19 @@ function Register() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={!formik.isValid || !formik.values.gcu}
             >
               Register
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/Login" variant="body2">
-                  You have an account? Login
+                <Link href="/login" variant="body2">
+                  Already have an account? Login
                 </Link>
               </Grid>
             </Grid>
-            {showAcceptance ? (
-              <Typography variant="body2" align="center">
-                We confirm your registration on the DevHubProject application,
-                you can log in.
-              </Typography>
-            ) : null}
-          </Box>
-        </Box>
+          </form>
+        </div>
       </Container>
     </ThemeProvider>
   );
 }
-
-export default Register;

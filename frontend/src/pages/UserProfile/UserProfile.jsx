@@ -52,7 +52,7 @@ function UserProfile() {
       });
 
     axios
-      .get(`http://localhost:5000/projects/user/${id}`)
+      .get(`http://localhost:5000/projects/${id}`)
       .then((response) => {
         console.info(response.data);
         setProjects(response.data);
@@ -61,6 +61,8 @@ function UserProfile() {
         console.info(error);
       });
   }, [id]);
+
+  console.info(projects);
 
   return (
     <div className={classes.root}>
@@ -106,8 +108,8 @@ function UserProfile() {
               </Grid>
               <Grid item className={classes.sendMessageContainer}>
                 <SendMessage
-                  firstname={user.firstName}
-                  lastname={user.lastName}
+                  firstname={user.firstname}
+                  lastname={user.lastname}
                 />
               </Grid>
             </Grid>
