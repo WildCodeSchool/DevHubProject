@@ -80,6 +80,7 @@ router.delete("/userProjects/:id", userProjectControllers.destroy);
 
 const taskProjectControllers = require("./controllers/taskProjectControllers");
 
+router.get("/projects/:id/tasks", taskControllers.getTasksByProjectId);
 router.get("/taskProjects", taskProjectControllers.browse);
 router.get("/taskProjects/:id", taskProjectControllers.read);
 router.post("/taskProjects", taskProjectControllers.add);

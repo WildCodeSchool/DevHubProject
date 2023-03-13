@@ -12,6 +12,7 @@ import SelectRole from "../../components/SelectRole/SelectRole";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
 import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
 import TeamTitle from "../../components/TeamTitle/TeamTitle";
+import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
 import { tokens } from "../../theme";
 
 function Dashboard() {
@@ -234,27 +235,7 @@ function Dashboard() {
             Project Task List
           </Typography>
         </Box>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            border: 1,
-            height: "100%",
-            borderRadius: "5px",
-            width: "90%",
-            marginTop: "10px",
-          }}
-        >
-          <Typography
-            variant="h4"
-            color={colors.grey[100]}
-            fontWeight="bold"
-            letterSpacing="0.15em"
-          >
-            TASK LIST COMPONENT
-          </Typography>
-        </Box>
+        <ProjectTaskList />
       </Grid>
     </Grid>
   );
