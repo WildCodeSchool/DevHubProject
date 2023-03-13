@@ -5,14 +5,16 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-function SelectProject() {
+function SelectProject({ onProjectSelect }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [project, setProject] = useState("");
   const [projectList, setProjectList] = useState([]);
 
   const handleChange = (event) => {
-    setProject(event.target.value);
+    const selectedProjectName = event.target.value;
+    setProject(selectedProjectName);
+    onProjectSelect(selectedProjectName);
   };
 
   const getProjectsByUserID = async () => {

@@ -10,6 +10,7 @@ import PieChart from "../../components/PieChart/PieChart";
 import SelectProject from "../../components/SelectProject/SelectProject";
 import SelectRole from "../../components/SelectRole/SelectRole";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
 import { tokens } from "../../theme";
 
 function Dashboard() {
@@ -52,6 +53,11 @@ function Dashboard() {
   };
 
   const [searchText, setSearchText] = useState("");
+
+  const [selectedProject, setSelectedProject] = useState("");
+  const handleProjectSelect = (selectedProjectName) => {
+    setSelectedProject(selectedProjectName);
+  };
   return (
     <Grid container>
       <Grid
@@ -63,7 +69,7 @@ function Dashboard() {
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
         <Box sx={{ width: "250px", marginTop: "25px", border: 1 }}>
-          <SelectProject />
+          <SelectProject onProjectSelect={handleProjectSelect} />
         </Box>
       </Grid>
 
@@ -209,27 +215,7 @@ function Dashboard() {
             padding: "10px",
           }}
         >
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            width="200px"
-            sx={{
-              border: 1,
-              height: "50px",
-              borderRadius: "5px",
-              padding: "10px",
-            }}
-          >
-            <Typography
-              variant="h4"
-              color={colors.grey[100]}
-              fontWeight="bold"
-              letterSpacing="0.15em"
-            >
-              Project Name
-            </Typography>
-          </Box>
+          <ProjectTitle selectedProject={selectedProject} />
         </Box>
         <Box
           display="flex"
