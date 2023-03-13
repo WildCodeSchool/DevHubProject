@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-function SelectRole() {
+function SelectRole({ setSelectedRole }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [role, setRole] = useState("");
@@ -13,6 +13,7 @@ function SelectRole() {
 
   const handleChange = (event) => {
     setRole(event.target.value);
+    setSelectedRole(event.target.value);
   };
 
   const getRole = () => {

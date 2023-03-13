@@ -11,6 +11,7 @@ import SelectProject from "../../components/SelectProject/SelectProject";
 import SelectRole from "../../components/SelectRole/SelectRole";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
 import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
+import TeamTitle from "../../components/TeamTitle/TeamTitle";
 import { tokens } from "../../theme";
 
 function Dashboard() {
@@ -58,6 +59,8 @@ function Dashboard() {
   const handleProjectSelect = (selectedProjectName) => {
     setSelectedProject(selectedProjectName);
   };
+  const [selectedRole, setSelectedRole] = useState("");
+
   return (
     <Grid container>
       <Grid
@@ -99,30 +102,14 @@ function Dashboard() {
             alignItems="center"
             width="100%"
           >
-            <Box>
-              <Typography
-                variant="h4"
-                color={colors.grey[100]}
-                fontWeight="bold"
-                letterSpacing="0.15em"
-                textAlign="center"
-                sx={{
-                  border: 1,
-                  borderRadius: "5px",
-                  padding: "0.4em",
-                  width: "300px",
-                }}
-              >
-                Selected Team
-              </Typography>
-            </Box>
+            <TeamTitle selectedRole={selectedRole} />
             <Box sx={{ border: 1, borderRadius: "5px" }}>
-              <SelectRole />
+              <SelectRole setSelectedRole={setSelectedRole} />
             </Box>
           </Grid>
         </Grid>
         <Box sx={{ border: 1, padding: "1em" }}>
-          <SliderTeam />
+          <SliderTeam selectedRole={selectedRole} />
         </Box>
         <Box
           display="flex"
