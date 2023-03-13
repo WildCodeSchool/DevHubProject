@@ -2,9 +2,9 @@ import { Formik, Form, Field } from "formik";
 import {
   TextField,
   Button,
-  //   Card,
-  //   CardContent,
-  //   Typography,
+  Card,
+  CardContent,
+  Typography,
 } from "@material-ui/core";
 import {
   FormControl,
@@ -23,15 +23,24 @@ const initialValues = {
   task_end_date: "",
   description: "",
   progress: "",
-  type: "",
-  user_id: "",
+  type: [],
+  user_id: [],
 };
 
-function AddTaskCard() {
+function AddTaskCard({ projectName }) {
   const [submittedValues, setSubmittedValues] = useState([]);
   const [user, setUser] = useState([]);
   const [task, setTask] = useState([]);
-  const [type, setType] = useState([]);
+
+  // const handleSubmitTask = async (values) => {
+  //   try {
+  //     await axios.post("http://localhost:5000/tasks", values);
+  //     alert("Task added successfully!");
+  //   } catch (error) {
+  //     console.log(error);
+  //     alert("Error adding task.");
+  //   }
+  // };
 
   useEffect(() => {
     axios
@@ -39,8 +48,6 @@ function AddTaskCard() {
       .then((response) => response.data)
       .then((data) => {
         setUser(data);
-        console.info(type);
-        console.info(setType);
       });
   }, []);
 
@@ -58,167 +65,265 @@ function AddTaskCard() {
 
   const handleSubmit = (values) => {
     setSubmittedValues([...submittedValues, values]);
+    console.info(values, "values");
   };
+  console.info(task, "task");
 
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ values, handleChange }) => (
+        {({ values, handleChange, setFieldValue }) => (
           <Form>
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="name"
-              label="Name"
-              value={values.name}
-              onChange={handleChange}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="state"
-              label="State"
-              value={values.state}
-              onChange={handleChange}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="task_start_date"
-              label="Task Start Date"
-              type="date"
-              value={values.task_start_date}
-              onChange={handleChange}
-              InputLabelProps={{ shrink: true }}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="task_end_date"
-              label="Task End Date"
-              type="date"
-              value={values.task_end_date}
-              onChange={handleChange}
-              InputLabelProps={{ shrink: true }}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="description"
-              label="Description"
-              value={values.description}
-              onChange={handleChange}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="progress"
-              label="Progress"
-              type="number"
-              value={values.progress}
-              onChange={handleChange}
-            />
-            <FormControl>
-              {/* <InputLabel id="demo-simple-select-standard-label">
-                Select Task Type
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-standard-label"
-                fullWidth
+            <FormControl
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "row",
+                marginBottom: "1%",
+              }}
+            >
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
                 variant="outlined"
-                value={values.type}
-                onChange={(e) => setType(e.target.value)}
-                label="Select Type"
-                sx={{
-                  width: 250,
-                }}
-              >
-                {[...uniqueTaskTypes].map((type) => (
-                  <MenuItem key={type.id} value={type}>
-                    {type}
-                  </MenuItem>
-                ))}
-              </Select> */}
-              <FormHelperText>Please Select Task Type</FormHelperText>
+                disabled
+                defaultValue="Project Name"
+                name="name"
+                label="Project Name"
+                value={projectName || ""}
+                onChange={handleChange}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="name"
+                label="Task Name"
+                value={values.name}
+                onChange={handleChange}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="state"
+                label="State"
+                value={values.state}
+                onChange={handleChange}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="progress"
+                label="Progress"
+                type="number"
+                value={values.progress}
+                onChange={handleChange}
+              />
             </FormControl>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Select User</InputLabel>
-              <Select
-                label="Select user"
-                fullWidth
-                value={values.user_id}
-                onChange={(e) => setUser(e.target.value)}
-                sx={{
-                  width: 250,
-                }}
+
+            <FormControl
+              sx={{
+                display: "flex",
+                direction: "row",
+                width: "100%",
+                marginBottom: "2%",
+              }}
+            >
+              <Field
+                as={TextField}
+                id="outlined-multiline-flexible"
+                labelid="Multiline"
+                multiline
+                maxRows={4}
+                name="description"
+                label="Description"
+                value={values.description}
+                onChange={handleChange}
+              />
+            </FormControl>
+
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                marginBottom: "1%",
+              }}
+            >
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="task_start_date"
+                label="Task Start Date"
+                type="date"
+                value={values.task_start_date}
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="task_end_date"
+                label="Task End Date"
+                type="date"
+                value={values.task_end_date}
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+              />
+            </FormControl>
+
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                marginBottom: "1%",
+              }}
+            >
+              <FormControl
+                sx={{ display: "flex", flexDirection: "column", m: "1" }}
               >
-                {user.map((users) => {
-                  return (
-                    <MenuItem
-                      key={users.id}
-                      value={`${users.firstname} ${users.lastname}`}
-                    >
-                      {`${users.firstname} ${users.lastname}`}
+                <InputLabel id="demo-simple-select-standard-label">
+                  Select Type
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  fullWidth
+                  variant="outlined"
+                  value={task.type}
+                  onChange={setFieldValue}
+                  label="Select Type"
+                  sx={{
+                    width: 250,
+                  }}
+                >
+                  {[...uniqueTaskTypes].map((type) => (
+                    <MenuItem key={type.id} value={type}>
+                      {type}
                     </MenuItem>
-                  );
-                })}
-              </Select>
+                  ))}
+                </Select>
+                <FormHelperText>Please Select Task Type</FormHelperText>
+              </FormControl>
+
+              <FormControl
+                sx={{ display: "flex", flexDirection: "column", m: "1" }}
+              >
+                <InputLabel id="demo-simple-select-label">
+                  Select User
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  fullWidth
+                  variant="outlined"
+                  value={task.user_id}
+                  onChange={handleChange}
+                  label="Select Type"
+                  sx={{
+                    width: 250,
+                  }}
+                >
+                  {user.map((users) => {
+                    return (
+                      <MenuItem
+                        key={users.id}
+                        value={`${users.firstname} ${users.lastname}`}
+                      >
+                        {`${users.firstname} ${users.lastname}`}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+                <FormHelperText>Please Select User</FormHelperText>
+              </FormControl>
             </FormControl>
-            <FormHelperText>Please Select User</FormHelperText>
-            <Button type="submit">Add task</Button>
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <Button type="submit" variant="contained" color="primary">
+                Add task
+              </Button>
+            </FormControl>
           </Form>
         )}
       </Formik>
-      {/* {submittedValues.map((values, index) => (
-        <Card key={values.index} direction="row" justifyContent="center">
-          <CardContent direction="row" justifyContent="spacebetween">
-            <Typography gutterBottom variant="h5" component="h2">
-              Name: {values.name}
-            </Typography>
 
-            <Typography gutterBottom variant="h5" component="h2">
-              State: {values.state}
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <Typography variant="h6" color="textSecondary" component="h6">
-              Start date: {values.task_start_date}
-            </Typography>
+      <Card>
+        {submittedValues.map((values) => (
+          <Card direction="row" justifyContent="center">
+            <CardContent direction="row" justifyContent="spacebetween">
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography gutterBottom variant="h5" component="h3">
+                  Name : {values.name}
+                </Typography>
 
-            <Typography variant="h6" color="textSecondary" component="h6">
-              End date: {values.task_end_date}
-            </Typography>
+                <Typography gutterBottom variant="h5" component="h3">
+                  State : {values.state}
+                </Typography>
+              </div>
 
-            <Typography variant="body2" color="textSecondary" component="p">
-              Description: {values.description}
-            </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: "2%",
+                }}
+              >
+                <Typography variant="h6" color="textSecondary" component="h6">
+                  Start date : {values.task_start_date}
+                </Typography>
+                <Typography variant="h6" color="textSecondary" component="h6">
+                  End date : {values.task_end_date}
+                </Typography>
+              </div>
 
-            <Typography variant="body2" color="textSecondary" component="p">
-              Progress: {values.progress}
-            </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: "2%",
+                }}
+              >
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Description : {values.description}
+                </Typography>
+              </div>
 
-            <Typography variant="body2" color="textSecondary" component="p">
-              Task Type: {values.type}
-            </Typography>
-
-            <Typography variant="body2" color="textSecondary" component="p">
-              User: {values.user_id}
-            </Typography>
-          </CardContent>
-        </Card> */}
-      {/* ))} */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: "2%",
+                }}
+              >
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Progress : {values.progress}%
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Task Type : {task.type}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  User : {task.user_id}
+                </Typography>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </Card>
     </>
   );
 }

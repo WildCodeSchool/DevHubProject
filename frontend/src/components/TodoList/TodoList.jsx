@@ -1,18 +1,10 @@
 // // import React, { useState, useEffect } from "react";
 // // import { makeStyles } from "@material-ui/core/styles";
-// // import {
-// //   TextField,
-// //   Button,
-// //   MenuItem,
-// //   Grid,
-// //   Select,
-// //   InputLabel,
-// // } from "@material-ui/core";
+
 // // import DeleteIcon from "@mui/icons-material/Delete";
 // // import SendIcon from "@mui/icons-material/Send";
 // // import { Stack } from "@mui/material";
 // // import axios from "axios";
-// // import Task from "../Task/Task";
 
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -40,78 +32,78 @@
 //     backgroundColor: "#E05206",
 //   },
 // }));
-// function ToDoList() {
-//   const classes = useStyles();
-//   const [tasks, setTasks] = useState([]);
-//   const [taskName, setTaskName] = useState("");
-//   const [taskDescription, setTaskDescription] = useState("");
-//   const [startDate, setStartDate] = useState("");
-//   const [endDate, setEndDate] = useState("");
-//   const [taskType, setTaskType] = useState("");
-//   const [taskUser, setTaskUser] = useState("");
+// // function ToDoList() {
+// //   const classes = useStyles();
+// //   const [tasks, setTasks] = useState([]);
+// //   const [taskName, setTaskName] = useState("");
+// //   const [taskDescription, setTaskDescription] = useState("");
+// //   const [startDate, setStartDate] = useState("");
+// //   const [endDate, setEndDate] = useState("");
+// //   const [taskType, setTaskType] = useState("");
+// //   const [taskUser, setTaskUser] = useState("");
 
-//   // const [user, setUser] = useState([]);
-//   const [task, setTask] = useState([]);
+// //   // const [user, setUser] = useState([]);
+// //   const [task, setTask] = useState([]);
 
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/users")
-//       .then((response) => response.data)
-//       .then((data) => {
-//         setUser(data);
-//       });
-//   }, []);
+// //   useEffect(() => {
+// //     axios
+// //       .get("http://localhost:5000/users")
+// //       .then((response) => response.data)
+// //       .then((data) => {
+// //         setUser(data);
+// //       });
+// //   }, []);
 
-//   useEffect(() => {
-//     axios
-//       .get("http://localhost:5000/tasks")
-//       .then((response) => response.data)
-//       .then((data) => {
-//         setTask(data);
-//       });
-//   }, []);
+// //   useEffect(() => {
+// //     axios
+// //       .get("http://localhost:5000/tasks")
+// //       .then((response) => response.data)
+// //       .then((data) => {
+// //         setTask(data);
+// //       });
+// //   }, []);
 
-//   const uniqueTaskTypes = new Set();
-//   task.forEach((tasks) => uniqueTaskTypes.add(tasks.type));
+// //   const uniqueTaskTypes = new Set();
+// //   task.forEach((tasks) => uniqueTaskTypes.add(tasks.type));
 
-//   // // const handleAddTask = () => {
-//   //   setTasks([
-//   //     ...tasks,
-//   //     {
-//   //       name: taskName,
-//   //       description: taskDescription,
-//   //       startDate,
-//   //       endDate,
-//   //       type: taskType,
-//   //       user: taskUser,
-//   //       completed: false,
-//   //     },
-//   //   ]);
-//   //   setTaskName("");
-//   //   setTaskDescription("");
-//   //   setStartDate("");
-//   //   setEndDate("");
-//   //   setTaskType("");
-//   //   setTaskUser("");
-//   // };
-//   // const handleDeleteTask = (index) => {
-//   //   const newTasks = [...tasks];
-//   //   newTasks.splice(index, 1);
-//   //   setTasks(newTasks);
-//   // };
+// //   const handleAddTask = () => {
+// //     setTasks([
+// //       ...tasks,
+// //       {
+// //         name: taskName,
+// //         description: taskDescription,
+// //         startDate,
+// //         endDate,
+// //         type: taskType,
+// //         user: taskUser,
+// //         completed: false,
+// //       },
+// //     ]);
+// //     setTaskName("");
+// //     setTaskDescription("");
+// //     setStartDate("");
+// //     setEndDate("");
+// //     setTaskType("");
+// //     setTaskUser("");
+// //   };
+// // const handleDeleteTask = (index) => {
+// //   const newTasks = [...tasks];
+// //   newTasks.splice(index, 1);
+// //   setTasks(newTasks);
+// // };
 
-//   return (
-//     <>
-//       <Stack className={classes.root}>
-//         <Grid
-//           container
-//           m={4}
-//           spacing={2}
-//           alignItems="center"
-//           wrap="nowrap"
-//           justifycontent="space-between"
-//         >
-//           {/* <Grid item xs={12} sm={3}>
+// // return (
+// //   <>
+// //     <Stack className={classes.root}>
+// //       <Grid
+// //         container
+// //         m={4}
+// //         spacing={2}
+// //         alignItems="center"
+// //         wrap="nowrap"
+// //         justifycontent="space-between"
+// //       >
+//         {/* <Grid item xs={12} sm={3}>
 //             <TextField
 //               id="taskName"
 //               label="Task name"
@@ -152,7 +144,7 @@
 //               }}
 //             />
 //           </Grid> */}
-//           {/* <Grid item xs={12} sm={3}>
+//         {/* <Grid item xs={12} sm={3}>
 //            <InputLabel id="demo-simple-select-label">Select Task Type</InputLabel>
 //             <Select
 //                 fullWidth
@@ -197,7 +189,7 @@
 //               })}
 //             </Select>
 //           </Grid> */}
-//           {/* <Grid item xs={12} sm={3}>
+//         {/* <Grid item xs={12} sm={3}>
 //             <Button
 //               variant="contained"
 //               backgroundColor="#82BE00"
@@ -215,9 +207,9 @@
 //               Ajouter
 //             </Button>
 //           </Grid> */}
-//         </Grid>
-//       </Stack>
-//       {/* <Stack
+//       </Grid>
+//     </Stack>
+//     {/* <Stack
 //         m={1}
 //         direction="row"
 //         justifyContent="space-around"
@@ -232,35 +224,35 @@
 //         ))}
 //       </Stack> */}
 
-//       <Stack
-//         direction="row"
-//         sx={{
-//           display: "flex",
-//           justifyContent: "center",
-//           alignItems: "center",
-//         }}
-//         spacing={2}
+//     <Stack
+//       direction="row"
+//       sx={{
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//       spacing={2}
+//     >
+//       <Button
+//         variant="outlined"
+//         className={classes.buttonDelete}
+//         style={{ backgroundColor: "red" }}
+//         startIcon={<DeleteIcon />}
 //       >
-//         <Button
-//           variant="outlined"
-//           className={classes.buttonDelete}
-//           style={{ backgroundColor: "red" }}
-//           startIcon={<DeleteIcon />}
-//         >
-//           Delete
-//         </Button>
+//         Delete
+//       </Button>
 
-//         <Button
-//           type="submit"
-//           variant="outlined"
-//           className={classes.buttonCreate}
-//           style={{ backgroundColor: "yellow" }}
-//           endIcon={<SendIcon />}
-//         >
-//           Create
-//         </Button>
-//       </Stack>
-//     </>
-//   );
-// }
+//       <Button
+//         type="submit"
+//         variant="outlined"
+//         className={classes.buttonCreate}
+//         style={{ backgroundColor: "yellow" }}
+//         endIcon={<SendIcon />}
+//       >
+//         Create
+//       </Button>
+//     </Stack>
+//   </>
+// );
+
 // export default ToDoList;
