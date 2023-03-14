@@ -14,7 +14,7 @@ const userControllers = require("./controllers/userControllers");
 // GET
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
-
+router.put("/users/:id", userControllers.edit);
 // REGISTER
 router.post("/users", hashPassword, userControllers.add);
 router.post(
@@ -36,7 +36,7 @@ router.get("/users/:id/projects", projectControllers.getProjectsByUserId);
 router.get("/projects", projectControllers.browse);
 router.get("/projects/:id", projectControllers.read);
 router.put("/projects/:id", projectControllers.edit);
-router.post("/projects", projectControllers.addProject);
+router.post("/projects", projectControllers.add);
 router.delete("/projects/:id", projectControllers.destroy);
 
 const noteControllers = require("./controllers/noteControllers");
