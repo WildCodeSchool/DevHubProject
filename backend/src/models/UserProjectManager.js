@@ -19,6 +19,17 @@ class UserProjectManager extends AbstractManager {
       [userProject.user_id, userProject.project_id, userProject.id]
     );
   }
+
+  async getUsersByProjectId(projectId) {
+    const result = await this.database.query(
+      `SELECT user.*
+       FROM user
+       INNER JOIN user_project ON user.id = user_project.user_id
+       WHERE user_project.project_id = ?`,
+      [projectId]
+    );
+    return result;
+  }
 }
 
 module.exports = UserProjectManager;
