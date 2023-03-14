@@ -142,7 +142,7 @@ function Sidebar() {
                   </Box>
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  <Box key={currentUser.id}>Role{currentUser.role}</Box>
+                  <Box key={currentUser.id}>{currentUser.user_role}</Box>
                 </Typography>
               </Box>
             </Box>

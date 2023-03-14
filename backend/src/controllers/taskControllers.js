@@ -80,10 +80,25 @@ const destroy = (req, res) => {
     });
 };
 
+const getTasksByProjectId = (req, res) => {
+  const projectId = req.params.id;
+
+  models.task
+    .getTasksByProjectId(projectId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  getTasksByProjectId,
 };

@@ -59,7 +59,7 @@ function UserCard(props) {
               <Typography variant="body2" color="text.greenAccent">
                 {email}
               </Typography>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h6" component="div">
                 {role}
               </Typography>
             </CardContent>

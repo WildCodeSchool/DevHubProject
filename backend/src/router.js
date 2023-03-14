@@ -32,6 +32,7 @@ router.post(
 
 const projectControllers = require("./controllers/projectControllers");
 
+router.get("/users/:id/projects", projectControllers.getProjectsByUserId);
 router.get("/projects", projectControllers.browse);
 router.get("/projects/:id", projectControllers.read);
 router.put("/projects/:id", projectControllers.edit);
@@ -48,6 +49,7 @@ router.delete("/notes/:id", noteControllers.destroy);
 
 const taskControllers = require("./controllers/taskControllers");
 
+router.get("/projects/:id/tasks", taskControllers.getTasksByProjectId);
 router.get("/tasks", taskControllers.browse);
 router.get("/tasks/:id", taskControllers.read);
 router.post("/tasks", taskControllers.add);

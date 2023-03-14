@@ -3,10 +3,9 @@ import Slider from "react-slick";
 import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import Team from "../../data/userData";
 import UserCard from "../UserCard/UserCard";
 
-function SliderTeam() {
+function SliderTeam({ selectedRole }) {
   const [users, setUsers] = useState([]);
 
   const getUser = () => {
@@ -17,9 +16,14 @@ function SliderTeam() {
         setUsers(data);
       });
   };
+
   useEffect(() => {
     getUser();
   }, []);
+
+  const filteredUsers = selectedRole
+    ? users.filter((user) => user.user_role === selectedRole)
+    : users;
 
   const settings = {
     infinite: true,
@@ -56,7 +60,7 @@ function SliderTeam() {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Slider {...settings}>
-      {users.map((user) => {
+      {filteredUsers.map((user) => {
         return (
           <UserCard
             key={user.id}
@@ -64,7 +68,7 @@ function SliderTeam() {
             lastname={user.lastname}
             email={user.email}
             user_image={user.user_image}
-            role={user.role}
+            role={user.user_role}
           />
         );
       })}
