@@ -38,6 +38,14 @@ class TaskManager extends AbstractManager {
       ]
     );
   }
+
+  getTasksByProjectId(projectId) {
+    return this.database.query(
+      `SELECT * FROM task INNER JOIN task_project ON task.id = task_project.task_id 
+      WHERE task_project.project_id = ?`,
+      [projectId]
+    );
+  }
 }
 
 module.exports = TaskManager;

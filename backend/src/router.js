@@ -5,8 +5,8 @@ const router = express.Router();
 const {
   hashPassword,
   verifyPassword,
-  verifyToken,
-  verifyId,
+  // verifyToken,
+  // verifyId,
 } = require("./middlewares/auth");
 
 const userControllers = require("./controllers/userControllers");
@@ -25,13 +25,14 @@ router.post(
 
 // POST,PUT & DELETE
 
-router.use(verifyToken); // Authentication Wall
+// router.use(verifyToken); // Authentication Wall
 
-router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
-router.delete("/users/:id", verifyId, userControllers.destroy);
+// router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
+// router.delete("/users/:id", verifyId, userControllers.destroy);
 
 const projectControllers = require("./controllers/projectControllers");
 
+router.get("/users/:id/projects", projectControllers.getProjectsByUserId);
 router.get("/projects", projectControllers.browse);
 router.get("/projects/:id", projectControllers.read);
 router.put("/projects/:id", projectControllers.edit);
@@ -48,6 +49,7 @@ router.delete("/notes/:id", noteControllers.destroy);
 
 const taskControllers = require("./controllers/taskControllers");
 
+router.get("/projects/:id/tasks", taskControllers.getTasksByProjectId);
 router.get("/tasks", taskControllers.browse);
 router.get("/tasks/:id", taskControllers.read);
 router.post("/tasks", taskControllers.add);

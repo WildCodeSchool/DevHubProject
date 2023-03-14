@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-function SelectRole() {
+function SelectRole({ setSelectedRole }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [role, setRole] = useState("");
@@ -13,6 +13,7 @@ function SelectRole() {
 
   const handleChange = (event) => {
     setRole(event.target.value);
+    setSelectedRole(event.target.value);
   };
 
   const getRole = () => {
@@ -20,7 +21,11 @@ function SelectRole() {
       .get(`http://localhost:5000/users`)
       .then((response) => response.data)
       .then((data) => {
-        setRoleList(data);
+        const roles = new Set();
+        data.forEach((roleMap) => {
+          roles.add(roleMap.user_role);
+        });
+        setRoleList(Array.from(roles));
       });
   };
 
@@ -42,8 +47,8 @@ function SelectRole() {
         }}
       >
         {roleList.map((roleMap) => (
-          <MenuItem key={roleMap.id} value={roleMap.name}>
-            {roleMap.name}
+          <MenuItem key={roleMap} value={roleMap}>
+            {roleMap}
           </MenuItem>
         ))}
       </TextField>

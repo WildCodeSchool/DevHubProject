@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Grid, useTheme, Typography } from "@mui/material";
-// import CalendarComponent from "../../components/Calendar/Calendar";
+import axios from "axios";
 import Header from "../../components/Header/Header";
 import NoteList from "../../components/NotesList/NotesList";
 import SliderTeam from "../../components/SliderTeam/SliderTeam";
@@ -10,51 +10,58 @@ import PieChart from "../../components/PieChart/PieChart";
 import SelectProject from "../../components/SelectProject/SelectProject";
 import SelectRole from "../../components/SelectRole/SelectRole";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
+import TeamTitle from "../../components/TeamTitle/TeamTitle";
+import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
 import { tokens } from "../../theme";
 
 function Dashboard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [notes, setNotes] = useState([
-    {
-      id: 1,
-      noteText: "This is my first note!",
-      date: "15/04/2021",
-    },
-    {
-      id: 2,
-      noteText: "This is my second note!",
-      date: "21/04/2021",
-    },
-    {
-      id: 3,
-      noteText: "This is my third note!",
-      date: "21/05/2021",
-    },
-    {
-      id: 5,
-      noteText: "This is my second note!",
-      date: "21/02/2023",
-    },
-  ]);
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/notes");
+
+        setNotes(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNotes();
+  }, []);
 
   const addNote = (text) => {
     const date = new Date();
     const newNote = {
-      id: 1,
       noteText: text,
       date: date.toLocaleDateString(),
     };
     const newNotes = [...notes, newNote];
     setNotes(newNotes);
+    console.info(newNotes, "NEWNOTES");
   };
 
-  const deleteNote = (id) => {
-    const newNotes = notes.filter((note) => note.id !== id);
-    setNotes(newNotes);
+  const deleteNote = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/notes/${id}`);
+      const newNotes = notes.filter((note) => note.id !== id);
+      setNotes(newNotes);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const [searchText, setSearchText] = useState("");
+
+  const [selectedProject, setSelectedProject] = useState("");
+  const handleProjectSelect = (selectedProjectName) => {
+    setSelectedProject(selectedProjectName);
+  };
+  const [selectedRole, setSelectedRole] = useState("");
+
   return (
     <Grid container>
       <Grid
@@ -66,7 +73,7 @@ function Dashboard() {
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
         <Box sx={{ width: "250px", marginTop: "25px", border: 1 }}>
-          <SelectProject />
+          <SelectProject onProjectSelect={handleProjectSelect} />
         </Box>
       </Grid>
 
@@ -96,30 +103,14 @@ function Dashboard() {
             alignItems="center"
             width="100%"
           >
-            <Box>
-              <Typography
-                variant="h4"
-                color={colors.grey[100]}
-                fontWeight="bold"
-                letterSpacing="0.15em"
-                textAlign="center"
-                sx={{
-                  border: 1,
-                  borderRadius: "5px",
-                  padding: "0.4em",
-                  width: "300px",
-                }}
-              >
-                Selected Team
-              </Typography>
-            </Box>
+            <TeamTitle selectedRole={selectedRole} />
             <Box sx={{ border: 1, borderRadius: "5px" }}>
-              <SelectRole />
+              <SelectRole setSelectedRole={setSelectedRole} />
             </Box>
           </Grid>
         </Grid>
         <Box sx={{ border: 1, padding: "1em" }}>
-          <SliderTeam />
+          <SliderTeam selectedRole={selectedRole} />
         </Box>
         <Box
           display="flex"
@@ -174,8 +165,10 @@ function Dashboard() {
             <AddNote handleAddNote={addNote} />
           </Box>
           <NoteList
-            notes={notes.filter((note) =>
-              note.noteText.toLocaleLowerCase().includes(searchText)
+            notes={notes.filter(
+              (note) =>
+                typeof note.description === "string" &&
+                note.description.toLocaleLowerCase().includes(searchText)
             )}
             handleDeleteNote={deleteNote}
           />
@@ -210,27 +203,7 @@ function Dashboard() {
             padding: "10px",
           }}
         >
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            width="200px"
-            sx={{
-              border: 1,
-              height: "50px",
-              borderRadius: "5px",
-              padding: "10px",
-            }}
-          >
-            <Typography
-              variant="h4"
-              color={colors.grey[100]}
-              fontWeight="bold"
-              letterSpacing="0.15em"
-            >
-              Project Name
-            </Typography>
-          </Box>
+          <ProjectTitle selectedProject={selectedProject} />
         </Box>
         <Box
           display="flex"
@@ -262,27 +235,7 @@ function Dashboard() {
             Project Task List
           </Typography>
         </Box>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            border: 1,
-            height: "100%",
-            borderRadius: "5px",
-            width: "90%",
-            marginTop: "10px",
-          }}
-        >
-          <Typography
-            variant="h4"
-            color={colors.grey[100]}
-            fontWeight="bold"
-            letterSpacing="0.15em"
-          >
-            TASK LIST COMPONENT
-          </Typography>
-        </Box>
+        <ProjectTaskList />
       </Grid>
     </Grid>
   );
