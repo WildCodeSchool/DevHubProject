@@ -74,6 +74,7 @@ router.delete("/recipients/:id", recipientControllers.destroy);
 
 const userProjectControllers = require("./controllers/userProjectControllers");
 
+router.get("/projects/:id/users", userProjectControllers.getUsersByProjectId);
 router.get("/userProjects", userProjectControllers.browse);
 router.get("/userProjects/:id", userProjectControllers.read);
 router.post("/userProjects", userProjectControllers.add);
