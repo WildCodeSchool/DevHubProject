@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, CardContent, Typography, Box } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { amber, blue, green, red } from "@mui/material/colors";
+import { Box } from "@mui/material";
 
 function TaskCard(props) {
   const { name, state, progress, description, startDate, endDate, type } =
@@ -48,12 +49,8 @@ function TaskCard(props) {
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="subtitle1" component="h6">
-            Start : {startDate}
-          </Typography>
-          <Typography variant="subtitle1" component="h6">
-            End : {endDate}
-          </Typography>
+          <Typography>Start : {startDate}</Typography>
+          <Typography>End : {endDate}</Typography>
         </div>
 
         <div
@@ -96,11 +93,10 @@ function TaskCard(props) {
               sx={{
                 height: "100%",
                 borderRadius: 5,
-                background: getColor(progress), // La couleur de fond dépend de la valeur de progress
-                backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.2)), ${getColor(
-                  { progress }
-                )}`,
-                width: `${progress}%`, // La largeur dépend de la valeur de progress
+                background: getColor(progress),
+                backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+                 ${getColor({ progress })}`,
+                width: `${progress}%`,
               }}
             />
             <Box sx={{ ml: 1, Width: 70 }} />
