@@ -56,9 +56,18 @@ function Dashboard() {
 
   const [searchText, setSearchText] = useState("");
 
-  const [selectedProject, setSelectedProject] = useState("");
-  const handleProjectSelect = (selectedProjectName) => {
-    setSelectedProject(selectedProjectName);
+  const [selectedProjectName, setSelectedProjectName] = useState("");
+  console.info("🚀 ~ Dashboard ~ selectedProjectName:", selectedProjectName);
+
+  const [idProject, setIdProject] = useState("");
+  console.info("🚀 ~ Dashboard ~ idProject:", idProject);
+
+  const handleProjectSelect = (ProjectName) => {
+    setSelectedProjectName(ProjectName);
+    console.info(
+      "🚀 ~ Dashboard ~ ProjectName on handleProjectSelect :",
+      ProjectName
+    );
   };
   const [selectedRole, setSelectedRole] = useState("");
 
@@ -73,7 +82,11 @@ function Dashboard() {
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
         <Box sx={{ width: "250px", marginTop: "25px", border: 1 }}>
-          <SelectProject onProjectSelect={handleProjectSelect} />
+          <SelectProject
+            handleProjectSelect={handleProjectSelect}
+            setIdProject={setIdProject}
+            setSelectedProjectName={setSelectedProjectName}
+          />
         </Box>
       </Grid>
 
@@ -110,7 +123,7 @@ function Dashboard() {
           </Grid>
         </Grid>
         <Box sx={{ border: 1, padding: "1em" }}>
-          <SliderTeam selectedRole={selectedRole} />
+          <SliderTeam selectedRole={selectedRole} idProject={idProject} />
         </Box>
         <Box
           display="flex"
@@ -203,7 +216,7 @@ function Dashboard() {
             padding: "10px",
           }}
         >
-          <ProjectTitle selectedProject={selectedProject} />
+          <ProjectTitle selectedProjectName={selectedProjectName} />
         </Box>
         <Box
           display="flex"
@@ -235,7 +248,7 @@ function Dashboard() {
             Project Task List
           </Typography>
         </Box>
-        <ProjectTaskList />
+        <ProjectTaskList idProject={idProject} />
       </Grid>
     </Grid>
   );

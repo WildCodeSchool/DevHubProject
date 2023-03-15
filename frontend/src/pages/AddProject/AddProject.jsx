@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import AddProjectForm from "@components/TodoList/HandleSubmitProject";
-import AddTaskCard from "@components/TodoList/HandleSubmitTest";
-// import AddTaskForm from "@components/TodoList/HandleSubmitTask";
+import AddProjectForm from "../../components/TodoList/HandleSubmitProject";
+import AddTaskCard from "../../components/TodoList/HandleSubmitTest";
+// import AddTaskForm from "../../components/TodoList/HandleSubmitTask";
 // import { tokens } from "../../theme";
 // import Input from "@mui/material/Input";
 // import ToDoList from "../../components/TodoList/TodoList";

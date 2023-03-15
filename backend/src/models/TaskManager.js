@@ -46,6 +46,12 @@ class TaskManager extends AbstractManager {
       [projectId]
     );
   }
+
+  getTasksByUserId(userId) {
+    return this.database.query(`SELECT * FROM task WHERE user_id = ?`, [
+      userId,
+    ]);
+  }
 }
 
 module.exports = TaskManager;

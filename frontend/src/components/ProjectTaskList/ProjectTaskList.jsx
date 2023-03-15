@@ -3,22 +3,29 @@ import { Box, useTheme, Typography } from "@mui/material";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-function ProjectTaskList() {
+function ProjectTaskList({ idProject }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [tasks, setTasks] = useState([]);
 
+  const getTasksByProjectId = async (projectId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/projects/${projectId}/tasks`
+      );
+      setTasks(response.data);
+      console.info("Users retrieved successfully:", response.data);
+    } catch (error) {
+      console.info(error);
+    }
+  };
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/projects/1/tasks")
-      .then((response) => {
-        setTasks(response.data);
-      })
-      .catch((error) => {
-        console.info(error);
-      });
-  }, []);
+    if (idProject) {
+      console.info("Selected project ID:", idProject);
+      getTasksByProjectId(idProject);
+    }
+  }, [idProject]);
 
   return (
     <Box

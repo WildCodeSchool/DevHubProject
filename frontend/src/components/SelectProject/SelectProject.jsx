@@ -5,16 +5,24 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-function SelectProject({ onProjectSelect }) {
+function SelectProject({
+  handleProjectSelect,
+  setIdProject,
+  setSelectedProjectName,
+}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [project, setProject] = useState("");
+  const [selectedProject, setSelectedProject] = useState(null);
   const [projectList, setProjectList] = useState([]);
 
   const handleChange = (event) => {
-    const selectedProjectName = event.target.value;
-    setProject(selectedProjectName);
-    onProjectSelect(selectedProjectName);
+    const project = event.target.value;
+    setSelectedProject(project);
+    setIdProject(project.id);
+    setSelectedProjectName(project.name);
+    console.info("ID du projet sélectionné :", project.id);
+    console.info("Nom du projet sélectionné :", project.name);
+    handleProjectSelect(project.name);
   };
 
   const getProjectsByUserID = async () => {
@@ -22,8 +30,13 @@ function SelectProject({ onProjectSelect }) {
       const response = await axios.get(
         "http://localhost:5000/users/1/projects"
       );
-      setProjectList(response.data);
-      console.info("Projects retrieved successfully:", response.data);
+      const projects = response.data.map((projectMap) => ({
+        ...projectMap,
+        id: projectMap.id,
+        name: projectMap.name,
+      }));
+      setProjectList(projects);
+      console.info("Projects retrieved successfully:", projects);
     } catch (error) {
       console.info(error);
     }
@@ -38,7 +51,7 @@ function SelectProject({ onProjectSelect }) {
       <TextField
         label="Liste de projets"
         select
-        value={project}
+        value={selectedProject}
         onChange={handleChange}
         fullWidth
         size="small"
@@ -47,9 +60,9 @@ function SelectProject({ onProjectSelect }) {
         }}
         helperText="Veuillez sélectionner votre projet"
       >
-        {projectList.map((projectMap) => (
-          <MenuItem key={projectMap.id} value={projectMap.name}>
-            {projectMap.name}
+        {projectList.map((project) => (
+          <MenuItem key={project.id} value={project}>
+            {project.name}
           </MenuItem>
         ))}
       </TextField>
