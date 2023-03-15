@@ -5,7 +5,11 @@ import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-function SelectProject({ onProjectSelect, setIdProject }) {
+function SelectProject({
+  handleProjectSelect,
+  setIdProject,
+  setSelectedProjectName,
+}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -15,9 +19,10 @@ function SelectProject({ onProjectSelect, setIdProject }) {
     const project = event.target.value;
     setSelectedProject(project);
     setIdProject(project.id);
+    setSelectedProjectName(project.name);
     console.info("ID du projet sélectionné :", project.id);
     console.info("Nom du projet sélectionné :", project.name);
-    onProjectSelect(project.id);
+    handleProjectSelect(project.name);
   };
 
   const getProjectsByUserID = async () => {

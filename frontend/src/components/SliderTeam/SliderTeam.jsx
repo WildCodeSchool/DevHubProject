@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import UserCard from "../UserCard/UserCard";
 
-function SliderTeam({ selectedUserRole, idProject }) {
+function SliderTeam({ selectedRole, idProject }) {
   const [users, setUsers] = useState([]);
 
   const getUsersByProjectId = async (projectId) => {
@@ -29,8 +29,8 @@ function SliderTeam({ selectedUserRole, idProject }) {
 
   console.info("Filtered users:", users);
 
-  const filteredUsers = selectedUserRole
-    ? users.filter((user) => user.user_role === selectedUserRole)
+  const filteredUsers = selectedRole
+    ? users.filter((user) => user.user_role === selectedRole)
     : users;
 
   console.info("Users filtered by role:", filteredUsers);
