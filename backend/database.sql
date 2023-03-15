@@ -502,8 +502,8 @@ VALUES (
         "2023-02-02",
         "2023-02-09",
         "Develop Data Management System",
-        "Not Started",
-        0,
+        "In Progress",
+        70,
         "IT Development",
         11
     ), (
@@ -520,8 +520,8 @@ VALUES (
         "2023-02-04",
         "2023-02-11",
         "Develop User Profile Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        30,
         "IT Development",
         12
     ), (
@@ -547,8 +547,8 @@ VALUES (
         "2023-02-07",
         "2023-02-14",
         "Develop User Billing Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        80,
         "IT Development",
         13
     ), (
@@ -592,8 +592,8 @@ VALUES (
         "2023-02-12",
         "2023-02-19",
         "Develop User Permissions Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        60,
         "IT Development",
         16
     ), (
@@ -646,8 +646,8 @@ VALUES (
         "2023-02-18",
         "2023-02-25",
         "Develop User Data Export Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        40,
         "IT Development",
         19
     ), (
@@ -673,8 +673,8 @@ VALUES (
         "2023-02-21",
         "2023-02-28",
         "Develop User Search Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        25,
         "IT Development",
         12
     ), (
@@ -727,8 +727,8 @@ VALUES (
         "2023-02-27",
         "2023-03-06",
         "Develop User Data Backup Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        55,
         "IT Development",
         15
     ), (
@@ -763,8 +763,8 @@ VALUES (
         "2023-03-03",
         "2023-03-10",
         "Develop User Data Decryption Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        85,
         "IT Development",
         17
     ), (
@@ -799,8 +799,8 @@ VALUES (
         "2023-03-07",
         "2023-03-14",
         "Develop User Data Backup Management Feature",
-        "Not Started",
-        0,
+        "In Progress",
+        60,
         "IT Development",
         20
     );
