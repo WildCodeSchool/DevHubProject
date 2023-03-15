@@ -94,6 +94,20 @@ const getTasksByProjectId = (req, res) => {
     });
 };
 
+const getTasksByUserId = (req, res) => {
+  const userId = req.params.id;
+
+  models.task
+    .getTasksByUserId(userId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
@@ -101,4 +115,5 @@ module.exports = {
   add,
   destroy,
   getTasksByProjectId,
+  getTasksByUserId,
 };

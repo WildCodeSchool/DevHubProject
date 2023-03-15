@@ -5,25 +5,35 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import UserCard from "../UserCard/UserCard";
 
-function SliderTeam({ selectedRole }) {
+function SliderTeam({ selectedRole, idProject }) {
   const [users, setUsers] = useState([]);
 
-  const getUser = () => {
-    axios
-      .get("http://localhost:5000/users")
-      .then((response) => response.data)
-      .then((data) => {
-        setUsers(data);
-      });
+  const getUsersByProjectId = async (projectId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/projects/${projectId}/users`
+      );
+      setUsers(response.data);
+      console.info("Users retrieved successfully:", response.data);
+    } catch (error) {
+      console.info(error);
+    }
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+    if (idProject) {
+      console.info("Selected project ID:", idProject);
+      getUsersByProjectId(idProject);
+    }
+  }, [idProject]);
+
+  console.info("Filtered users:", users);
 
   const filteredUsers = selectedRole
     ? users.filter((user) => user.user_role === selectedRole)
     : users;
+
+  console.info("Users filtered by role:", filteredUsers);
 
   const settings = {
     infinite: true,
