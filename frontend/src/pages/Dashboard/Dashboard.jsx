@@ -248,7 +248,7 @@ function Dashboard() {
             Project Task List
           </Typography>
         </Box>
-        <ProjectTaskList />
+        <ProjectTaskList idProject={idProject} />
       </Grid>
     </Grid>
   );
