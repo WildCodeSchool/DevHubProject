@@ -348,10 +348,10 @@ function AddTaskForm({ projectName }) {
                   Progress : {values.progress}%
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  Task Type : {task.type}
+                  Task Type : {values.type}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  User : {task.user_id}
+                  User : {values.user_id}
                 </Typography>
               </div>
             </CardContent>

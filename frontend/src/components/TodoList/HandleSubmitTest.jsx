@@ -32,15 +32,14 @@ function AddTaskCard({ projectName }) {
   const [user, setUser] = useState([]);
   const [task, setTask] = useState([]);
 
-  // const handleSubmitTask = async (values) => {
-  //   try {
-  //     await axios.post("http://localhost:5000/tasks", values);
-  //     alert("Task added successfully!");
-  //   } catch (error) {
-  //     console.log(error);
-  //     alert("Error adding task.");
-  //   }
-  // };
+  const handleSubmitTask = async (values) => {
+    try {
+      await axios.post("http://localhost:5000/tasks", values);
+      console.info("Task added successfully!");
+    } catch (error) {
+      console.error("Error adding task.");
+    }
+  };
 
   useEffect(() => {
     axios
@@ -321,6 +320,23 @@ function AddTaskCard({ projectName }) {
                 </Typography>
               </div>
             </CardContent>
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <Button
+                onSubmit={handleSubmitTask}
+                type="submit"
+                size="small"
+                variant="contained"
+                color="primary"
+              >
+                Complete
+              </Button>
+              <Button type="submit" variant="contained" color="greenAccent">
+                Update
+              </Button>
+              <Button type="submit" variant="contained" color="secondary">
+                Delete
+              </Button>
+            </div>
           </Card>
         ))}
       </Card>

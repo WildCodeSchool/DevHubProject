@@ -3,8 +3,6 @@ import { Formik, Form, Field } from "formik";
 import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
 import { FormControl } from "@mui/material";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 
 const initialValues = {
   name: "",

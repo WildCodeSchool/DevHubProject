@@ -1,81 +1,58 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from "@material-ui/core";
+import { useState, useEffect } from "react";
+import { Card } from "@material-ui/core";
+import axios from "axios";
+import TaskCard from "@components/TaskCard/TaskCard";
+import { CardContent } from "@mui/material";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    display: "flex",
-    flexwrap: "nowrap",
-    flexdirection: "row",
-    aligncontent: "center",
-    justifycontent: "space-around",
-    width: "50%",
-    height: "20em",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  completed: {
-    textDecoration: "line-through",
-  },
-}));
-function Task({ task, onDelete }) {
-  const classes = useStyles();
+function Task() {
+  const [task, setTask] = useState([]);
+
+  const getTask = () => {
+    axios
+      .get("http://localhost:5000/tasks")
+      .then((response) => response.data)
+      .then((data) => {
+        const formattedData = data.map((item) => {
+          const formattedStartDate = new Date(item.task_start_date)
+            .toLocaleDateString("fr-FR")
+            .slice(0, 10);
+          const formattedEndDate = new Date(item.task_end_date)
+            .toLocaleDateString("fr-FR")
+            .slice(0, 10);
+          return {
+            ...item,
+            task_start_date: formattedStartDate,
+            task_end_date: formattedEndDate,
+          };
+        });
+        setTask(formattedData);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    getTask();
+  }, []);
+
   return (
-    <Card>
-      <CardContent sx={{ maxWidth: "30em" }}>
-        <Typography variant="h5" component="h4">
-          {task.name}
-        </Typography>
-        <Typography
-          variant="h6"
-          component="h3"
-          maxwidth="120"
-          multiline
-          maxRows={4}
-        >
-          {task.description}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          Début : {task.startDate} - Fin : {task.endDate}- Utilisateur :
-          {task.user}
-        </Typography>
-        <Typography variant="h6" component="h4">
-          {task.type}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={onDelete}>
-          Supprimer
-        </Button>
-        <Button
-          size="small"
-          className={task.completed ? classes.completed : ""}
-        >
-          {task.completed ? "Terminé" : "En cours"}
-        </Button>
-      </CardActions>
+    <Card sx={{ backgroundColor: "grey" }}>
+      {task.map((tasks) => {
+        return (
+          <CardContent sx={{ marginBottom: "1%", backgroundColor: "grey" }}>
+            <TaskCard
+              key={tasks.id}
+              name={tasks.name}
+              state={tasks.state}
+              progress={tasks.progress}
+              description={tasks.description}
+              startDate={tasks.task_start_date}
+              endDate={tasks.task_end_date}
+              type={tasks.type}
+            />
+          </CardContent>
+        );
+      })}
     </Card>
   );
 }
-Task.propTypes = {
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  completed: PropTypes.string.isRequired,
-};
 export default Task;
