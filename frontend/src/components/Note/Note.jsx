@@ -7,7 +7,7 @@ import { tokens } from "../../theme";
 function Note({ id, description, date, handleDeleteNote }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  console.info(description, "description dans NOTE.JSX");
+  // console.info(description, "description dans NOTE.JSX");
   return (
     <Box
       display="flex"

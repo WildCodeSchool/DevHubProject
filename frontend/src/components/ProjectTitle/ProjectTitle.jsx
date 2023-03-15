@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 
-function ProjectTitle({ selectedProject }) {
+function ProjectTitle() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -24,7 +24,7 @@ function ProjectTitle({ selectedProject }) {
         fontWeight="bold"
         letterSpacing="0.15em"
       >
-        {selectedProject || "Project Name"}
+        Project Name
       </Typography>
     </Box>
   );
