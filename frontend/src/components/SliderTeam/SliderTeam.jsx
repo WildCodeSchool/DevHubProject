@@ -38,7 +38,7 @@ function SliderTeam({ selectedRole, idProject }) {
   const settings = {
     infinite: true,
     speed: 300,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 3,
     spacing: "10px",
     responsive: [
