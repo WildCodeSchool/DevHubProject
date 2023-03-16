@@ -7,6 +7,7 @@ const {
   verifyPassword,
   verifyToken,
   verifyId,
+  validateForm,
 } = require("./middlewares/auth");
 
 const userControllers = require("./controllers/userControllers");
@@ -19,6 +20,7 @@ router.get("/users/:id", userControllers.read);
 router.post("/users", hashPassword, userControllers.add);
 router.post(
   "/users/login",
+  validateForm,
   userControllers.getUserByEmailWithPasswordAndPassToNext,
   verifyPassword
 );

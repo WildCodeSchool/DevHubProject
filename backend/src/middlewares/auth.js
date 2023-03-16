@@ -10,20 +10,23 @@ const hashingOptions = {
 
 const hashPassword = (req, res, next) => {
   // hash the password using argon2 then call next()
-
+  console.info(req.body, "hashPassword function called");
   argon2
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
+      console.info(hashedPassword, "mdpasse");
       req.body.hashedPassword = hashedPassword;
       delete req.body.password;
       next();
     })
     .catch((err) => {
       console.error(err);
+      console.info("Error in hashPassword:", err);
       res.sendStatus(500);
     });
 };
 const verifyPassword = (req, res) => {
+  console.info("verifyPassword function called");
   argon2
     .verify(req.user.hashedPassword, req.body.password)
     .then((isVerified) => {
@@ -35,7 +38,9 @@ const verifyPassword = (req, res) => {
         });
 
         delete req.user.hashedPassword;
-        res.status(201).send({ token, user: req.user });
+        res
+          .status(201)
+          .send({ token, userId: req.user.id, toggle: process.env.APP_DECO }); //  retour token + user ID
       } else {
         res.sendStatus(401);
       }
@@ -47,6 +52,7 @@ const verifyPassword = (req, res) => {
 };
 
 const verifyToken = (req, res, next) => {
+  console.info("verifyToken function called");
   try {
     const authorizationHeader = req.get("Authorization");
 
@@ -70,6 +76,7 @@ const verifyToken = (req, res, next) => {
 };
 
 const verifyId = (req, res, next) => {
+  console.info("verifyId function called");
   try {
     if (req.payload.sub === parseInt(req.params.id, 10)) {
       next();
@@ -82,9 +89,48 @@ const verifyId = (req, res, next) => {
   }
 };
 
+const validateForm = (req, res, next) => {
+  const { email, password } = req.body;
+  const errors = [];
+
+  const emailRegex = /[a-z0-9._]+@[a-z0-9-]+\.[a-z]{2,3}/;
+  const passwordRegex = /^(?=.*?[0-9]).{9,}$/;
+
+  if (!email?.length || email == null) {
+    errors.push({ field: "email", message: "This field is required" });
+  } else if (!emailRegex.test(email)) {
+    errors.push({ field: "email", message: "Invalid email" });
+  } else if (email.length >= 255) {
+    errors.push({
+      field: "email",
+      message: "Should contain less than 255 characters",
+    });
+  }
+
+  if (!password?.length || password == null) {
+    errors.push({ field: "password", message: "This field is required" });
+  } else if (!passwordRegex.test(password)) {
+    errors.push({ field: "password", message: "Invalid password" });
+  } else if (password.length >= 255) {
+    errors.push({
+      field: "password",
+      message: "Should contain less than 255 characters",
+    });
+  }
+
+  if (errors.length) {
+    console.info(res, "erreur 422");
+    console.info(errors, "errors");
+    res.status(422).json({ validationErrors: errors });
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   hashPassword,
   verifyPassword,
   verifyToken,
   verifyId,
+  validateForm,
 };

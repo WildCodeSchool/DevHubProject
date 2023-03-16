@@ -1,7 +1,4 @@
--- Active: 1678616074625@@127.0.0.1@3306@dbdevhubproject
---- npm run migrate
-
-USE dbdevhubproject;
+-- Active: 1678616074625@@127.0.0.1@3306@dbdevhubprojectUSE dbdevhubproject;
 
 DROP TABLE IF EXISTS user;
 
@@ -11,7 +8,7 @@ CREATE TABLE
         firstname VARCHAR(60) NOT NULL,
         lastname VARCHAR(60) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
-        phone VARCHAR(10) UNIQUE,        
+        phone VARCHAR(10) UNIQUE,
         user_image BLOB,
         biography VARCHAR(255),
         hashedPassword VARCHAR(255),
@@ -109,7 +106,6 @@ USE dbdevhubproject;
 
 -- Query to feed sql data in USER table
 
-
 INSERT INTO
     user (
         firstname,
@@ -129,7 +125,8 @@ VALUES (
         '1234567890',
         NULL,
         'A software developer',
-        'password123',
+        '$argon2id$v=19$m=65536,t=5,p=1$mNJNlU8pRBXbCLIJjZwZWg$X90u1DE3J+vtIV+AvQCB1IB/g2epOVEwnB1ikuJmaH8', 
+        -- //password112
         'johndoe',
         'New York'
     ), (
@@ -139,7 +136,8 @@ VALUES (
         '0987654321',
         NULL,
         'A web designer',
-        'password456',
+        '$argon2id$v=19$m=65536,t=5,p=1$AP4W9uC0rCuw4kiU7DcIgQ$Ft9fTgWjOp2yeimahVmnKZQtAEmNjKBdzYbI0/T0OQQ',
+        -- // password141
         'janedoe',
         'Los Angeles'
     ), (
@@ -149,7 +147,8 @@ VALUES (
         '5555555555',
         NULL,
         'A data analyst',
-        'password789',
+        '$argon2id$v=19$m=65536,t=5,p=1$Kl278CswLedGEIKBbVkm2A$oxqwAHcBaaCZriLGmbVRxlcgDBjOfQ5SgDJugciSX3Q', 
+        -- // password191
         'bobsmith',
         'Chicago'
     ), (
@@ -159,7 +158,8 @@ VALUES (
         '6666666666',
         NULL,
         'A project manager',
-        'password111',
+        '$argon2id$v=19$m=65536,t=5,p=1$HEu7sziIK50nuWQ2UJO6iA$taYdt0qeKaIf8SUMlDIxXCzm3aWx79opfAiNMmyNpFU', 
+        -- // password900
         'alicejohnson',
         'Houston'
     ), (
@@ -169,7 +169,8 @@ VALUES (
         '7777787777',
         NULL,
         'A software engineer',
-        'password222',
+        '$argon2id$v=19$m=65536,t=5,p=1$RDHjstYKQP9TK5ZT9PqFRg$vgql0wWlIPTqgNWsKVC6NPo7qjn7ZE6YPs/Jg1popNI', 
+        -- // password922
         'tombrown',
         'Phoenix'
     ), (
@@ -179,7 +180,8 @@ VALUES (
         '8888888888',
         NULL,
         'A product manager',
-        'password333',
+        '$argon2id$v=19$m=65536,t=5,p=1$XhEbXL1iDgRwjhfaHlR2BA$3Z0rG6ALfh2+6xVQDW3Pe8Y2lhvAePViupm06OPlYLM', 
+        -- // password933
         'sophiedavis',
         'Philadelphia'
     ), (
@@ -189,7 +191,8 @@ VALUES (
         '9999999999',
         NULL,
         'A DevOps engineer',
-        'password444',
+        '$argon2id$v=19$m=65536,t=5,p=1$DZZevDGH57an3ozQIxfrPg$jXDwBWHN4iuQLl+xRCc5UpeIQJxNIDKp6YMaXkYjqr4', 
+        -- // password944
         'michaelwilson',
         'San Francisco'
     ), (
@@ -199,7 +202,8 @@ VALUES (
         '0000000000',
         NULL,
         'A UX designer',
-        'password555',
+        '$argon2id$v=19$m=65536,t=5,p=1$BRAEbr5xORTwm3TuGzULkQ$WP1cZh/k/6Mw35pRB6ygB9Y6dE0LSDqPvbblX5SiFuk', 
+        -- // password559
         'emilytaylor',
         'Seattle'
     ), (
@@ -209,7 +213,8 @@ VALUES (
         '1111211111',
         NULL,
         'A QA engineer',
-        'password666',
+        '$argon2id$v=19$m=65536,t=5,p=1$bClup2bi/scAzda6dXTmyw$BNEqCjXMFQATpQFqMJikLOHUBN7hvOYNTKkVSVnOqmg', 
+        -- // password669
         'williamlee',
         'Austin'
     ), (
@@ -219,7 +224,8 @@ VALUES (
         '2222222225',
         NULL,
         'A technical writer',
-        'password777',
+        '$argon2id$v=19$m=65536,t=5,p=1$XAmkW4+PKquxQQzzqnZCAw$eQ/3OCkaQIsLCdLwfoKs7GCRy6vBFmSrqE0a5soKdS8', 
+        -- // password179
         'oliviaparker',
         'Boston'
     ), (
@@ -229,7 +235,8 @@ VALUES (
         '1234565890',
         NULL,
         'Un développeur logiciel',
-        'motdepasse123',
+        '$argon2id$v=19$m=65536,t=5,p=1$BKyCFxU007zI767/lNKSqw$odR09SxQqI6MKrnCTmWknj9ejm93L25wvurt+RxeOBI', 
+        -- // motdepasse159
         'jeandupont',
         'Paris'
     ), (
@@ -239,7 +246,8 @@ VALUES (
         '0987655321',
         NULL,
         'Un concepteur web',
-        'motdepasse456',
+        '$argon2id$v=19$m=65536,t=5,p=1$UNcv3iKJldnpcq+nwE+mEw$e/odBGuAl5HpLDIchvPNVI0de7aPnNKuHana3oYRTYg', 
+        -- // motdepasse659
         'jacquesmartin',
         'Lyon'
     ), (
@@ -249,7 +257,8 @@ VALUES (
         '5555455555',
         NULL,
         'Un analyste de données',
-        'motdepasse789',
+        '$argon2id$v=19$m=65536,t=5,p=1$fyrqvHoVk8IQdzBWWa0nGw$glsjVeA0xf4uvAVhHO/HRBiSNOByZ0WqlUxFV3l4soE', 
+        -- // motdepasse149
         'robertdurand',
         'Marseille'
     ), (
@@ -259,7 +268,7 @@ VALUES (
         '6666676666',
         NULL,
         'Une chef de projet',
-        'motdepasse111',
+        '$argon2id$v=19$m=65536,t=5,p=1$5ZwH5YxDp5xB7AlR5jOlTw$gOvfSR9rJPeXogYgpbkBvM/JR6NYDXnIPKhvbT1xlXM', -- // motdepasse112
         'lucieleroy',
         'Bordeaux'
     ), (
@@ -269,7 +278,7 @@ VALUES (
         '7777777777',
         NULL,
         'Un ingénieur logiciel',
-        'motdepasse222',
+        '$argon2id$v=19$m=65536,t=5,p=1$J2ru23iBsi3StiuUOGDXQg$gMPPj8yhFi+H8wYHQrs/BzLWZqzMglhAwp2+UY1H+Dc', -- // motdepasse223
         'thomasmoreau',
         'Toulouse'
     ), (
@@ -279,7 +288,7 @@ VALUES (
         '8888888878',
         NULL,
         'Une responsable de produit',
-        'motdepasse333',
+        '$argon2id$v=19$m=65536,t=5,p=1$BFzQpoo89RVHctOjh3m5lA$jXfpK+wvH74f4JqjGKj97xVy2P8TlC0pHJUDl48Y2k0', -- // motdepasse334
         'chloesimon',
         'Nice'
     ), (
@@ -289,7 +298,7 @@ VALUES (
         '9999999799',
         NULL,
         'Un ingénieur DevOps',
-        'motdepasse444',
+        '$argon2id$v=19$m=65536,t=5,p=1$0rBl/s7hnBmQNfCdvD9/fg$XQTwROzqIGo3Z3sOijOh/sk/u0DII3ZqZPc+I8j6tZs', -- // motdepasse445
         'emilielefebvre',
         'Nantes'
     ), (
@@ -299,7 +308,7 @@ VALUES (
         '0000007000',
         NULL,
         'Un designer UX',
-        'motdepasse555',
+        '$argon2id$v=19$m=65536,t=5,p=1$Ty/5WKBNoaAeEvVClMMuMg$Bn0tLMOlfIQVaJqmSMs94zVMGonT9sMjM5e56/zt7Bg', -- // motdepasse556
         'victorgarcia',
         'Lille'
     ), (
@@ -309,7 +318,7 @@ VALUES (
         '1111111111',
         NULL,
         'Un ingénieur QA',
-        'motdepasse666',
+        '$argon2id$v=19$m=65536,t=5,p=1$TkpvF00ujqNglWdUWZoZZg$v/7XQl6RDdy6FJtRIZSv/0xzwa01kZc/QDoAZhxEnzk', -- // motdepasse566
         'everousseau',
         'Strasbourg'
     ), (
@@ -319,29 +328,40 @@ VALUES (
         '2222222222',
         NULL,
         'Une rédactrice technique',
-        'motdepasse777',
+        '$argon2id$v=19$m=65536,t=5,p=1$v3WP/x4IuMvX9oLzYgqnSw$4VlAL/FDwkfwBDca+BrFQo+YQDqSXmYsYOGKa2QgLMk', -- // motdepasse677
         'juliedumont',
         'Montpellier'
     );
 
-ALTER TABLE user
-ADD user_role VARCHAR(50);
+ALTER TABLE user ADD user_role VARCHAR(50);
 
-UPDATE user SET user_role = 'Développeur full-stack'
- WHERE user_role IS NULL;
+UPDATE user
+SET
+    user_role = 'Développeur full-stack'
+WHERE user_role IS NULL;
 
-UPDATE user SET user_role = 'Développeur front-end'
- WHERE id IN ('3','5','17','19');
+UPDATE user
+SET
+    user_role = 'Développeur front-end'
+WHERE
+    id IN ('3', '5', '17', '19');
 
-UPDATE user SET user_role = 'Développeur back-end'
- WHERE id IN ('4','6','12','18');
+UPDATE user
+SET
+    user_role = 'Développeur back-end'
+WHERE
+    id IN ('4', '6', '12', '18');
 
-UPDATE user SET user_role = 'Gestionnaire de projets'
- WHERE id IN ('1','8','13','20');
+UPDATE user
+SET
+    user_role = 'Gestionnaire de projets'
+WHERE
+    id IN ('1', '8', '13', '20');
 
-UPDATE user SET user_role = 'Designer UI/UX'
- WHERE id IN ('9','14','16');
-
+UPDATE user
+SET
+    user_role = 'Designer UI/UX'
+WHERE id IN ('9', '14', '16');
 
 -- Query to feed sql data in project table
 
@@ -437,35 +457,25 @@ VALUES (
         'Olivia Parker'
     );
 
-UPDATE project SET name = 'Bookworm'
- WHERE name = ('Project A');
+UPDATE project SET name = 'Bookworm' WHERE name = ('Project A');
 
-UPDATE project SET name = 'EatWell'
- WHERE name = ('Project B');
+UPDATE project SET name = 'EatWell' WHERE name = ('Project B');
 
-UPDATE project SET name = 'Greenify'
- WHERE name = ('Project C');
+UPDATE project SET name = 'Greenify' WHERE name = ('Project C');
 
-UPDATE project SET name = 'Mindful'
- WHERE name = ('Project D');
+UPDATE project SET name = 'Mindful' WHERE name = ('Project D');
 
-UPDATE project SET name = 'RecycleNow'
- WHERE name = ('Project E');
+UPDATE project SET name = 'RecycleNow' WHERE name = ('Project E');
 
-UPDATE project SET name = 'TalkTogether'
- WHERE name = ('Project F');
+UPDATE project SET name = 'TalkTogether' WHERE name = ('Project F');
 
-UPDATE project SET name = 'TimeTrack'
- WHERE name = ('Project G');
+UPDATE project SET name = 'TimeTrack' WHERE name = ('Project G');
 
-UPDATE project SET name = 'FitBuddy'
- WHERE name = ('Project H');
+UPDATE project SET name = 'FitBuddy' WHERE name = ('Project H');
 
-UPDATE project SET name = 'Wanderlust'
- WHERE name = ('Project I');
+UPDATE project SET name = 'Wanderlust' WHERE name = ('Project I');
 
-UPDATE project SET name = 'YumYum'
- WHERE name = ('Project J');
+UPDATE project SET name = 'YumYum' WHERE name = ('Project J');
 
 -- Query to feed sql data in task table
 
@@ -805,54 +815,146 @@ VALUES (
         "IT Development",
         20
     );
-UPDATE task SET name = 'Élaboration du cahier des charges'
-WHERE name IN ('Task 1', 'Task 7','Task 13', 'Task 19','Task 25', 'Task 31');
-UPDATE task SET type = 'Planification'
-WHERE name = 'Élaboration du cahier des charges';
 
-UPDATE task SET name = 'Évaluation des ressources nécessaires'
-WHERE name IN ('Task 2', 'Task 8','Task 14', 'Task 20','Task 26', 'Task 32');
-UPDATE task SET type = 'Gestion'
-WHERE name = 'Évaluation des ressources nécessaires';
+UPDATE task
+SET
+    name = 'Élaboration du cahier des charges'
+WHERE
+    name IN (
+        'Task 1',
+        'Task 7',
+        'Task 13',
+        'Task 19',
+        'Task 25',
+        'Task 31'
+    );
 
-UPDATE task SET name = 'Gestion des modifications du projet'
-WHERE name IN ('Task 3', 'Task 9','Task 15', 'Task 21','Task 27', 'Task 33');
-UPDATE task SET type = 'Front-end'
-WHERE name = 'Gestion des modifications du projet';
+UPDATE task
+SET type = 'Planification'
+WHERE
+    name = 'Élaboration du cahier des charges';
 
-UPDATE task SET name = 'Planification de la maintenance du projet'
-WHERE name IN ('Task 4', 'Task 10','Task 16', 'Task 22','Task 28', 'Task 34');
-UPDATE task SET type = 'Back-end'
-WHERE name = 'Planification de la maintenance du projet';
+UPDATE task
+SET
+    name = 'Évaluation des ressources nécessaires'
+WHERE
+    name IN (
+        'Task 2',
+        'Task 8',
+        'Task 14',
+        'Task 20',
+        'Task 26',
+        'Task 32'
+    );
 
-UPDATE task SET name = 'Gestion des versions des livrables'
-WHERE name IN ('Task 5', 'Task 11','Task 17', 'Task 23','Task 29', 'Task 35');
-UPDATE task SET type = 'UX design'
-WHERE name = 'Gestion des versions des livrables';
+UPDATE task
+SET type = 'Gestion'
+WHERE
+    name = 'Évaluation des ressources nécessaires';
 
-UPDATE task SET name = 'Retour interface utilisateur'
-WHERE name IN ('Task 6', 'Task 12','Task 18', 'Task 24','Task 30', 'Task 36');
-UPDATE task SET type = 'UI design'
-WHERE name = 'Retour interface utilisateur';
+UPDATE task
+SET
+    name = 'Gestion des modifications du projet'
+WHERE
+    name IN (
+        'Task 3',
+        'Task 9',
+        'Task 15',
+        'Task 21',
+        'Task 27',
+        'Task 33'
+    );
 
-UPDATE task SET user_id = '1'
-WHERE user_id = '11';
+UPDATE task
+SET type = 'Front-end'
+WHERE
+    name = 'Gestion des modifications du projet';
 
+UPDATE task
+SET
+    name = 'Planification de la maintenance du projet'
+WHERE
+    name IN (
+        'Task 4',
+        'Task 10',
+        'Task 16',
+        'Task 22',
+        'Task 28',
+        'Task 34'
+    );
+
+UPDATE task
+SET type = 'Back-end'
+WHERE
+    name = 'Planification de la maintenance du projet';
+
+UPDATE task
+SET
+    name = 'Gestion des versions des livrables'
+WHERE
+    name IN (
+        'Task 5',
+        'Task 11',
+        'Task 17',
+        'Task 23',
+        'Task 29',
+        'Task 35'
+    );
+
+UPDATE task
+SET type = 'UX design'
+WHERE
+    name = 'Gestion des versions des livrables';
+
+UPDATE task
+SET
+    name = 'Retour interface utilisateur'
+WHERE
+    name IN (
+        'Task 6',
+        'Task 12',
+        'Task 18',
+        'Task 24',
+        'Task 30',
+        'Task 36'
+    );
+
+UPDATE task
+SET type = 'UI design'
+WHERE
+    name = 'Retour interface utilisateur';
+
+UPDATE task SET user_id = '1' WHERE user_id = '11';
 
 -- Query to feed sql data in user_project table
 
 INSERT INTO
     user_project (user_id, project_id)
-VALUES (11, 1), (12, 2), (13, 3), (14, 4), (15, 5), (16, 6), (17, 7), (18, 8), (19, 9), (20, 10);
+VALUES  (1, 1),(2, 1),(3, 1),(4, 1),(5, 1),(7, 1), 
+        (6, 2),(7, 2),(8, 2),(9, 2),(10, 2),(1, 2), 
+        (1, 3),(11, 3),(12, 3),(13, 3),(14, 3),(15, 3), 
+        (16, 4),(17, 4),(18, 4),(19, 4),(20, 4),(14, 4), 
+        (15, 5),(3, 5),(6, 5),(8, 5),(17, 5),(19, 5), 
+        (16, 6),(2, 6),(4, 6),(5, 6),(9, 6),(11, 6), 
+        (1, 7),(8, 7),(13, 7),(15, 7),(19, 7),(20, 7), 
+        (18, 8),(1, 8),(12, 8),(6, 8),(7, 8),(4, 8), 
+        (19, 9),(10, 9),(6, 9),(3, 9),(7, 9),(20, 9), 
+        (20, 10),(10, 10),(8, 10),(5, 10),(13, 10);
 
-UPDATE user_project SET user_id ='1'
-WHERE project_id IN ('1','3','7');
 
 -- Query to feed sql data in task_project table
 
 INSERT INTO
     task_project (task_id, project_id)
-VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 2), (6, 2), (7, 3), (8, 3), (9, 4), (10, 4), (11, 5), (12, 5), (13, 6), (14, 6), (15, 7), (16, 7), (17, 8), (18, 8), (19, 9), (20, 10), (21, 2), (22, 2), (23, 3), (24, 3), (25, 4), (26, 4), (27, 5), (28, 5), (29, 6), (30, 6), (31, 7), (32, 7), (33, 8), (34, 8), (35, 9), (36, 10);
+VALUES  (1, 1), (2, 1), (3, 1), (4, 1),
+        (5, 2), (6, 2), (7, 2), (8, 2),
+        (9, 3), (10, 3), (11, 3), (12, 3),
+        (13, 4), (14, 4), (15, 4), (16, 4),
+        (17, 5), (18, 5), (19, 5), (20, 5),
+        (21, 6), (22, 6), (23, 6), (24, 6),
+        (25, 7), (26, 7), (27, 7), (28, 7),
+        (29, 8), (30, 8), (31, 8), (32, 9),
+        (33, 9), (34, 9), (35, 10), (36, 10);
 
 -- Query to feed sql data in message table
 
@@ -992,15 +1094,53 @@ INSERT INTO
     recipient (recipient_id, message_id)
 VALUES (11, 1), (12, 2), (13, 3), (14, 4), (15, 5), (16, 6), (17, 7), (18, 8), (19, 9), (20, 10), (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20);
 
+INSERT INTO
+    note (id, description, user_id)
+VALUES (
+        1,
+        "Correction de bug : J'ai identifié et corrigé un bug qui empêchait les utilisateurs de se connecter à leur compte.",
+        1
+    ), (
+        2,
+        "Optimisation des performances : J'ai optimisé la vitesse de chargement de la page d'accueil de notre site web en réduisant la taille des images.",
+        1
+    ), (
+        3,
+        "Amélioration de l'interface utilisateur : J'ai mis à jour l'interface utilisateur de notre application mobile pour la rendre plus intuitive et facile à utiliser.",
+        1
+    ), (
+        4,
+        "J'ai développé une nouvelle fonctionnalité qui permet aux utilisateurs de partager des articles sur les réseaux sociaux.",
+        1
+    ), (
+        5,
+        "Intégration d'une API : J'ai intégré une API tierce pour permettre à notre application de se connecter à d'autres services.",
+        1
+    ), (
+        6,
+        "Mise à jour de la base de données : J'ai mis à jour notre base de données pour prendre en charge de nouveaux types de données.",
+        1
+    ), (
+        7,
+        "Correction de vulnérabilité de sécurité : J'ai corrigé une vulnérabilité de sécurité qui aurait pu permettre à des pirates informatiques d'accéder aux données sensibles des utilisateurs.",
+        1
+    ), (
+        8,
+        "Réécriture de code : J'ai réécrit une partie de notre code pour améliorer sa lisibilité et sa maintenabilité.",
+        1
+    ), (
+        9,
+        "Refonte de l'architecture : J'ai repensé l'architecture de notre application pour la rendre plus évolutive et plus facile à déployer.",
+        1
+    ), (
+        10,
+        "Déploiement de la version : J'ai déployé la dernière version de notre application sur le serveur de production.",
+        1
+    );
 
-INSERT INTO note (id, description, user_id) 
-VALUES 	(1,"Correction de bug : J'ai identifié et corrigé un bug qui empêchait les utilisateurs de se connecter à leur compte.", 1),
-		(2,"Optimisation des performances : J'ai optimisé la vitesse de chargement de la page d'accueil de notre site web en réduisant la taille des images.", 1),
-        (3,"Amélioration de l'interface utilisateur : J'ai mis à jour l'interface utilisateur de notre application mobile pour la rendre plus intuitive et facile à utiliser.", 1),
-        (4,"J'ai développé une nouvelle fonctionnalité qui permet aux utilisateurs de partager des articles sur les réseaux sociaux.", 1),
-        (5,"Intégration d'une API : J'ai intégré une API tierce pour permettre à notre application de se connecter à d'autres services.", 1),
-        (6,"Mise à jour de la base de données : J'ai mis à jour notre base de données pour prendre en charge de nouveaux types de données.", 1),
-        (7,"Correction de vulnérabilité de sécurité : J'ai corrigé une vulnérabilité de sécurité qui aurait pu permettre à des pirates informatiques d'accéder aux données sensibles des utilisateurs.", 1),
-		(8,"Réécriture de code : J'ai réécrit une partie de notre code pour améliorer sa lisibilité et sa maintenabilité.", 1),
-        (9,"Refonte de l'architecture : J'ai repensé l'architecture de notre application pour la rendre plus évolutive et plus facile à déployer.", 1),
-        (10,"Déploiement de la version : J'ai déployé la dernière version de notre application sur le serveur de production.", 1);
+SELECT project.name
+FROM project
+    INNER JOIN user_project ON project.id = user_project.project_id
+WHERE user_project.user_id = 1;
+
+USE dbdevhubproject;

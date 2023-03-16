@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 function UserProfile() {
   const classes = useStyles();
   const [user, setUser] = useState({});
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState({});
 
   const { id } = useParams();
 
@@ -52,7 +52,7 @@ function UserProfile() {
       });
 
     axios
-      .get(`http://localhost:5000/projects/${id}`)
+      .get(`http://localhost:5000/projects/`)
       .then((response) => {
         console.info(response.data);
         setProjects(response.data);
