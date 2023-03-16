@@ -19,6 +19,17 @@ class TaskProjectManager extends AbstractManager {
       [taskProject.task_id, taskProject.project_id, taskProject.id]
     );
   }
+
+  getUserTasksByProjectId(userId, projectId) {
+    return this.database.query(
+      `SELECT t.* FROM task t
+      JOIN task_project tp ON tp.task_id = t.id
+      JOIN project p ON p.id = tp.project_id
+      WHERE t.user_id = ? AND p.id = ?
+      `,
+      [userId, projectId]
+    );
+  }
 }
 
 module.exports = TaskProjectManager;

@@ -31,6 +31,7 @@ class ProjectManager extends AbstractManager {
         project.project_end_date,
         project.progress,
         project.project_manager,
+        project.id,
       ]
     );
   }

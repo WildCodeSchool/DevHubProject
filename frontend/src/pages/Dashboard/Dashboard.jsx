@@ -9,7 +9,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import PieChart from "../../components/PieChart/PieChart";
 import SelectProject from "../../components/SelectProject/SelectProject";
 import SelectRole from "../../components/SelectRole/SelectRole";
-import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import UserTask from "../../components/UserTask/UserTask";
 import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
 import TeamTitle from "../../components/TeamTitle/TeamTitle";
 import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
@@ -70,6 +70,8 @@ function Dashboard() {
     );
   };
   const [selectedRole, setSelectedRole] = useState("");
+  // eslint-disable-next-line no-unused-vars
+  const [selectTasksByUser, setSelectTasksByUserId] = useState("");
 
   return (
     <Grid container>
@@ -89,7 +91,6 @@ function Dashboard() {
           />
         </Box>
       </Grid>
-
       <Grid
         display="flex "
         justifyContent="flexStart"
@@ -153,7 +154,7 @@ function Dashboard() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" overflow="auto" m="0.5em">
-            <ProjectsList />
+            <UserTask setSelectTasksByUserId={setSelectTasksByUserId} />
           </Box>
         </Box>
         <Box sx={{ mt: "10px", border: 1 }}>

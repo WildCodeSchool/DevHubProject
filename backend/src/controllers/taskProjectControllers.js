@@ -82,10 +82,29 @@ const destroy = (req, res) => {
     });
 };
 
+const getUserTasksByProjectId = (req, res) => {
+  console.info(req.user, "REQ");
+  const userId = req.user ? req.user.id : null;
+  console.info(userId, "USERID");
+  const { projectId } = req.params;
+  console.info(projectId, "PROJECTID");
+
+  models.taskProject
+    .getUserTasksByProjectId(userId, projectId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  getUserTasksByProjectId,
 };
