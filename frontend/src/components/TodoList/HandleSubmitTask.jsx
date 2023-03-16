@@ -15,8 +15,6 @@ import {
   MenuItem,
   FormHelperText,
 } from "@mui/material";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 
 const initialValues = {
   name: "",
@@ -25,7 +23,7 @@ const initialValues = {
   description: "",
   state: "",
   progress: "",
-  type: [],
+  type: [1],
   user_id: [1],
 };
 
@@ -36,6 +34,7 @@ function AddTaskForm({ projectName }) {
 
   const handleSubmitCard = (values) => {
     setSubmittedValues([...submittedValues, values]);
+    console.info(values, "premier values");
   };
 
   const handleSubmit = async (values) => {
@@ -49,22 +48,22 @@ function AddTaskForm({ projectName }) {
       console.error(error, "error");
     }
   };
-  const handleUpdate = async (values) => {
-    try {
-      await axios.put("http://localhost:5000/tasks/:id", values);
-      console.info("Task updated successfully!");
-    } catch (error) {
-      console.info("Error updating Task.");
-    }
-  };
-  const handleDelete = async (values) => {
-    try {
-      await axios.delete("http://localhost:5000/tasks/:id", values);
-      console.info("Task deleted successfully!");
-    } catch (error) {
-      console.info("Error deleting Task.");
-    }
-  };
+  // const handleUpdate = async (values) => {
+  //   try {
+  //     await axios.put("http://localhost:5000/tasks/", values);
+  //     console.info("Task updated successfully!");
+  //   } catch (error) {
+  //     console.info("Error updating Task.");
+  //   }
+  // };
+  // const handleDelete = async (values) => {
+  //   try {
+  //     await axios.delete("http://localhost:5000/tasks/:id", values);
+  //     console.info("Task deleted successfully!");
+  //   } catch (error) {
+  //     console.info("Error deleting Task.");
+  //   }
+  // };
   useEffect(() => {
     axios
       .get("http://localhost:5000/users")
@@ -89,7 +88,7 @@ function AddTaskForm({ projectName }) {
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ values, handleChange, setFieldValue }) => (
+        {({ values, handleChange }) => (
           <Form>
             <FormControl
               sx={{
@@ -101,8 +100,8 @@ function AddTaskForm({ projectName }) {
             >
               <Field
                 as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
+                id="outlined-secondary"
+                labelid="Outlined-secondary"
                 variant="outlined"
                 disabled
                 defaultValue="Project Name"
@@ -217,8 +216,8 @@ function AddTaskForm({ projectName }) {
                   labelId="demo-simple-select-standard-label"
                   fullWidth
                   variant="outlined"
-                  value={task.type}
-                  onChange={setFieldValue}
+                  value={values.type}
+                  onChange={handleChange}
                   label="Select Type"
                   sx={{
                     width: 250,
@@ -243,8 +242,8 @@ function AddTaskForm({ projectName }) {
                   labelId="demo-simple-select-standard-label"
                   fullWidth
                   variant="outlined"
-                  value={task.user_id}
-                  onChange={setFieldValue}
+                  value={values.user_id}
+                  onChange={handleChange}
                   label="Select Type"
                   sx={{
                     width: 250,
@@ -274,22 +273,6 @@ function AddTaskForm({ projectName }) {
             >
               <Button type="submit" variant="contained" color="primary">
                 Add Task
-              </Button>
-
-              <Button
-                onClick={handleUpdate}
-                variant="contained"
-                color="greenAccent"
-              >
-                Update Task
-              </Button>
-
-              <Button
-                onClick={handleDelete}
-                variant="contained"
-                color="secondary"
-              >
-                Delete Task
               </Button>
             </FormControl>
           </Form>
@@ -336,7 +319,6 @@ function AddTaskForm({ projectName }) {
                   Description : {values.description}
                 </Typography>
               </div>
-
               <div
                 style={{
                   display: "flex",
@@ -348,10 +330,10 @@ function AddTaskForm({ projectName }) {
                   Progress : {values.progress}%
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  Task Type : {values.type}
+                  Task Type : {task.type}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  User : {values.user_id}
+                  User : {task.user_id}
                 </Typography>
               </div>
             </CardContent>

@@ -14,6 +14,7 @@ import {
   FormHelperText,
 } from "@mui/material";
 import axios from "axios";
+
 import { useState, useEffect } from "react";
 
 const initialValues = {
@@ -24,13 +25,14 @@ const initialValues = {
   description: "",
   progress: "",
   type: [],
-  user_id: [],
+  user_id: [1],
 };
 
 function AddTaskCard({ projectName }) {
   const [submittedValues, setSubmittedValues] = useState([]);
   const [user, setUser] = useState([]);
   const [task, setTask] = useState([]);
+  // const [selectedUserId, setSelectedUserId] = useState();
 
   const handleSubmitTask = async (values) => {
     try {
@@ -67,11 +69,16 @@ function AddTaskCard({ projectName }) {
     console.info(values, "values");
   };
   console.info(task, "task");
+  // const handleClick = (userId) => {
+  //   // console.log(userId, "id");
+  //   // setSelectedUserId(userId.id);
+  // };
+  // // console.log(selectedUserId, "userId global");
 
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ values, handleChange, setFieldValue }) => (
+        {({ values, handleChange }) => (
           <Form>
             <FormControl
               sx={{
@@ -200,7 +207,7 @@ function AddTaskCard({ projectName }) {
                   fullWidth
                   variant="outlined"
                   value={task.type}
-                  onChange={setFieldValue}
+                  onChange={handleChange}
                   label="Select Type"
                   sx={{
                     width: 250,
@@ -237,6 +244,7 @@ function AddTaskCard({ projectName }) {
                       <MenuItem
                         key={users.id}
                         value={`${users.firstname} ${users.lastname}`}
+                        // onClick={() => handleClick(users)}
                       >
                         {`${users.firstname} ${users.lastname}`}
                       </MenuItem>
@@ -266,9 +274,9 @@ function AddTaskCard({ projectName }) {
           <Card direction="row" justifyContent="center">
             <CardContent direction="row" justifyContent="spacebetween">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography gutterBottom variant="h5" component="h3">
+                <TextField gutterBottom variant="h5" component="h3">
                   Name : {values.name}
-                </Typography>
+                </TextField>
 
                 <Typography gutterBottom variant="h5" component="h3">
                   State : {values.state}
@@ -313,10 +321,10 @@ function AddTaskCard({ projectName }) {
                   Progress : {values.progress}%
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  Task Type : {task.type}
+                  Task Type : {values.type}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  User : {task.user_id}
+                  User : {values.user_id}
                 </Typography>
               </div>
             </CardContent>
