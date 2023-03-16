@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -8,6 +8,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import axios from "axios";
 import { tokens } from "../../theme";
 import defaultUserImage from "../../assets/user.png";
 
@@ -16,7 +17,20 @@ function UserCard(props) {
   const colors = tokens(theme.palette.mode);
 
   const { firstname, lastname, email, role, userImage } = props;
-  const userDefautImage = userImage || defaultUserImage;
+  const userDefaultImage = userImage || defaultUserImage;
+  const [userProfileImage, setUserProfileImage] = useState(userDefaultImage);
+
+  useEffect(() => {
+    axios
+      .get("https://randomuser.me/api/")
+      .then((response) => {
+        const imageUrl = response.data.results[0].picture.large;
+        setUserProfileImage(imageUrl);
+      })
+      .catch((error) => {
+        console.info(error);
+      });
+  }, []);
 
   return (
     <Box
@@ -42,7 +56,7 @@ function UserCard(props) {
                   height: "50%",
                 }}
                 component="img"
-                image={userDefautImage}
+                image={userProfileImage}
                 alt={`${firstname} ${lastname}`}
               />
             </Box>
