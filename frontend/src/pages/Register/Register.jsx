@@ -1,181 +1,328 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useContext, useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import {
+  Avatar,
+  CssBaseline,
+  TextField,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Field, Formik } from "formik";
+import * as yup from "yup";
+import { ref } from "yup";
+import { Link } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import RegisterContext from "../../context/RegisterContext";
 
-const theme = createTheme();
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
 
-function Register() {
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: Yup.object({
-      firstName: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Required"),
-      lastName: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string()
-        .min(8, "Password must be at least 8 characters")
-        .required("Required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Required"),
-    }),
-    onSubmit: (values) => {
-      console.error(JSON.stringify(values, null, 2));
-    },
-  });
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+export default function Register() {
+  const { formValues, setFormValues } = useContext(RegisterContext);
+  const { lastname, firstname, email, password } = formValues;
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // configurer errorMessage a faire
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const classes = useStyles();
+
+  const checkRequiredFields = (values) => {
+    const messages = {};
+    if (!values.lastname) {
+      messages.lastname = "Veuillez saisir votre nom";
+    }
+    if (!values.firstname) {
+      messages.firstname = "Veuillez saisir votre prénom";
+    }
+    if (!values.email) {
+      messages.email = "Veuillez saisir votre adresse e-mail";
+    }
+    if (!values.password) {
+      messages.password = "Veuillez saisir un mot de passe";
+    }
+    if (!values.confirmPassword) {
+      messages.confirmPassword = "Veuillez confirmer votre mot de passe";
+    }
+    return messages;
+  };
+
+  const handleSubmit = async (values) => {
+    const messages = checkRequiredFields(values);
+    if (Object.keys(messages).length === 0) {
+      if (values.password !== values.confirmPassword) {
+        setErrorMessage("Les mots de passe ne correspondent pas");
+      } else {
+        try {
+          console.info(values, "password");
+          // Call API POST to create a new user
+          await axios.post("http://localhost:5000/users", values);
+          setFormValues({ ...formValues, ...values });
+          setSuccess(true);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    } else {
+      setErrorMessage("Veuillez remplir tous les champs obligatoires");
+    }
+
+    console.info("firstname:", values.firstname);
+    console.info("lastname:", values.lastname);
+    console.info("email:", values.email);
+    console.info("password:", values.password);
+    console.info("confirmPassword:", values.confirmPassword);
+    console.info("values:", values);
+  };
+
+  const handleShowPasswordClick = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={lightTheme}>
+      {errorMessage && (
+        <Typography color="error" variant="subtitle1">
+          {errorMessage}
+        </Typography>
+      )}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "greenAccent.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Register
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={formik.handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.firstName && Boolean(formik.errors.firstName)
-                  }
-                  helperText={
-                    formik.touched.firstName && formik.errors.firstName
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.lastName && Boolean(formik.errors.lastName)
-                  }
-                  helperText={formik.touched.lastName && formik.errors.lastName}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="new-password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                  helperText={formik.touched.password && formik.errors.password}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="new-password"
-                  value={formik.values.confirmPassword}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.confirmPassword &&
-                    Boolean(formik.errors.confirmPassword)
-                  }
-                  helperText={
-                    formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  Already have an account? Log in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
+        <div className={classes.paper}>
+          {success ? (
+            <Typography>
+              Félicitations, vous êtes maintenant enregistré ! Vous pouvez
+              maintenant <Link to="/Login">vous connecter</Link> avec vos
+              identifiants.
+            </Typography>
+          ) : (
+            <>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Créer un compte
+              </Typography>
+              <Formik
+                initialValues={{
+                  lastname,
+                  firstname,
+                  email,
+                  password,
+                  confirmPassword: "",
+                }}
+                onSubmit={handleSubmit}
+                validationSchema={yup.object().shape({
+                  lastname: yup.string().required("Veuillez saisir votre nom"),
+                  firstname: yup
+                    .string()
+                    .required("Veuillez saisir votre prénom"),
+                  email: yup
+                    .string()
+                    .email("Veuillez saisir une adresse e-mail valide")
+                    .required("Veuillez saisir votre adresse e-mail"),
+                  password: yup
+                    .string()
+                    .min(
+                      6,
+                      "Le mot de passe doit contenir au moins 9 caractères dont 1 chiffre"
+                    )
+                    .required("Veuillez saisir un mot de passe"),
+                  confirmPassword: yup
+                    .string()
+                    .oneOf(
+                      [ref("password"), null],
+                      "Les mots de passe ne correspondent pas"
+                    )
+                    .required("Veuillez confirmer votre mot de passe"),
+                })}
+              >
+                {(formik) => (
+                  <form onSubmit={formik.handleSubmit} className={classes.form}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={6}>
+                        <Field
+                          as={TextField}
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="lastname"
+                          label="Nom"
+                          name="lastname"
+                          autoComplete="lname"
+                          error={
+                            formik.touched.lastname &&
+                            Boolean(formik.errors.lastname)
+                          }
+                          helperText={
+                            formik.touched.lastname && formik.errors.lastname
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Field
+                          as={TextField}
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="firstname"
+                          label="Prénom"
+                          name="firstname"
+                          autoComplete="fname"
+                          error={
+                            formik.touched.firstname &&
+                            Boolean(formik.errors.firstname)
+                          }
+                          helperText={
+                            formik.touched.firstname && formik.errors.firstname
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Field
+                          as={TextField}
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="email"
+                          label="Adresse e-mail"
+                          name="email"
+                          autoComplete="email"
+                          error={
+                            formik.touched.email && Boolean(formik.errors.email)
+                          }
+                          helperText={
+                            formik.touched.email && formik.errors.email
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Field
+                          as={TextField}
+                          variant="outlined"
+                          required
+                          fullWidth
+                          name="password"
+                          label="Mot de passe"
+                          type={showPassword ? "text" : "password"}
+                          id="password"
+                          autoComplete="current-password"
+                          error={
+                            formik.touched.password &&
+                            Boolean(formik.errors.password)
+                          }
+                          helperText={
+                            formik.touched.password && formik.errors.password
+                          }
+                          InputProps={{
+                            endAdornment: (
+                              <IconButton
+                                onClick={handleShowPasswordClick}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            ),
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Field
+                          as={TextField}
+                          variant="outlined"
+                          required
+                          fullWidth
+                          name="confirmPassword"
+                          label="Confirmez votre mot de passe"
+                          type={showPassword ? "text" : "password"}
+                          id="confirmPassword"
+                          autoComplete="confirm-password"
+                          error={
+                            formik.touched.confirmPassword &&
+                            Boolean(formik.errors.confirmPassword)
+                          }
+                          helperText={
+                            formik.touched.confirmPassword &&
+                            formik.errors.confirmPassword
+                          }
+                          InputProps={{
+                            endAdornment: (
+                              <IconButton
+                                onClick={() => setShowPassword(!showPassword)}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            ),
+                          }}
+                          {...formik.getFieldProps("confirmPassword")}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      S'inscrire
+                    </Button>
+                    <Grid container justifyContent="flex-end">
+                      <Grid item>
+                        <Link to="/login">
+                          Vous avez déjà un compte ? Connectez-vous
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </form>
+                )}
+              </Formik>
+            </>
+          )}
+        </div>
       </Container>
     </ThemeProvider>
   );
 }
-
-export default Register;

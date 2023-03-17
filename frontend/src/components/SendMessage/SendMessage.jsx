@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     maxWidth: 400,
     width: "100%",
-    textAlign: "center", // Centrer le contenu de la modal
+    textAlign: "center",
   },
   title: {
     marginBottom: theme.spacing(2),
@@ -32,11 +32,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SendMessage({ firstName, lastName }) {
+function SendMessage(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
   const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const { firstname, lastname } = props;
+  console.info(firstname, lastname, "nom et prénom");
 
   const handleOpen = () => {
     setOpen(true);
@@ -48,7 +50,7 @@ function SendMessage({ firstName, lastName }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.error(`Sending message "${message}" to ${firstName} ${lastName}`);
+    console.info(`Sending message ${message} to "${firstname} ${lastname}"`);
     handleClose();
   };
 
@@ -60,7 +62,7 @@ function SendMessage({ firstName, lastName }) {
         endIcon={<SendIcon />}
         onClick={handleOpen}
       >
-        Send Message to "{firstName} {lastName}"
+        Send Message to "{firstname} {lastname}
       </Button>
       <Modal
         open={open}
@@ -71,7 +73,7 @@ function SendMessage({ firstName, lastName }) {
       >
         <div className={classes.paper}>
           <Typography variant="h6" className={classes.title}>
-            Send a message to {firstName} {lastName}
+            Send a message to "{firstname} {lastname}"
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
             <TextField

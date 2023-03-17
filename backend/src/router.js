@@ -5,8 +5,9 @@ const router = express.Router();
 const {
   hashPassword,
   verifyPassword,
-  // verifyToken,
-  // verifyId,
+  verifyToken,
+  verifyId,
+  validateForm,
 } = require("./middlewares/auth");
 
 const userControllers = require("./controllers/userControllers");
@@ -14,21 +15,21 @@ const userControllers = require("./controllers/userControllers");
 // GET
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
-router.put("/users/:id", userControllers.edit);
 // REGISTER
 router.post("/users", hashPassword, userControllers.add);
 router.post(
   "/users/login",
+  validateForm,
   userControllers.getUserByEmailWithPasswordAndPassToNext,
   verifyPassword
 );
 
-// POST,PUT & DELETE
+// POST, PUT & DELETE;
 
-// router.use(verifyToken); // Authentication Wall
+router.use(verifyToken); // Authentication Wall
 
-// router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
-// router.delete("/users/:id", verifyId, userControllers.destroy);
+router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
+router.delete("/users/:id", verifyId, userControllers.destroy);
 
 const projectControllers = require("./controllers/projectControllers");
 

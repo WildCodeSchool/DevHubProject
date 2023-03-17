@@ -66,9 +66,11 @@ const add = (req, res) => {
 
 const getUserByEmailWithPasswordAndPassToNext = (req, res, next) => {
   const { email } = req.body;
+  console.info(req.body, "email");
   models.user
     .findUser(email)
     .then(([users]) => {
+      console.info(users, "usersmail");
       if (users[0] != null) {
         const [firstUser] = users;
         req.user = firstUser;

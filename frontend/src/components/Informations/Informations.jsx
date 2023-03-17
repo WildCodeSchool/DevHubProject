@@ -4,8 +4,8 @@ import { Grid, Paper, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2.5),
-    marginBottom: theme.spacing(2),
+    padding: theme.spacing(1.5),
+    marginBottom: theme.spacing(1),
   },
   field: {
     marginTop: theme.spacing(1),
@@ -13,20 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Informations({
-  firstName,
-  lastName,
-  gender,
-  phoneNumber,
-  city,
-  country,
-  nationality,
-  email,
-  website,
-  githubPage,
-  biography,
-}) {
+function Informations(props) {
   const classes = useStyles();
+  const { firstname, lastname, phone, city, email, githubPage, biography } =
+    props;
 
   return (
     <Paper className={classes.root}>
@@ -35,7 +25,7 @@ function Informations({
           <TextField
             className={classes.field}
             label="First Name"
-            value={firstName}
+            value={firstname || ""}
             fullWidth
             disabled
           />
@@ -44,16 +34,7 @@ function Informations({
           <TextField
             className={classes.field}
             label="Last Name"
-            value={lastName}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
-            label="Gender"
-            value={gender}
+            value={lastname || ""}
             fullWidth
             disabled
           />
@@ -62,7 +43,7 @@ function Informations({
           <TextField
             className={classes.field}
             label="Phone Number"
-            value={phoneNumber}
+            value={phone || ""}
             fullWidth
             disabled
           />
@@ -71,25 +52,7 @@ function Informations({
           <TextField
             className={classes.field}
             label="City"
-            value={city}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
-            label="Country"
-            value={country}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
-            label="Nationality"
-            value={nationality}
+            value={city || ""}
             fullWidth
             disabled
           />
@@ -98,16 +61,7 @@ function Informations({
           <TextField
             className={classes.field}
             label="Email"
-            value={email}
-            fullWidth
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            className={classes.field}
-            label="Website"
-            value={website}
+            value={email || ""}
             fullWidth
             disabled
           />
@@ -116,7 +70,7 @@ function Informations({
           <TextField
             className={classes.field}
             label="Git-Hub Page"
-            value={githubPage}
+            value={githubPage || ""}
             fullWidth
             disabled
           />
@@ -125,9 +79,9 @@ function Informations({
           <TextField
             className={classes.field}
             label="Biography"
-            value={biography}
+            value={biography || ""}
             multiline
-            rows={6}
+            minRows={6}
             fullWidth
             disabled
           />

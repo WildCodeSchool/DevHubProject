@@ -1,116 +1,199 @@
-import React from "react";
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*?[0-9]).{9,}$/,
+      "Le mot de passe doit contenir au minimum 9 caractères dont 1 chiffre"
+    )
+    .required("Password is required"),
+});
 
 const theme = createTheme();
 
-function Login() {
-  const initialValues = {
-    email: "",
-    password: "",
+export default function Login() {
+  const [tokenIsValid, setTokenIsValid] = useState(false);
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // configurer errorMessage à faire + déconnexion et forgetpassword
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = parseInt(localStorage.getItem("userId"), 10);
+
+    if (token) {
+      axios
+        .get(`http://localhost:5000/users/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          if (response.request.status === 200) {
+            setTokenIsValid(true);
+          } else {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+          }
+        })
+        .catch((error) => {
+          console.info(error);
+        });
+    }
+  }, []);
+
+  const toggle = parseInt(localStorage.getItem("toggle"), 10);
+  if (tokenIsValid) {
+    if (toggle) {
+      localStorage.removeItem("token");
+    } else {
+      navigate("/dashboard");
+    }
+  }
+
+  const [showPassword, setShowPassword] = useState(true);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().required("Required"),
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post(
+          `http://localhost:5000/users/login`,
+          values
+        );
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId.toString());
+        localStorage.setItem("toggle", response.data.toggle.toString());
+        navigate("/dashboard");
+      } catch (error) {
+        setErrorMessage("Invalid email or password");
+      }
+    },
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    console.error(values);
-    setSubmitting(false);
-  };
+  const { errors, touched } = formik;
 
   return (
     <ThemeProvider theme={theme}>
+      {errorMessage && (
+        <Typography color="error" variant="subtitle1">
+          {errorMessage}
+        </Typography>
+      )}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "greenAccent.main" }}>
+        <div>
+          <Avatar>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                    />
-                    <ErrorMessage name="email">
-                      {(msg) => <div style={{ color: "red" }}>{msg}</div>}
-                    </ErrorMessage>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                    />
-                    <ErrorMessage name="password">
-                      {(msg) => <div style={{ color: "red" }}>{msg}</div>}
-                    </ErrorMessage>
-                  </Grid>
-                </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Submitting..." : "Log In"}
-                </Button>
-              </Form>
-            )}
-          </Formik>
-          <Grid container justifyContent="flex-end">
-            {/* faire le lien vers register */}
-            <Grid item>
-              <Link href="/register" variant="body2">
-                Don't have an account? Create your account
-              </Link>
+          <form onSubmit={formik.handleSubmit} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              autoComplete="current-password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className="submit"
+            >
+              Login
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link to="/register" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to="/register">Don't have an account? Register</Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </form>
+        </div>
       </Container>
     </ThemeProvider>
   );
 }
-
-export default Login;
