@@ -3,7 +3,6 @@ import { useContext } from "react";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchBar from "../SearchBar/SearchBar";
 
@@ -14,12 +13,16 @@ function Topbar() {
   const { toggleColorMode } = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2} position="sticky">
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      p={2}
+      sx={{ border: 1, textDecoration: "none" }}
+    >
       {/* SEARCH BAR */}
       <SearchBar />
-
       {/* ICONS */}
-      <Box display="flex">
+      <Box display="flex" sx={{ border: 1 }}>
         <IconButton onClick={toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
@@ -30,10 +33,7 @@ function Topbar() {
         <IconButton>
           <NotificationsOutlinedIcon />
         </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-        <IconButton>
+        <IconButton href="/user-profile/1">
           <PersonOutlinedIcon />
         </IconButton>
       </Box>

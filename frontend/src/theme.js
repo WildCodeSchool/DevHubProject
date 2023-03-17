@@ -134,7 +134,7 @@ export const themeSettings = (mode) => {
             primary: {
               main: colors.primary[500],
             },
-            secondary: {
+            greenAccent: {
               main: colors.greenAccent[500],
             },
             neutral: {
@@ -151,7 +151,7 @@ export const themeSettings = (mode) => {
             primary: {
               main: colors.primary[100],
             },
-            secondary: {
+            greenAccent: {
               main: colors.greenAccent[500],
             },
             neutral: {

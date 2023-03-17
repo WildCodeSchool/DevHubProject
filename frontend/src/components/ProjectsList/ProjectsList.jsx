@@ -41,7 +41,7 @@ function ProjectsList() {
 
   return (
     <Grid container spacing={2} justifyContent="center">
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <Box sx={{ mt: 3 }}>
           {projectState.map((project) => (
             <Box
@@ -52,7 +52,7 @@ function ProjectsList() {
                 <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                   {project.name}
                 </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography variant="body2" sx={{ color: "text.greenAccent" }}>
                   {project.description}
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>

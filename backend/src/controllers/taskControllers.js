@@ -31,8 +31,6 @@ const read = (req, res) => {
 const edit = (req, res) => {
   const task = req.body;
 
-  // TODO validations (length, format...)
-
   task.id = parseInt(req.params.id, 10);
 
   models.task
@@ -82,10 +80,40 @@ const destroy = (req, res) => {
     });
 };
 
+const getTasksByProjectId = (req, res) => {
+  const projectId = req.params.id;
+
+  models.task
+    .getTasksByProjectId(projectId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const getTasksByUserId = (req, res) => {
+  const userId = req.params.id;
+
+  models.task
+    .getTasksByUserId(userId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  getTasksByProjectId,
+  getTasksByUserId,
 };

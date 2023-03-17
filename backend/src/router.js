@@ -15,7 +15,6 @@ const userControllers = require("./controllers/userControllers");
 // GET
 router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
-
 // REGISTER
 router.post("/users", hashPassword, userControllers.add);
 router.post(
@@ -25,7 +24,7 @@ router.post(
   verifyPassword
 );
 
-// POST,PUT & DELETE
+// POST, PUT & DELETE;
 
 router.use(verifyToken); // Authentication Wall
 
@@ -34,10 +33,11 @@ router.delete("/users/:id", verifyId, userControllers.destroy);
 
 const projectControllers = require("./controllers/projectControllers");
 
+router.get("/users/:id/projects", projectControllers.getProjectsByUserId);
 router.get("/projects", projectControllers.browse);
 router.get("/projects/:id", projectControllers.read);
 router.put("/projects/:id", projectControllers.edit);
-router.post("/projects", projectControllers.addProject);
+router.post("/projects", projectControllers.add);
 router.delete("/projects/:id", projectControllers.destroy);
 
 const noteControllers = require("./controllers/noteControllers");
@@ -50,6 +50,8 @@ router.delete("/notes/:id", noteControllers.destroy);
 
 const taskControllers = require("./controllers/taskControllers");
 
+router.get("/users/:id/tasks", taskControllers.getTasksByUserId);
+router.get("/projects/:id/tasks", taskControllers.getTasksByProjectId);
 router.get("/tasks", taskControllers.browse);
 router.get("/tasks/:id", taskControllers.read);
 router.post("/tasks", taskControllers.add);
@@ -74,6 +76,7 @@ router.delete("/recipients/:id", recipientControllers.destroy);
 
 const userProjectControllers = require("./controllers/userProjectControllers");
 
+router.get("/projects/:id/users", userProjectControllers.getUsersByProjectId);
 router.get("/userProjects", userProjectControllers.browse);
 router.get("/userProjects/:id", userProjectControllers.read);
 router.post("/userProjects", userProjectControllers.add);

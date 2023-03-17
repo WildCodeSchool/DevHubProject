@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Box } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Informations from "../../components/Informations/Informations";
 import userimage from "../../assets/user.png";
-import ProjectsList from "../../components/ProjectsList/ProjectsList";
+// import ProjectsList from "../../components/ProjectsList/ProjectsList";
 import SendMessage from "../../components/SendMessage/SendMessage";
 
 const useStyles = makeStyles((theme) => ({
@@ -93,27 +93,17 @@ function UserProfile() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper className={classes.paper}>
-            <Grid container direction="column" spacing={3}>
-              <Grid item>
-                {projects.map((project) => (
-                  <ProjectsList
-                    key={project.id}
-                    name={project.name}
-                    description={project.description}
-                    progress={project.progress}
-                  />
-                ))}
-              </Grid>
-              <Grid item className={classes.sendMessageContainer}>
-                <SendMessage
-                  firstname={user.firstname}
-                  lastname={user.lastname}
-                />
-              </Grid>
-            </Grid>
-          </Paper>
+        <Grid item xs={12}>
+          <Grid
+            container
+            justifyContent="center"
+            className={classes.sendMessageContainer}
+          >
+            <SendMessage
+              firstName={UserProfile.firstName}
+              lastName={UserProfile.lastName}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </div>
