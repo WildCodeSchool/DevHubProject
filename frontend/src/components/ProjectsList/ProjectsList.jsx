@@ -20,46 +20,47 @@ function ProjectsList({ projects }) {
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
         <Box sx={{ mt: 3 }}>
-          {projects.map((project) => {
-            console.info(project);
-            return (
-              <Box
-                key={project.id}
-                sx={{ display: "flex", alignItems: "center", mb: 2 }}
-              >
-                <Box sx={{ width: "100%", mr: 1 }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    {project.name}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: green[500] }}>
-                    {project.description}
-                  </Typography>
-                  <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                    <Box
-                      sx={{
-                        flexGrow: 1,
-                        height: 8,
-                        borderRadius: 5,
-                        overflow: "hidden",
-                        background: "#ccc",
-                      }}
-                    >
+          {projects &&
+            projects.map((project) => {
+              console.info(project);
+              return (
+                <Box
+                  key={project.id}
+                  sx={{ display: "flex", alignItems: "center", mb: 2 }}
+                >
+                  <Box sx={{ width: "100%", mr: 1 }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                      {project.name}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: green[500] }}>
+                      {project.description}
+                    </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
                       <Box
                         sx={{
-                          height: "100%",
+                          flexGrow: 1,
+                          height: 8,
                           borderRadius: 5,
-                          background: getColor(project.progress),
+                          overflow: "hidden",
+                          background: "#ccc",
                         }}
-                      />
-                    </Box>
-                    <Box sx={{ ml: 1 }}>
-                      <Typography variant="caption">{`${project.progress}%`}</Typography>
+                      >
+                        <Box
+                          sx={{
+                            height: "100%",
+                            borderRadius: 5,
+                            background: getColor(project.progress),
+                          }}
+                        />
+                      </Box>
+                      <Box sx={{ ml: 1 }}>
+                        <Typography variant="caption">{`${project.progress}%`}</Typography>
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
-              </Box>
-            );
-          })}
+              );
+            })}
         </Box>
       </Grid>
     </Grid>
