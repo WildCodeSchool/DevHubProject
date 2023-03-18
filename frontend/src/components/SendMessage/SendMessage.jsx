@@ -47,7 +47,7 @@ function SendMessage(props) {
   const [message, setMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [setAnchorEl] = useState(null); // Nouveau state pour l'élément d'ancrage de la Snackbar
+  const [anchorEl, setAnchorEl] = useState(null);
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const { onSendMessage, firstname, lastname } = props;
@@ -55,7 +55,7 @@ function SendMessage(props) {
 
   const handleOpen = (event) => {
     setOpen(true);
-    setAnchorEl(event.currentTarget); // Stocke l'élément d'ancrage lors de l'ouverture de la modal
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -94,6 +94,7 @@ function SendMessage(props) {
         aria-labelledby="send-message-modal-title"
         aria-describedby="send-message-modal-description"
         className={classes.modal}
+        anchorEl={anchorEl}
       >
         <div className={classes.paper}>
           <Typography variant="h6" className={classes.title}>
