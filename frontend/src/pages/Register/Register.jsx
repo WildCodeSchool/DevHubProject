@@ -3,6 +3,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import {
   Avatar,
@@ -48,8 +51,6 @@ export default function Register() {
   const { lastname, firstname, email, password } = formValues;
 
   const [errorMessage, setErrorMessage] = useState("");
-
-  // configurer errorMessage a faire
 
   const [showPassword, setShowPassword] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -123,11 +124,15 @@ export default function Register() {
         <CssBaseline />
         <div className={classes.paper}>
           {success ? (
-            <Typography>
-              Félicitations, vous êtes maintenant enregistré ! Vous pouvez
-              maintenant <Link to="/Login">vous connecter</Link> avec vos
-              identifiants.
-            </Typography>
+            <Card sx={{ maxWidth: 800 }}>
+              <CardHeader title="Félicitations, vous êtes maintenant enregistré !" />
+              <CardContent>
+                <Typography>
+                  Vous pouvez maintenant <Link to="/Login">vous connecter</Link>{" "}
+                  avec vos identifiants.
+                </Typography>
+              </CardContent>
+            </Card>
           ) : (
             <>
               <Avatar className={classes.avatar}>

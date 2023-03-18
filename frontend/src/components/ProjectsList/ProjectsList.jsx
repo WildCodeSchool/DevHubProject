@@ -1,14 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { amber, blue, green, red } from "@mui/material/colors";
 
 function ProjectsList({ projects }) {
-  const [projectFilter, setProjectFilter] = useState("");
-
-  const handleFilterChange = (event) => {
-    setProjectFilter(event.target.value);
-  };
-
   const getColor = (progress) => {
     if (progress < 25) {
       return red[500];
@@ -22,21 +16,11 @@ function ProjectsList({ projects }) {
     return green[500];
   };
 
-  const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(projectFilter.toLowerCase())
-  );
-
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
-        <input
-          type="text"
-          placeholder="Filter projects by name"
-          value={projectFilter}
-          onChange={handleFilterChange}
-        />
         <Box sx={{ mt: 3 }}>
-          {filteredProjects.map((project) => {
+          {projects.map((project) => {
             console.info(project);
             return (
               <Box
