@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Box } from "@material-ui/core";
+import { Grid, Paper, Box } from "@material-ui/core";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Informations from "../../components/Informations/Informations";
 import userimage from "../../assets/user.png";
-// import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import ProjectsList from "../../components/ProjectsList/ProjectsList";
 import SendMessage from "../../components/SendMessage/SendMessage";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,13 +36,26 @@ const useStyles = makeStyles((theme) => ({
 function UserProfile() {
   const classes = useStyles();
   const [user, setUser] = useState({});
-  const [projects, setProjects] = useState({});
+  const [projects, setProjects] = useState([]);
+  const [inbox, setInbox] = useState([]);
 
   const { id } = useParams();
 
+  const handleSendMessage = (subject, message) => {
+    const newMessage = {
+      subject,
+      message,
+      date: new Date(),
+    };
+    setInbox([...inbox, newMessage]);
+  };
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:5000/users/${id}`)
+      .get(`http://localhost:5000/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         console.info(response.data);
         setUser(response.data);
@@ -52,7 +65,9 @@ function UserProfile() {
       });
 
     axios
-      .get(`http://localhost:5000/projects/`)
+      .get(`http://localhost:5000/users/${id}/projects`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         console.info(response.data);
         setProjects(response.data);
@@ -93,15 +108,19 @@ function UserProfile() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Grid
-            container
-            justifyContent="center"
-            className={classes.sendMessageContainer}
-          >
+        <Grid item xs={12} md={6}>
+          <Paper className={classes.paper}>
+            <Grid container direction="column" spacing={3}>
+              <Grid item>
+                <ProjectsList projects={projects} />
+              </Grid>
+            </Grid>
+          </Paper>
+          <Grid item className={classes.sendMessageContainer}>
             <SendMessage
-              firstName={UserProfile.firstName}
-              lastName={UserProfile.lastName}
+              firstname={user.firstname}
+              lastname={user.lastname}
+              onSendMessage={handleSendMessage}
             />
           </Grid>
         </Grid>

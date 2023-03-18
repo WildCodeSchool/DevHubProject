@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useState, useEffect } from "react";
 import { Box, useTheme } from "@mui/material";
 import TextField from "@mui/material/TextField";

@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { amber, blue, green, red } from "@mui/material/colors";
-import axios from "axios";
 
-function ProjectsList() {
-  const [projectState, setProjectState] = useState([]);
-  const [error, setError] = useState("");
+function ProjectsList({ projects }) {
+  const [projectFilter, setProjectFilter] = useState("");
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/projects");
-        console.info("Projects:", response.data);
-        setProjectState(response.data);
-      } catch (err) {
-        setError(error);
-      }
-    };
-    console.info("Fetching projects...");
-    fetchProjects();
-  }, []);
+  const handleFilterChange = (event) => {
+    setProjectFilter(event.target.value);
+  };
 
   const getColor = (progress) => {
     if (progress < 25) {
@@ -34,52 +22,60 @@ function ProjectsList() {
     return green[500];
   };
 
-  if (error) {
-    console.error("Error fetching projects:", error);
-    return <div>Error: {error}</div>;
-  }
+  const filteredProjects = projects.filter((project) =>
+    project.name.toLowerCase().includes(projectFilter.toLowerCase())
+  );
 
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
+        <input
+          type="text"
+          placeholder="Filter projects by name"
+          value={projectFilter}
+          onChange={handleFilterChange}
+        />
         <Box sx={{ mt: 3 }}>
-          {projectState.map((project) => (
-            <Box
-              key={project.id}
-              sx={{ display: "flex", alignItems: "center", mb: 2 }}
-            >
-              <Box sx={{ width: "100%", mr: 1 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                  {project.name}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.greenAccent" }}>
-                  {project.description}
-                </Typography>
-                <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                  <Box
-                    sx={{
-                      flexGrow: 1,
-                      height: 8,
-                      borderRadius: 5,
-                      overflow: "hidden",
-                      background: "#ccc",
-                    }}
-                  >
+          {filteredProjects.map((project) => {
+            console.info(project);
+            return (
+              <Box
+                key={project.id}
+                sx={{ display: "flex", alignItems: "center", mb: 2 }}
+              >
+                <Box sx={{ width: "100%", mr: 1 }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    {project.name}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: green[500] }}>
+                    {project.description}
+                  </Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
                     <Box
                       sx={{
-                        height: "100%",
+                        flexGrow: 1,
+                        height: 8,
                         borderRadius: 5,
-                        background: getColor(project.progress),
+                        overflow: "hidden",
+                        background: "#ccc",
                       }}
-                    />
-                  </Box>
-                  <Box sx={{ ml: 1 }}>
-                    <Typography variant="caption">{`${project.progress}%`}</Typography>
+                    >
+                      <Box
+                        sx={{
+                          height: "100%",
+                          borderRadius: 5,
+                          background: getColor(project.progress),
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ ml: 1 }}>
+                      <Typography variant="caption">{`${project.progress}%`}</Typography>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-          ))}
+            );
+          })}
         </Box>
       </Grid>
     </Grid>
