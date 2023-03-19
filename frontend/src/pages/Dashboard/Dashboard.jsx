@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Grid, useTheme, Typography } from "@mui/material";
+import { Box, Grid, useTheme, Typography, Paper } from "@mui/material";
 import axios from "axios";
 import Header from "../../components/Header/Header";
 import NoteList from "../../components/NotesList/NotesList";
@@ -83,7 +83,7 @@ function Dashboard() {
         justifyContent="space-between"
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-        <Box sx={{ width: "250px", marginTop: "25px", border: 1 }}>
+        <Box sx={{ width: "250px", marginTop: "1  5px" }}>
           <SelectProject
             handleProjectSelect={handleProjectSelect}
             setIdProject={setIdProject}
@@ -100,7 +100,6 @@ function Dashboard() {
         sx={{ border: 1, p: "1em" }}
       >
         <Grid
-          xs={12}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
@@ -157,8 +156,7 @@ function Dashboard() {
             <UserTask setSelectTasksByUserId={setSelectTasksByUserId} />
           </Box>
         </Box>
-        <Box sx={{ mt: "10px", border: 1 }}>
-          <SearchBar handleSearchNote={setSearchText} />
+        <Box sx={{ mt: "10px" }}>
           <Box display="flex" justifyContent="space-between">
             <Box
               display="flex"
@@ -178,14 +176,19 @@ function Dashboard() {
             </Box>
             <AddNote handleAddNote={addNote} />
           </Box>
-          <NoteList
-            notes={notes.filter(
-              (note) =>
-                typeof note.description === "string" &&
-                note.description.toLocaleLowerCase().includes(searchText)
-            )}
-            handleDeleteNote={deleteNote}
-          />
+          <Paper elevation="10">
+            <SearchBar handleSearchNote={setSearchText} />
+          </Paper>
+          <Paper elevation="10" sx={{ borderRadius: "10px" }}>
+            <NoteList
+              notes={notes.filter(
+                (note) =>
+                  typeof note.description === "string" &&
+                  note.description.toLocaleLowerCase().includes(searchText)
+              )}
+              handleDeleteNote={deleteNote}
+            />
+          </Paper>
         </Box>
       </Grid>
       <Grid xs={4} display="flex" justifyContent="center" sx={{ border: 1 }}>

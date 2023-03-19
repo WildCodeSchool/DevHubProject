@@ -2,8 +2,13 @@ import Slider from "react-slick";
 import Note from "../Note/Note";
 
 function NotesList({ notes, handleDeleteNote }) {
+  const settings = {
+    adaptiveHeight: true,
+  };
+
   return (
-    <Slider>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Slider {...settings}>
       {notes.map((note) => (
         <Note
           id={note.id}

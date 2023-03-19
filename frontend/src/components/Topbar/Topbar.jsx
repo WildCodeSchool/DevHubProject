@@ -4,8 +4,6 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SearchBar from "../SearchBar/SearchBar";
-
 import { ColorModeContext } from "../../theme";
 
 function Topbar() {
@@ -15,14 +13,12 @@ function Topbar() {
   return (
     <Box
       display="flex"
-      justifyContent="space-between"
+      justifyContent="flex-end"
       p={2}
       sx={{ border: 1, textDecoration: "none" }}
     >
-      {/* SEARCH BAR */}
-      <SearchBar />
       {/* ICONS */}
-      <Box display="flex" sx={{ border: 1 }}>
+      <Box display="flex">
         <IconButton onClick={toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />

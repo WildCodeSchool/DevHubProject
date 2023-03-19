@@ -83,7 +83,7 @@ const destroy = (req, res) => {
 };
 
 const getUserTasksByProjectId = (req, res) => {
-  console.info(req.user, "REQ");
+  console.info(req, "REQ");
   const userId = req.user ? req.user.id : null;
   console.info(userId, "USERID");
   const { projectId } = req.params;

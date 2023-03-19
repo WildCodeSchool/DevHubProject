@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Card,
   CardActionArea,
   CardContent,
   CardMedia,
+  Paper,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -39,11 +39,13 @@ function UserCard(props) {
       sx={{ width: "180px", height: "200px" }}
     >
       <Box>
-        <Card
+        <Paper
+          elevation="10"
           sx={{
-            height: "200px",
+            height: "180px",
             width: "100%",
             background: colors.primary[400],
+            mt: "10px",
           }}
         >
           <CardActionArea>
@@ -79,7 +81,7 @@ function UserCard(props) {
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>
+        </Paper>
       </Box>
     </Box>
   );

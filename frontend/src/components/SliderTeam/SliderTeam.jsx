@@ -41,6 +41,7 @@ function SliderTeam({ selectedRole, idProject }) {
     slidesToShow: 3,
     slidesToScroll: 3,
     spacing: "10px",
+    focusOnSelect: true,
     responsive: [
       {
         breakpoint: 1024,

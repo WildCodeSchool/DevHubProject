@@ -15,7 +15,6 @@ import Roadmap from "./pages/Roadmap/Roadmap";
 import Register from "./pages/Register/Register";
 import NotFound from "./pages/NotFound/NotFound";
 import Progress from "./pages/Progress/Progress";
-import Topbar from "./components/Topbar/Topbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import "./App.css";
 
@@ -42,9 +41,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {showSidebar && <Sidebar />}
+          {showTopbar && <Sidebar />}
           <main className="content">
-            {showTopbar && <Topbar />}
             <Routes>
               <Route path="*" element={<NotFound />} />
               <Route path="/" element={<Home />} />
