@@ -1,9 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import { Modal, Button, TextField, Paper } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -20,6 +19,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import LoginLink from "../../components/LoginLink/LoginLink";
+import ForgetPasswordMessage from "../../components/ForgetPasswordMessage/ForgetPasswordMessage";
 
 const validationSchema = yup.object({
   email: yup
@@ -41,6 +41,7 @@ export default function Login() {
   const [tokenIsValid, setTokenIsValid] = useState(false);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [open, setOpen] = useState(false);
 
   // configurer errorMessage à faire + déconnexion et forgetpassword
 
@@ -107,6 +108,13 @@ export default function Login() {
   });
 
   const { errors, touched } = formik;
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -212,12 +220,42 @@ export default function Login() {
               }}
             >
               <Grid item>
-                <Link to="/register" variant="body2">
-                  Forgot password?
-                </Link>
+                <Typography variant="body1" component="span">
+                  <button type="button" onClick={handleOpen}>
+                    Forgot password?
+                  </button>
+                </Typography>
+
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-title"
+                  aria-describedby="modal-description"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Paper style={{ width: "50%", padding: "2rem" }}>
+                    <Typography variant="h6" id="modal-title" align="center">
+                      Forgot password?
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      id="modal-description"
+                      align="center"
+                    >
+                      <ForgetPasswordMessage />
+                    </Typography>
+                    <Button onClick={handleClose}>Annuler</Button>
+                  </Paper>
+                </Modal>
               </Grid>
               <Grid item>
-                <Link to="/register">Don't have an account? Register</Link>
+                <Link to="/register">
+                  <button type="button">Don't have an account? Register</button>
+                </Link>
               </Grid>
             </Grid>
 
