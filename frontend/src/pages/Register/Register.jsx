@@ -120,11 +120,22 @@ export default function Register() {
           {errorMessage}
         </Typography>
       )}
-      <Container component="main" maxWidth="xs">
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          boxShadow:
+            "0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+        }}
+        style={{ paddingTop: "1%", paddingBottom: "2%", marginTop: "5%" }}
+      >
         <CssBaseline />
         <div className={classes.paper}>
           {success ? (
-            <Card sx={{ maxWidth: 800 }}>
+            <Card
+              sx={{ maxWidth: 800 }}
+              style={{ paddingTop: "1%", paddingBottom: "2%", marginTop: "5%" }}
+            >
               <CardHeader title="Félicitations, vous êtes maintenant enregistré !" />
               <CardContent>
                 <Typography>
@@ -135,12 +146,21 @@ export default function Register() {
             </Card>
           ) : (
             <>
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Créer un compte
-              </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginBottom: "5%",
+                }}
+              >
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Créer un compte
+                </Typography>
+              </div>
               <Formik
                 initialValues={{
                   lastname,
@@ -314,7 +334,7 @@ export default function Register() {
                     >
                       S'inscrire
                     </Button>
-                    <Grid container justifyContent="flex-end">
+                    <Grid container justifyContent="flex-start">
                       <Grid item>
                         <Link to="/login">
                           Vous avez déjà un compte ? Connectez-vous

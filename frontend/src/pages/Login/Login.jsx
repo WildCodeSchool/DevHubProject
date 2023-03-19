@@ -19,6 +19,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import LoginLink from "../../components/LoginLink/LoginLink";
 
 const validationSchema = yup.object({
   email: yup
@@ -114,15 +115,34 @@ export default function Login() {
           {errorMessage}
         </Typography>
       )}
-      <Container component="main" maxWidth="xs">
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          boxShadow:
+            "0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+        }}
+        style={{ paddingTop: "1%", paddingBottom: "2%", marginTop: "5%" }}
+      >
         <CssBaseline />
-        <div>
-          <Avatar>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
+        <div style={{ marginTop: "5%" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: "5%",
+            }}
+          >
+            <Avatar style={{ backgroundColor: "#82be00" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+
+            <Typography component="h1" variant="h5">
+              Login
+            </Typography>
+          </div>
+
           <form onSubmit={formik.handleSubmit} noValidate>
             <TextField
               variant="outlined"
@@ -178,11 +198,20 @@ export default function Login() {
               variant="contained"
               color="primary"
               className="submit"
+              style={{ marginTop: "8%" }}
             >
               Login
             </Button>
-            <Grid container>
-              <Grid item xs>
+            <Grid
+              container
+              style={{
+                marginBottom: "10%",
+                marginTop: "2%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Grid item>
                 <Link to="/register" variant="body2">
                   Forgot password?
                 </Link>
@@ -190,6 +219,10 @@ export default function Login() {
               <Grid item>
                 <Link to="/register">Don't have an account? Register</Link>
               </Grid>
+            </Grid>
+
+            <Grid container>
+              <LoginLink />
             </Grid>
           </form>
         </div>
