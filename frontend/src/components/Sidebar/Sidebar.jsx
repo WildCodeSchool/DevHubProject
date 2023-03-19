@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, createContext } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { Box, Typography, MenuItem } from "@mui/material";
 import axios from "axios";
@@ -28,10 +28,9 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { ColorModeContext, tokens } from "../../theme";
+// import { UserProvider } from "../../context/userContext";
 
 const drawerWidth = 240;
-
-// const UserContext = createContext();
 
 const styles = {
   iconsBox: {
@@ -106,9 +105,16 @@ const Drawer = styled(MuiDrawer, {
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
 }));
+export const UserContext = createContext();
 
 export default function MiniDrawer() {
-  const [user, setUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentUserId, setCurrentUserId] = useState(null);
+  console.info(
+    "🚀 ~ file: Sidebar.jsx:112 ~ MiniDrawer ~ currentUserId:",
+    currentUserId
+  );
+
   const [randomUserImage, setRandomUserImage] = useState("");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -130,8 +136,8 @@ export default function MiniDrawer() {
       .get(`http://localhost:5000/users/1`)
       .then((response) => response.data)
       .then((data) => {
-        setUser(data);
-        setUser(data.id);
+        setCurrentUser(data);
+        setCurrentUserId(data.id);
       });
   };
 
@@ -150,309 +156,321 @@ export default function MiniDrawer() {
     fetchRandomUserImage();
   }, []);
 
-  const getId = () => {
-    return user.id;
-  };
   return (
-    <Box sx={{ display: "flex" }}>
-      <AppBar position="fixed" open={open}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Box sx={{ ...styles.iconsBox, ...(open ? {} : { flexGrow: 0 }) }}>
-            <Box display="flex">
-              <IconButton onClick={toggleColorMode}>
-                {theme.palette.mode === "dark" ? (
-                  <DarkModeOutlinedIcon />
-                ) : (
-                  <LightModeOutlinedIcon />
-                )}
-              </IconButton>
-              <IconButton>
-                <NotificationsOutlinedIcon />
-              </IconButton>
-              <IconButton href={`/user-profile/${getId()}`}>
-                <PersonOutlinedIcon />
-              </IconButton>
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        style={{
-          backgroundColor: colors.primary[500],
-        }}
-        variant="permanent"
-        open={open}
-      >
-        <DrawerHeader
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {/* LOGO AND MENU ICON */}
-          <MenuItem
-            style={{
-              margin: "10px 0 20px 0",
-              color: colors.grey[100],
-            }}
-          >
-            <Box
+    <UserContext.Provider value={currentUser.id}>
+      <Box sx={{ display: "flex" }}>
+        <AppBar position="fixed" open={open}>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                marginRight: 5,
+                ...(open && { display: "none" }),
               }}
             >
-              <Box>
-                <IconButton onClick={handleDrawerClose}>
-                  {theme.direction === "rtl" ? (
-                    <ChevronRightIcon />
+              <MenuIcon />
+            </IconButton>
+            <Box sx={{ ...styles.iconsBox, ...(open ? {} : { flexGrow: 0 }) }}>
+              <Box display="flex">
+                <IconButton onClick={toggleColorMode}>
+                  {theme.palette.mode === "dark" ? (
+                    <DarkModeOutlinedIcon />
                   ) : (
-                    <ChevronLeftIcon />
+                    <LightModeOutlinedIcon />
                   )}
                 </IconButton>
+                <IconButton>
+                  <NotificationsOutlinedIcon />
+                </IconButton>
+                <IconButton href={`/user-profile/${currentUserId}`}>
+                  <PersonOutlinedIcon />
+                </IconButton>
               </Box>
-              <Typography
-                variant="h4"
-                color={colors.grey[100]}
-                sx={{ pl: "1em" }}
-              >
-                DevHub Project
-              </Typography>
             </Box>
-          </MenuItem>
-          {/* USER */}
-          {open && (
-            <Box mb="25px">
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <Box key={user.id}>
-                  {user.user_image ? (
-                    <img
-                      style={{ width: "150px", borderRadius: "50%" }}
-                      src={user.user_image}
-                      alt="user"
-                    />
-                  ) : (
-                    <img
-                      style={{ width: "150px", borderRadius: "50%" }}
-                      src={randomUserImage}
-                      alt="default user"
-                    />
-                  )}
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          style={{
+            backgroundColor: colors.primary[500],
+          }}
+          variant="permanent"
+          open={open}
+        >
+          <DrawerHeader
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {/* LOGO AND MENU ICON */}
+            <MenuItem
+              style={{
+                margin: "10px 0 20px 0",
+                color: colors.grey[100],
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box>
+                  <IconButton onClick={handleDrawerClose}>
+                    {theme.direction === "rtl" ? (
+                      <ChevronRightIcon />
+                    ) : (
+                      <ChevronLeftIcon />
+                    )}
+                  </IconButton>
+                </Box>
+                <Typography
+                  variant="h4"
+                  color={colors.grey[100]}
+                  sx={{ pl: "1em" }}
+                >
+                  DevHub Project
+                </Typography>
+              </Box>
+            </MenuItem>
+            {/* USER */}
+            {open && (
+              <Box mb="25px">
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <Box key={currentUser.id}>
+                    {currentUser.user_image ? (
+                      <img
+                        style={{ width: "150px", borderRadius: "50%" }}
+                        src={currentUser.user_image}
+                        alt="user"
+                      />
+                    ) : (
+                      <img
+                        style={{ width: "150px", borderRadius: "50%" }}
+                        src={randomUserImage}
+                        alt="default user"
+                      />
+                    )}
+                  </Box>
+                </Box>
+                <Box textAlign="center">
+                  <Typography
+                    variant="h3"
+                    color={colors.grey[100]}
+                    fontWeight="bold"
+                    sx={{ m: "10px 0 0 0" }}
+                  >
+                    <Box key={currentUser.id}>
+                      {`${currentUser.firstname} 
+                    ${currentUser.lastname}`}
+                    </Box>
+                  </Typography>
+                  <Typography variant="h5" color={colors.greenAccent[500]}>
+                    <Box key={currentUser.id}>{currentUser.user_role}</Box>
+                  </Typography>
                 </Box>
               </Box>
-              <Box textAlign="center">
-                <Typography
-                  variant="h3"
-                  color={colors.grey[100]}
-                  fontWeight="bold"
-                  sx={{ m: "10px 0 0 0" }}
+            )}
+          </DrawerHeader>
+          <Divider />
+
+          {/* ITEM */}
+
+          <List>
+            <ListItem key="Dashboard" disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                to="/dashboard"
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
                 >
-                  <Box key={user.id}>
-                    {`${user.firstname} 
-                    ${user.lastname}`}
-                  </Box>
-                </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  <Box key={user.id}>{user.user_role}</Box>
-                </Typography>
-              </Box>
-            </Box>
-          )}
-        </DrawerHeader>
-        <Divider />
+                  <DashboardCustomizeOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Dashboard"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem key="Mailbox" disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                to="/mailbox"
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <EmailOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Mailbox"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
 
-        {/* ITEM */}
-
-        <List>
-          <ListItem key="Dashboard" disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              to="/dashboard"
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
+            <ListItem key="Contacts" disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                to="/contact"
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <DashboardCustomizeOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Dashboard"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key="Mailbox" disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              to="/mailbox"
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ContactMailOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Contacts"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem
+              key="Add Project"
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <ListItemIcon
+              <ListItemButton
+                to="/add-project"
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <EmailOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Mailbox" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem key="Contacts" disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              to="/contact"
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AddCircleOutlineOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Add Project"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem key="Calendar" disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                to="/calendar"
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <ContactMailOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Contacts" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem key="Add Project" disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              to="/add-project"
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CalendarTodayOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Calendar"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem
+              key="Project Progress"
+              disablePadding
+              sx={{ display: "block" }}
             >
-              <ListItemIcon
+              <ListItemButton
+                to="/progress"
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <AddCircleOutlineOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Add Project"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key="Calendar" disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              to="/calendar"
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <CalendarTodayOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Calendar" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            key="Project Progress"
-            disablePadding
-            sx={{ display: "block" }}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PieChartOutlineOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Project Progress"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
+          <List
+            sx={{ display: "flex", flexDirection: "column", marginTop: "auto" }}
           >
-            <ListItemButton
-              to="/progress"
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
+            <ListItem key="LogOut" disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                to="/"
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <PieChartOutlineOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Project Progress"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-        <List
-          sx={{ display: "flex", flexDirection: "column", marginTop: "auto" }}
-        >
-          <ListItem key="LogOut" disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              to="/"
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <LogoutOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="LogOut" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <LogoutOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="LogOut" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+        </Box>
       </Box>
-    </Box>
+    </UserContext.Provider>
   );
 }
