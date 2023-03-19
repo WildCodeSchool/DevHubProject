@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Box, CardContent } from "@mui/material";
 import axios from "axios";
 import TaskCard from "../TaskCard/TaskCard";
+import { UserContext } from "../../context/userContext";
 
-function UserTask({ setSelectTasksByUserIdId }) {
+function UserTask(props) {
+  const { userId } = useContext(UserContext);
+  console.info("🚀 ~ file: UserTask.jsx:9 ~ UserTask ~ userId:", userId);
+  const { projectId } = props; // props added
   const [userTasks, setUserTasks] = useState([]);
 
-  const getTaskByUserId = (userId, projectId) => {
+  const getTaskByUserId = () => {
     axios
       .get(`http://localhost:5000/users/${userId}/projects/${projectId}/tasks`)
       .then((response) => {
@@ -34,9 +38,10 @@ function UserTask({ setSelectTasksByUserIdId }) {
       })
       .catch((error) => console.error(error));
   };
+
   useEffect(() => {
-    getTaskByUserId(setSelectTasksByUserIdId);
-  }, [setSelectTasksByUserIdId]);
+    getTaskByUserId();
+  }, [userId, projectId]); // added dependencies
 
   return (
     <Box>

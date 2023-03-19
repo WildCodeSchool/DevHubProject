@@ -6,7 +6,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
+// import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -30,6 +30,8 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { ColorModeContext, tokens } from "../../theme";
 
 const drawerWidth = 240;
+
+// const UserContext = createContext();
 
 const styles = {
   iconsBox: {
@@ -106,7 +108,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer() {
-  const [currentUser, setCurrentUser] = useState({});
+  const [user, setUser] = useState({});
   const [randomUserImage, setRandomUserImage] = useState("");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -121,12 +123,15 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  // Appel à l'API pour afficher l'utilisateur connecté
+
   const getUser = () => {
     axios
       .get(`http://localhost:5000/users/1`)
       .then((response) => response.data)
       .then((data) => {
-        setCurrentUser(data);
+        setUser(data);
+        setUser(data.id);
       });
   };
 
@@ -145,9 +150,11 @@ export default function MiniDrawer() {
     fetchRandomUserImage();
   }, []);
 
+  const getId = () => {
+    return user.id;
+  };
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
@@ -174,14 +181,20 @@ export default function MiniDrawer() {
               <IconButton>
                 <NotificationsOutlinedIcon />
               </IconButton>
-              <IconButton href="/user-profile/1">
+              <IconButton href={`/user-profile/${getId()}`}>
                 <PersonOutlinedIcon />
               </IconButton>
             </Box>
           </Box>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        style={{
+          backgroundColor: colors.primary[500],
+        }}
+        variant="permanent"
+        open={open}
+      >
         <DrawerHeader
           sx={{
             display: "flex",
@@ -226,11 +239,11 @@ export default function MiniDrawer() {
           {open && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <Box key={currentUser.id}>
-                  {currentUser.user_image ? (
+                <Box key={user.id}>
+                  {user.user_image ? (
                     <img
                       style={{ width: "150px", borderRadius: "50%" }}
-                      src={currentUser.user_image}
+                      src={user.user_image}
                       alt="user"
                     />
                   ) : (
@@ -249,13 +262,13 @@ export default function MiniDrawer() {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  <Box key={currentUser.id}>
-                    {`${currentUser.firstname} 
-                    ${currentUser.lastname}`}
+                  <Box key={user.id}>
+                    {`${user.firstname} 
+                    ${user.lastname}`}
                   </Box>
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  <Box key={currentUser.id}>{currentUser.user_role}</Box>
+                  <Box key={user.id}>{user.user_role}</Box>
                 </Typography>
               </Box>
             </Box>

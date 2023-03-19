@@ -49,6 +49,10 @@ router.delete("/notes/:id", noteControllers.destroy);
 
 const taskControllers = require("./controllers/taskControllers");
 
+router.get(
+  "/users/:userId/projects/:projectId/tasks",
+  taskControllers.getTasksByUserIdAndProjectId
+);
 router.get("/users/:id/tasks", taskControllers.getTasksByUserId);
 router.get("/projects/:id/tasks", taskControllers.getTasksByProjectId);
 router.get("/tasks", taskControllers.browse);
@@ -83,10 +87,6 @@ router.delete("/userProjects/:id", userProjectControllers.destroy);
 
 const taskProjectControllers = require("./controllers/taskProjectControllers");
 
-router.get(
-  "/users/:id/projects/:id/tasks",
-  taskProjectControllers.getUserTasksByProjectId
-);
 router.get("/taskProjects", taskProjectControllers.browse);
 router.get("/taskProjects/:id", taskProjectControllers.read);
 router.post("/taskProjects", taskProjectControllers.add);

@@ -71,14 +71,13 @@ function Dashboard() {
   };
   const [selectedRole, setSelectedRole] = useState("");
   // eslint-disable-next-line no-unused-vars
-  const [selectTasksByUser, setSelectTasksByUserId] = useState("");
 
   return (
     <Grid container>
       <Grid
         item
         xs={12}
-        sx={{ border: 1, padding: "0 10px 0 10px" }}
+        sx={{ border: 1, padding: "0 10px 0 10px", mt: "70px" }}
         display="flex"
         justifyContent="space-between"
       >
@@ -153,7 +152,7 @@ function Dashboard() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" overflow="auto" m="0.5em">
-            <UserTask setSelectTasksByUserId={setSelectTasksByUserId} />
+            <UserTask setIdProject={setIdProject} />
           </Box>
         </Box>
         <Box sx={{ mt: "10px" }}>
