@@ -27,7 +27,7 @@ export default function Home() {
       >
         <CssBaseline />
         <Container
-          Width="600px"
+          width="600px"
           sx={{
             display: "flex",
             alignItems: "center",
@@ -53,6 +53,7 @@ export default function Home() {
                 variant="h3"
                 component="div"
                 sx={{ color: "#B28011" }}
+                style={{ marginBottom: "8%" }}
               >
                 Connectez-vous avec DevHubProjects et donnez vie à vos projets.
               </Typography>
@@ -112,7 +113,7 @@ export default function Home() {
         </Container>
       </Paper>
       <Paper sx={{ borderRadius: 0 }}>
-        <Container Width="600px">
+        <Container width="600px">
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 4, sm: 6, md: 6 }}

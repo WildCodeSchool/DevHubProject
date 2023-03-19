@@ -18,6 +18,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import HouseIcon from "@mui/icons-material/House";
 import LoginLink from "../../components/LoginLink/LoginLink";
 import ForgetPasswordMessage from "../../components/ForgetPasswordMessage/ForgetPasswordMessage";
 
@@ -128,7 +129,7 @@ export default function Login() {
           boxShadow:
             "0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
         }}
-        style={{ paddingTop: "1%", paddingBottom: "2%", marginTop: "5%" }}
+        style={{ paddingTop: "1%", paddingBottom: "1%", marginTop: "3%" }}
       >
         <CssBaseline />
         <div style={{ marginTop: "5%" }}>
@@ -262,6 +263,23 @@ export default function Login() {
             </Grid>
           </form>
         </div>
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          style={{
+            marginTop: "5%",
+          }}
+        >
+          <IconButton
+            color="inherit"
+            component={Link}
+            to="/"
+            onClick={() => localStorage.removeItem("token")}
+          >
+            <HouseIcon />
+          </IconButton>
+        </Grid>
       </Container>
     </ThemeProvider>
   );

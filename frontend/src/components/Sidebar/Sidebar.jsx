@@ -12,6 +12,7 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import { tokens } from "../../theme";
 import defaultUserImage from "../../assets/user.png";
 
@@ -213,6 +214,20 @@ function Sidebar() {
               title="Project Progress"
               to="/progress"
               icon={<PieChartOutlineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              LogOut
+            </Typography>
+            <Item
+              title="Logout"
+              to="/"
+              icon={<ExitToAppOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

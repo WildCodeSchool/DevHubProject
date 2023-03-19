@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import HouseIcon from "@mui/icons-material/House";
 import RegisterContext from "../../context/RegisterContext";
 
 const lightTheme = createTheme({
@@ -127,7 +128,7 @@ export default function Register() {
           boxShadow:
             "0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
         }}
-        style={{ paddingTop: "3%", paddingBottom: "3%", marginTop: "5%" }}
+        style={{ paddingTop: "1%", paddingBottom: "2%", marginTop: "5%" }}
       >
         <CssBaseline />
         <div className={classes.paper}>
@@ -344,6 +345,23 @@ export default function Register() {
                   </form>
                 )}
               </Formik>
+              <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+                style={{
+                  marginTop: "2%",
+                }}
+              >
+                <IconButton
+                  color="inherit"
+                  component={Link}
+                  to="/"
+                  onClick={() => localStorage.removeItem("token")}
+                >
+                  <HouseIcon />
+                </IconButton>
+              </Grid>
             </>
           )}
         </div>
