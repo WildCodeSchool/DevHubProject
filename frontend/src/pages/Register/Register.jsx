@@ -60,19 +60,19 @@ export default function Register() {
   const checkRequiredFields = (values) => {
     const messages = {};
     if (!values.lastname) {
-      messages.lastname = "Veuillez saisir votre nom";
+      messages.lastname = "Please enter your name";
     }
     if (!values.firstname) {
-      messages.firstname = "Veuillez saisir votre prénom";
+      messages.firstname = "Please enter your first name";
     }
     if (!values.email) {
-      messages.email = "Veuillez saisir votre adresse e-mail";
+      messages.email = "Please enter your email address";
     }
     if (!values.password) {
-      messages.password = "Veuillez saisir un mot de passe";
+      messages.password = "Please enter a password";
     }
     if (!values.confirmPassword) {
-      messages.confirmPassword = "Veuillez confirmer votre mot de passe";
+      messages.confirmPassword = "Please confirm your password";
     }
     return messages;
   };
@@ -81,7 +81,7 @@ export default function Register() {
     const messages = checkRequiredFields(values);
     if (Object.keys(messages).length === 0) {
       if (values.password !== values.confirmPassword) {
-        setErrorMessage("Les mots de passe ne correspondent pas");
+        setErrorMessage("Passwords do not match");
       } else {
         try {
           console.info(values, "password");
@@ -94,7 +94,7 @@ export default function Register() {
         }
       }
     } else {
-      setErrorMessage("Veuillez remplir tous les champs obligatoires");
+      setErrorMessage("Please fill in all mandatory fields");
     }
 
     console.info("firstname:", values.firstname);
@@ -127,7 +127,7 @@ export default function Register() {
           boxShadow:
             "0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
         }}
-        style={{ paddingTop: "1%", paddingBottom: "2%", marginTop: "5%" }}
+        style={{ paddingTop: "3%", paddingBottom: "3%", marginTop: "5%" }}
       >
         <CssBaseline />
         <div className={classes.paper}>
@@ -136,11 +136,11 @@ export default function Register() {
               sx={{ maxWidth: 800 }}
               style={{ paddingTop: "1%", paddingBottom: "2%", marginTop: "5%" }}
             >
-              <CardHeader title="Félicitations, vous êtes maintenant enregistré !" />
+              <CardHeader title="Congratulations, you are now registered!" />
               <CardContent>
                 <Typography>
-                  Vous pouvez maintenant <Link to="/Login">vous connecter</Link>{" "}
-                  avec vos identifiants.
+                  You can now <Link to="/Login">connect</Link> with your
+                  credentials.
                 </Typography>
               </CardContent>
             </Card>
@@ -158,7 +158,7 @@ export default function Register() {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Créer un compte
+                  Register
                 </Typography>
               </div>
               <Formik
@@ -171,28 +171,25 @@ export default function Register() {
                 }}
                 onSubmit={handleSubmit}
                 validationSchema={yup.object().shape({
-                  lastname: yup.string().required("Veuillez saisir votre nom"),
+                  lastname: yup.string().required("Please enter your name"),
                   firstname: yup
                     .string()
-                    .required("Veuillez saisir votre prénom"),
+                    .required("Please enter your first name"),
                   email: yup
                     .string()
-                    .email("Veuillez saisir une adresse e-mail valide")
-                    .required("Veuillez saisir votre adresse e-mail"),
+                    .email("Please enter a valid email address")
+                    .required("Please enter your email address"),
                   password: yup
                     .string()
                     .min(
                       6,
-                      "Le mot de passe doit contenir au moins 9 caractères dont 1 chiffre"
+                      "The password must contain at least 9 characters including 1 number"
                     )
-                    .required("Veuillez saisir un mot de passe"),
+                    .required("Please enter a password"),
                   confirmPassword: yup
                     .string()
-                    .oneOf(
-                      [ref("password"), null],
-                      "Les mots de passe ne correspondent pas"
-                    )
-                    .required("Veuillez confirmer votre mot de passe"),
+                    .oneOf([ref("password"), null], "Passwords do not match")
+                    .required("Please confirm your password"),
                 })}
               >
                 {(formik) => (
@@ -205,7 +202,7 @@ export default function Register() {
                           required
                           fullWidth
                           id="lastname"
-                          label="Nom"
+                          label="LastName"
                           name="lastname"
                           autoComplete="lname"
                           error={
@@ -224,7 +221,7 @@ export default function Register() {
                           required
                           fullWidth
                           id="firstname"
-                          label="Prénom"
+                          label="FirstName"
                           name="firstname"
                           autoComplete="fname"
                           error={
@@ -243,7 +240,7 @@ export default function Register() {
                           required
                           fullWidth
                           id="email"
-                          label="Adresse e-mail"
+                          label="E-mail adress"
                           name="email"
                           autoComplete="email"
                           error={
@@ -261,7 +258,7 @@ export default function Register() {
                           required
                           fullWidth
                           name="password"
-                          label="Mot de passe"
+                          label="Password"
                           type={showPassword ? "text" : "password"}
                           id="password"
                           autoComplete="current-password"
@@ -296,7 +293,7 @@ export default function Register() {
                           required
                           fullWidth
                           name="confirmPassword"
-                          label="Confirmez votre mot de passe"
+                          label="Confirm password"
                           type={showPassword ? "text" : "password"}
                           id="confirmPassword"
                           autoComplete="confirm-password"
@@ -331,14 +328,15 @@ export default function Register() {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
+                      style={{ marginTop: "10%" }}
                     >
-                      S'inscrire
+                      Register
                     </Button>
                     <Grid container justifyContent="flex-start">
                       <Grid item>
                         <Link to="/login">
                           <button type="button">
-                            Vous avez déjà un compte ? Connectez-vous
+                            Already have an account ? Login
                           </button>
                         </Link>
                       </Grid>

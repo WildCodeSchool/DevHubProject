@@ -30,7 +30,7 @@ const validationSchema = yup.object({
     .string()
     .matches(
       /^(?=.*?[0-9]).{9,}$/,
-      "Le mot de passe doit contenir au minimum 9 caractères dont 1 chiffre"
+      "The password must contain at least 9 characters including 1 number"
     )
     .required("Password is required"),
 });
@@ -42,8 +42,6 @@ export default function Login() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
-
-  // configurer errorMessage à faire + déconnexion et forgetpassword
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -248,7 +246,7 @@ export default function Login() {
                     >
                       <ForgetPasswordMessage />
                     </Typography>
-                    <Button onClick={handleClose}>Annuler</Button>
+                    <Button onClick={handleClose}>Cancel</Button>
                   </Paper>
                 </Modal>
               </Grid>
