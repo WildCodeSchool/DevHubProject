@@ -1,6 +1,4 @@
--- npm run migrate
-
-USE dbdevhubproject;
+-- Active: 1678616074625@@127.0.0.1@3306@dbdevhubprojectUSE dbdevhubproject;
 
 DROP TABLE IF EXISTS user;
 
@@ -127,7 +125,8 @@ VALUES (
         '1234567890',
         NULL,
         'A software developer',
-        'password123',
+        '$argon2id$v=19$m=65536,t=5,p=1$mNJNlU8pRBXbCLIJjZwZWg$X90u1DE3J+vtIV+AvQCB1IB/g2epOVEwnB1ikuJmaH8', 
+        -- //password112
         'johndoe',
         'New York'
     ), (
@@ -137,7 +136,8 @@ VALUES (
         '0987654321',
         NULL,
         'A web designer',
-        'password456',
+        '$argon2id$v=19$m=65536,t=5,p=1$AP4W9uC0rCuw4kiU7DcIgQ$Ft9fTgWjOp2yeimahVmnKZQtAEmNjKBdzYbI0/T0OQQ',
+        -- // password141
         'janedoe',
         'Los Angeles'
     ), (
@@ -147,7 +147,8 @@ VALUES (
         '5555555555',
         NULL,
         'A data analyst',
-        'password789',
+        '$argon2id$v=19$m=65536,t=5,p=1$Kl278CswLedGEIKBbVkm2A$oxqwAHcBaaCZriLGmbVRxlcgDBjOfQ5SgDJugciSX3Q', 
+        -- // password191
         'bobsmith',
         'Chicago'
     ), (
@@ -157,7 +158,8 @@ VALUES (
         '6666666666',
         NULL,
         'A project manager',
-        'password111',
+        '$argon2id$v=19$m=65536,t=5,p=1$HEu7sziIK50nuWQ2UJO6iA$taYdt0qeKaIf8SUMlDIxXCzm3aWx79opfAiNMmyNpFU', 
+        -- // password900
         'alicejohnson',
         'Houston'
     ), (
@@ -167,7 +169,8 @@ VALUES (
         '7777787777',
         NULL,
         'A software engineer',
-        'password222',
+        '$argon2id$v=19$m=65536,t=5,p=1$RDHjstYKQP9TK5ZT9PqFRg$vgql0wWlIPTqgNWsKVC6NPo7qjn7ZE6YPs/Jg1popNI', 
+        -- // password922
         'tombrown',
         'Phoenix'
     ), (
@@ -177,7 +180,8 @@ VALUES (
         '8888888888',
         NULL,
         'A product manager',
-        'password333',
+        '$argon2id$v=19$m=65536,t=5,p=1$XhEbXL1iDgRwjhfaHlR2BA$3Z0rG6ALfh2+6xVQDW3Pe8Y2lhvAePViupm06OPlYLM', 
+        -- // password933
         'sophiedavis',
         'Philadelphia'
     ), (
@@ -187,7 +191,8 @@ VALUES (
         '9999999999',
         NULL,
         'A DevOps engineer',
-        'password444',
+        '$argon2id$v=19$m=65536,t=5,p=1$DZZevDGH57an3ozQIxfrPg$jXDwBWHN4iuQLl+xRCc5UpeIQJxNIDKp6YMaXkYjqr4', 
+        -- // password944
         'michaelwilson',
         'San Francisco'
     ), (
@@ -197,7 +202,8 @@ VALUES (
         '0000000000',
         NULL,
         'A UX designer',
-        'password555',
+        '$argon2id$v=19$m=65536,t=5,p=1$BRAEbr5xORTwm3TuGzULkQ$WP1cZh/k/6Mw35pRB6ygB9Y6dE0LSDqPvbblX5SiFuk', 
+        -- // password559
         'emilytaylor',
         'Seattle'
     ), (
@@ -207,7 +213,8 @@ VALUES (
         '1111211111',
         NULL,
         'A QA engineer',
-        'password666',
+        '$argon2id$v=19$m=65536,t=5,p=1$bClup2bi/scAzda6dXTmyw$BNEqCjXMFQATpQFqMJikLOHUBN7hvOYNTKkVSVnOqmg', 
+        -- // password669
         'williamlee',
         'Austin'
     ), (
@@ -217,7 +224,8 @@ VALUES (
         '2222222225',
         NULL,
         'A technical writer',
-        'password777',
+        '$argon2id$v=19$m=65536,t=5,p=1$XAmkW4+PKquxQQzzqnZCAw$eQ/3OCkaQIsLCdLwfoKs7GCRy6vBFmSrqE0a5soKdS8', 
+        -- // password179
         'oliviaparker',
         'Boston'
     ), (
@@ -227,7 +235,8 @@ VALUES (
         '1234565890',
         NULL,
         'Un développeur logiciel',
-        'motdepasse123',
+        '$argon2id$v=19$m=65536,t=5,p=1$BKyCFxU007zI767/lNKSqw$odR09SxQqI6MKrnCTmWknj9ejm93L25wvurt+RxeOBI', 
+        -- // motdepasse159
         'jeandupont',
         'Paris'
     ), (
@@ -237,7 +246,8 @@ VALUES (
         '0987655321',
         NULL,
         'Un concepteur web',
-        'motdepasse456',
+        '$argon2id$v=19$m=65536,t=5,p=1$UNcv3iKJldnpcq+nwE+mEw$e/odBGuAl5HpLDIchvPNVI0de7aPnNKuHana3oYRTYg', 
+        -- // motdepasse659
         'jacquesmartin',
         'Lyon'
     ), (
@@ -247,7 +257,8 @@ VALUES (
         '5555455555',
         NULL,
         'Un analyste de données',
-        'motdepasse789',
+        '$argon2id$v=19$m=65536,t=5,p=1$fyrqvHoVk8IQdzBWWa0nGw$glsjVeA0xf4uvAVhHO/HRBiSNOByZ0WqlUxFV3l4soE', 
+        -- // motdepasse149
         'robertdurand',
         'Marseille'
     ), (
@@ -257,7 +268,7 @@ VALUES (
         '6666676666',
         NULL,
         'Une chef de projet',
-        'motdepasse111',
+        '$argon2id$v=19$m=65536,t=5,p=1$5ZwH5YxDp5xB7AlR5jOlTw$gOvfSR9rJPeXogYgpbkBvM/JR6NYDXnIPKhvbT1xlXM', -- // motdepasse112
         'lucieleroy',
         'Bordeaux'
     ), (
@@ -267,7 +278,7 @@ VALUES (
         '7777777777',
         NULL,
         'Un ingénieur logiciel',
-        'motdepasse222',
+        '$argon2id$v=19$m=65536,t=5,p=1$J2ru23iBsi3StiuUOGDXQg$gMPPj8yhFi+H8wYHQrs/BzLWZqzMglhAwp2+UY1H+Dc', -- // motdepasse223
         'thomasmoreau',
         'Toulouse'
     ), (
@@ -277,7 +288,7 @@ VALUES (
         '8888888878',
         NULL,
         'Une responsable de produit',
-        'motdepasse333',
+        '$argon2id$v=19$m=65536,t=5,p=1$BFzQpoo89RVHctOjh3m5lA$jXfpK+wvH74f4JqjGKj97xVy2P8TlC0pHJUDl48Y2k0', -- // motdepasse334
         'chloesimon',
         'Nice'
     ), (
@@ -287,7 +298,7 @@ VALUES (
         '9999999799',
         NULL,
         'Un ingénieur DevOps',
-        'motdepasse444',
+        '$argon2id$v=19$m=65536,t=5,p=1$0rBl/s7hnBmQNfCdvD9/fg$XQTwROzqIGo3Z3sOijOh/sk/u0DII3ZqZPc+I8j6tZs', -- // motdepasse445
         'emilielefebvre',
         'Nantes'
     ), (
@@ -297,7 +308,7 @@ VALUES (
         '0000007000',
         NULL,
         'Un designer UX',
-        'motdepasse555',
+        '$argon2id$v=19$m=65536,t=5,p=1$Ty/5WKBNoaAeEvVClMMuMg$Bn0tLMOlfIQVaJqmSMs94zVMGonT9sMjM5e56/zt7Bg', -- // motdepasse556
         'victorgarcia',
         'Lille'
     ), (
@@ -307,7 +318,7 @@ VALUES (
         '1111111111',
         NULL,
         'Un ingénieur QA',
-        'motdepasse666',
+        '$argon2id$v=19$m=65536,t=5,p=1$TkpvF00ujqNglWdUWZoZZg$v/7XQl6RDdy6FJtRIZSv/0xzwa01kZc/QDoAZhxEnzk', -- // motdepasse566
         'everousseau',
         'Strasbourg'
     ), (
@@ -317,7 +328,7 @@ VALUES (
         '2222222222',
         NULL,
         'Une rédactrice technique',
-        'motdepasse777',
+        '$argon2id$v=19$m=65536,t=5,p=1$v3WP/x4IuMvX9oLzYgqnSw$4VlAL/FDwkfwBDca+BrFQo+YQDqSXmYsYOGKa2QgLMk', -- // motdepasse677
         'juliedumont',
         'Montpellier'
     );

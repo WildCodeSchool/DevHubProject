@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SendIcon from "@mui/icons-material/Send";
-import { Button, Modal, TextField, Typography, Box } from "@material-ui/core";
+import {
+  Button,
+  Modal,
+  TextField,
+  Typography,
+  Snackbar,
+  IconButton,
+} from "@material-ui/core";
+import { Close as CloseIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     maxWidth: 400,
     width: "100%",
-    textAlign: "center", // Centrer le contenu de la modal
+    textAlign: "center",
   },
   title: {
     marginBottom: theme.spacing(2),
@@ -32,14 +40,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SendMessage({ firstName, lastName }) {
+function SendMessage(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
   const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
-  const handleOpen = () => {
+  const { onSendMessage, firstname, lastname } = props;
+  console.info(firstname, lastname, "nom et prénom");
+
+  const handleOpen = (event) => {
     setOpen(true);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -48,8 +64,18 @@ function SendMessage({ firstName, lastName }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.error(`Sending message "${message}" to ${firstName} ${lastName}`);
+    console.info(`Sending message ${message} to "${firstname} ${lastname}"`);
+    onSendMessage(subject, message);
     handleClose();
+    setSnackbarMessage("Message sent with success");
+    setSnackbarSeverity("success");
+    setSnackbarOpen(true);
+  };
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
@@ -60,7 +86,7 @@ function SendMessage({ firstName, lastName }) {
         endIcon={<SendIcon />}
         onClick={handleOpen}
       >
-        Send Message to "{firstName} {lastName}"
+        Send Message to "{firstname} {lastname}"
       </Button>
       <Modal
         open={open}
@@ -68,10 +94,11 @@ function SendMessage({ firstName, lastName }) {
         aria-labelledby="send-message-modal-title"
         aria-describedby="send-message-modal-description"
         className={classes.modal}
+        anchorEl={anchorEl}
       >
         <div className={classes.paper}>
           <Typography variant="h6" className={classes.title}>
-            Send a message to {firstName} {lastName}
+            Send a message to "{firstname} {lastname}"
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
@@ -85,19 +112,46 @@ function SendMessage({ firstName, lastName }) {
               id="message"
               label="Message"
               variant="outlined"
-              multiline
-              rows={4}
               value={message}
               onChange={(event) => setMessage(event.target.value)}
+              multiline
+              rows={4}
             />
-            <Box display="flex" justifyContent="flex-end">
-              <Button type="submit" variant="contained" color="primary">
-                Send
-              </Button>
-            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              endIcon={<SendIcon />}
+            >
+              Send
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
           </form>
         </div>
       </Modal>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+        action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+        severity={snackbarSeverity}
+      />
     </div>
   );
 }
