@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { Box, CardContent } from "@mui/material";
 import axios from "axios";
-import { UserContext } from "../Sidebar/Sidebar";
 import TaskCard from "../TaskCard/TaskCard";
+import { UserContext } from "../../context/userContext";
 
 function UserTask(projectId) {
   const [userTasks, setUserTasks] = useState([]);
@@ -11,7 +11,7 @@ function UserTask(projectId) {
 
   const getTaskByUserId = () => {
     axios
-      .get(`http://localhost:5000/users/1/projects/1/tasks`)
+      .get(`http://localhost:5000/users/${userId}/projects/${projectId}/tasks`)
       .then((response) => {
         console.info(
           "🚀 ~ file: UserTask.jsx:31 ~ getTaskByUserId ~ response:",

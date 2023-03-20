@@ -3,16 +3,18 @@ import PropTypes from "prop-types";
 
 export const UserContext = createContext();
 
-export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+export function UserContextProvider({ children }) {
+  const [currentUserId, setCurrentUserId] = useState(null);
 
-  const value = useMemo(() => {
-    return { user, setUser };
-  }, [user, setUser]);
+  const contextValue = useMemo(() => {
+    return { currentUserId, setCurrentUserId };
+  }, [currentUserId, setCurrentUserId]);
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
+  );
 }
 
-UserProvider.propTypes = {
+UserContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
