@@ -15,7 +15,10 @@ function ProjectTaskList({ idProject }) {
         `http://localhost:5000/projects/${projectId}/tasks`
       );
       setTasks(response.data);
-      console.info("Users retrieved successfully:", response.data);
+      console.info(
+        "getTasksByProjectId retrieved successfully:",
+        response.data
+      );
     } catch (error) {
       console.info(error);
     }

@@ -1,7 +1,7 @@
 import React from "react";
-import Task from "@components/Task/Task";
 import { Box } from "@mui/material";
-import Header from "@components/Header/Header";
+import Header from "../../components/Header/Header";
+import Task from "../../components/Task/Task";
 
 function Roadmap() {
   return (

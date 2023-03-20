@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Grid, useTheme, Typography } from "@mui/material";
+import { Box, Grid, useTheme, Typography, Paper } from "@mui/material";
 import axios from "axios";
 import Header from "../../components/Header/Header";
 import NoteList from "../../components/NotesList/NotesList";
@@ -9,7 +9,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import PieChart from "../../components/PieChart/PieChart";
 import SelectProject from "../../components/SelectProject/SelectProject";
 import SelectRole from "../../components/SelectRole/SelectRole";
-import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import UserTask from "../../components/UserTask/UserTask";
 import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
 import TeamTitle from "../../components/TeamTitle/TeamTitle";
 import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
@@ -70,18 +70,19 @@ function Dashboard() {
     );
   };
   const [selectedRole, setSelectedRole] = useState("");
+  // eslint-disable-next-line no-unused-vars
 
   return (
     <Grid container>
       <Grid
         item
         xs={12}
-        sx={{ border: 1, padding: "0 10px 0 10px" }}
+        sx={{ border: 1, padding: "0 10px 0 10px", mt: "70px" }}
         display="flex"
         justifyContent="space-between"
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-        <Box sx={{ width: "250px", marginTop: "25px", border: 1 }}>
+        <Box sx={{ width: "250px", marginTop: "1  5px" }}>
           <SelectProject
             handleProjectSelect={handleProjectSelect}
             setIdProject={setIdProject}
@@ -89,7 +90,6 @@ function Dashboard() {
           />
         </Box>
       </Grid>
-
       <Grid
         display="flex "
         justifyContent="flexStart"
@@ -99,7 +99,6 @@ function Dashboard() {
         sx={{ border: 1, p: "1em" }}
       >
         <Grid
-          xs={12}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
@@ -153,11 +152,10 @@ function Dashboard() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" overflow="auto" m="0.5em">
-            <ProjectsList />
+            <UserTask setIdProject={setIdProject} />
           </Box>
         </Box>
-        <Box sx={{ mt: "10px", border: 1 }}>
-          <SearchBar handleSearchNote={setSearchText} />
+        <Box sx={{ mt: "10px" }}>
           <Box display="flex" justifyContent="space-between">
             <Box
               display="flex"
@@ -177,14 +175,19 @@ function Dashboard() {
             </Box>
             <AddNote handleAddNote={addNote} />
           </Box>
-          <NoteList
-            notes={notes.filter(
-              (note) =>
-                typeof note.description === "string" &&
-                note.description.toLocaleLowerCase().includes(searchText)
-            )}
-            handleDeleteNote={deleteNote}
-          />
+          <Paper elevation="10">
+            <SearchBar handleSearchNote={setSearchText} />
+          </Paper>
+          <Paper elevation="10" sx={{ borderRadius: "10px" }}>
+            <NoteList
+              notes={notes.filter(
+                (note) =>
+                  typeof note.description === "string" &&
+                  note.description.toLocaleLowerCase().includes(searchText)
+              )}
+              handleDeleteNote={deleteNote}
+            />
+          </Paper>
         </Box>
       </Grid>
       <Grid xs={4} display="flex" justifyContent="center" sx={{ border: 1 }}>

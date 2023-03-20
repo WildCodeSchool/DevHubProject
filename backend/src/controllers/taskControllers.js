@@ -108,6 +108,20 @@ const getTasksByUserId = (req, res) => {
     });
 };
 
+const getTasksByUserIdAndProjectId = (req, res) => {
+  const { userId, projectId } = req.params;
+
+  models.task
+    .getTasksByUserIdAndProjectId(userId, projectId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
   read,
@@ -116,4 +130,5 @@ module.exports = {
   destroy,
   getTasksByProjectId,
   getTasksByUserId,
+  getTasksByUserIdAndProjectId,
 };

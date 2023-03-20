@@ -7,15 +7,14 @@ class TaskProjectManager extends AbstractManager {
 
   insert(taskProject) {
     return this.database.query(
-      `insert into ${this.table} (task_id, project_id)
-       values (?, ?)`,
-      [taskProject.task_id, taskProject.project_id, taskProject.taskIds]
+      `insert into ${this.table} (task_id, project_id) values (?, ?)`,
+      [taskProject.task_id, taskProject.project_id]
     );
   }
 
   update(taskProject) {
     return this.database.query(
-      `update ${this.table} set task_id ?, project_id where id = ?`,
+      `update ${this.table} set task_id = ?, project_id = ? where id = ?`,
       [taskProject.task_id, taskProject.project_id, taskProject.id]
     );
   }
