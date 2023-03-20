@@ -83,9 +83,7 @@ function AddProjectForm({ setProjectName }) {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {(
-        { values, handleChange } // isSubmitting deleted
-      ) => (
+      {({ values, handleChange }) => (
         <Form>
           <FormControl
             sx={{

@@ -51,8 +51,8 @@ function AddProject() {
           p={1}
           sx={{ backgroundColor: "#f2f0f0" }}
         >
-          <AddTaskCard projectName={projectName} />
-        </Box> */}
+          <AddTaskForm projectName={projectName} />
+        </Box>  */}
       </Box>
     </Box>
   );
