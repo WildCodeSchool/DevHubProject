@@ -32,7 +32,7 @@ function ProjectsList({ projects }) {
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                       {project.name}
                     </Typography>
-                    <Typography variant="body2" >
+                    <Typography variant="body2">
                       {project.description}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
@@ -55,13 +55,11 @@ function ProjectsList({ projects }) {
                         />
                       </Box>
 
-
                       <Box sx={{ ml: 1, Width: 70 }}>
                         <Typography
                           variant="body2"
                           sx={{
                             textAlign: "right",
-
                           }}
                         >
                           {`${project.progress}%`}{" "}

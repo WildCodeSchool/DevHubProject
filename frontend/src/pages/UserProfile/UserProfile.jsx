@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     height: "75vh",
     width: "100%",
     backgroundColor: theme.palette.background.paper,
-   
   },
   userImageContainer: {
     marginBottom: theme.spacing(5),
