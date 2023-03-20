@@ -11,7 +11,7 @@ function NotesList({ notes, handleDeleteNote }) {
     <Slider {...settings}>
       {notes.map((note) => (
         <Note
-          id={note.id}
+          key={note.id}
           description={note.description}
           date={note.date}
           handleDeleteNote={handleDeleteNote}
