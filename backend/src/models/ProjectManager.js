@@ -38,7 +38,7 @@ class ProjectManager extends AbstractManager {
 
   getProjectsByUserId(userId) {
     return this.database.query(
-      `SELECT project.id, project.name FROM project INNER JOIN user_project ON project.id = user_project.project_id WHERE user_project.user_id = ?`,
+      `SELECT project.id, project.name, project.state, project.description, project.progress, project.project_manager, project.project_start_date, project.project_end_date FROM project INNER JOIN user_project ON project.id = user_project.project_id WHERE user_project.user_id = ?`,
       [userId]
     );
   }
