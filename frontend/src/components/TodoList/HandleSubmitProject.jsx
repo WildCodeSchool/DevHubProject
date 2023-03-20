@@ -16,7 +16,10 @@ const initialValues = {
 function AddProjectForm({ setProjectName }) {
   const handleSubmit = async (values) => {
     try {
-      await axios.post("http://localhost:5000/projects", values);
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:5000/projects", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setProjectName(values.name);
       console.info("Project added successfully!");
     } catch (error) {
@@ -26,7 +29,10 @@ function AddProjectForm({ setProjectName }) {
   };
   const handleDelete = async (values) => {
     try {
-      await axios.delete("http://localhost:5000/projects/20", values);
+      const token = localStorage.getItem("token");
+      await axios.delete("http://localhost:5000/projects/20", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       console.info("Project deleted successfully!");
     } catch (error) {
       console.info("Error deleting project.");
@@ -34,7 +40,10 @@ function AddProjectForm({ setProjectName }) {
   };
   const handleUpdate = async (values) => {
     try {
-      await axios.put("http://localhost:5000/projects/11", values);
+      const token = localStorage.getItem("token");
+      await axios.put("http://localhost:5000/projects/11", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       console.info("Project updated successfully!");
     } catch (error) {
       console.info("Error updating project.");

@@ -23,7 +23,12 @@ function Dashboard() {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/notes");
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:5000/notes", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setNotes(response.data);
       } catch (error) {

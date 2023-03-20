@@ -32,7 +32,7 @@ function ProjectsList({ projects }) {
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                       {project.name}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: green[500] }}>
+                    <Typography variant="body2" >
                       {project.description}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
@@ -50,11 +50,23 @@ function ProjectsList({ projects }) {
                             height: "100%",
                             borderRadius: 5,
                             background: getColor(project.progress),
+                            width: `${project.progress}%`,
                           }}
                         />
                       </Box>
-                      <Box sx={{ ml: 1 }}>
-                        <Typography variant="caption">{`${project.progress}%`}</Typography>
+
+
+                      <Box sx={{ ml: 1, Width: 70 }}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            textAlign: "right",
+
+                          }}
+                        >
+                          {`${project.progress}%`}{" "}
+                          {/* La valeur affichée dépend de la valeur de progress */}
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>
