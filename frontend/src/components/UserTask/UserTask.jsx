@@ -10,8 +10,14 @@ function UserTask(projectId) {
   console.info("🚀 ~ file: UserTask.jsx:10 ~ UserTask ~ userId:", userId);
 
   const getTaskByUserId = () => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:5000/users/${userId}/projects/${projectId}/tasks`)
+      .get(
+        `http://localhost:5000/users/${userId}/projects/${projectId}/tasks`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then((response) => {
         console.info(
           "🚀 ~ file: UserTask.jsx:31 ~ getTaskByUserId ~ response:",

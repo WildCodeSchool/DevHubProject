@@ -51,7 +51,12 @@ function Dashboard() {
 
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/notes/${id}`);
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:5000/notes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const newNotes = notes.filter((note) => note.id !== id);
       setNotes(newNotes);
     } catch (error) {
