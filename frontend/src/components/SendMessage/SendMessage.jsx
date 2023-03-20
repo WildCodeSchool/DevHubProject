@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SendIcon from "@mui/icons-material/Send";
-import { Button, Modal, TextField, Typography, Box } from "@material-ui/core";
+import {
+  Button,
+  Modal,
+  TextField,
+  Typography,
+  Snackbar,
+  IconButton,
+} from "@material-ui/core";
+import { Close as CloseIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,11 +45,17 @@ function SendMessage(props) {
   const [open, setOpen] = useState(false);
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const { firstname, lastname } = props;
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  const { onSendMessage, firstname, lastname } = props;
   console.info(firstname, lastname, "nom et prénom");
 
-  const handleOpen = () => {
+  const handleOpen = (event) => {
     setOpen(true);
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -51,7 +65,17 @@ function SendMessage(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.info(`Sending message ${message} to "${firstname} ${lastname}"`);
+    onSendMessage(subject, message);
     handleClose();
+    setSnackbarMessage("Message sent with success");
+    setSnackbarSeverity("success");
+    setSnackbarOpen(true);
+  };
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
@@ -62,7 +86,7 @@ function SendMessage(props) {
         endIcon={<SendIcon />}
         onClick={handleOpen}
       >
-        Send Message to "{firstname} {lastname}
+        Send Message to "{firstname} {lastname}"
       </Button>
       <Modal
         open={open}
@@ -70,6 +94,7 @@ function SendMessage(props) {
         aria-labelledby="send-message-modal-title"
         aria-describedby="send-message-modal-description"
         className={classes.modal}
+        anchorEl={anchorEl}
       >
         <div className={classes.paper}>
           <Typography variant="h6" className={classes.title}>
@@ -87,19 +112,46 @@ function SendMessage(props) {
               id="message"
               label="Message"
               variant="outlined"
-              multiline
-              rows={4}
               value={message}
               onChange={(event) => setMessage(event.target.value)}
+              multiline
+              rows={4}
             />
-            <Box display="flex" justifyContent="flex-end">
-              <Button type="submit" variant="contained" color="primary">
-                Send
-              </Button>
-            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              endIcon={<SendIcon />}
+            >
+              Send
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
           </form>
         </div>
       </Modal>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+        action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+        severity={snackbarSeverity}
+      />
     </div>
   );
 }
