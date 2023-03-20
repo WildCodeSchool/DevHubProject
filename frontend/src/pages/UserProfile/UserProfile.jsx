@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     height: "75vh",
     width: "100%",
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.background.paper,
   },
   userImageContainer: {
     marginBottom: theme.spacing(5),

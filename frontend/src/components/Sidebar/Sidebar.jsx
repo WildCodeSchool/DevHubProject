@@ -108,7 +108,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
   const [currentUser, setCurrentUser] = useState({});
-  const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState({});
   console.info(
     "🚀 ~ file: Sidebar.jsx:112 ~ MiniDrawer ~ currentUserId:",
     currentUserId
@@ -129,10 +129,14 @@ export default function MiniDrawer() {
   };
 
   // Appel à l'API pour afficher l'utilisateur connecté
+  const userId = localStorage.getItem("userId");
 
   const getUser = () => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:5000/users/1`)
+      .get(`http://localhost:5000/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => response.data)
       .then((data) => {
         setCurrentUser(data);
