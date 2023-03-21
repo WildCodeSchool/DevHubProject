@@ -4,13 +4,13 @@ import { amber, blue, green, red } from "@mui/material/colors";
 
 function ProjectsList({ projects }) {
   const getColor = (progress) => {
-    if (progress < 25) {
+    if (progress < 26) {
       return red[500];
     }
-    if (progress < 50) {
+    if (progress < 51) {
       return amber[500];
     }
-    if (progress < 75) {
+    if (progress < 80) {
       return blue[500];
     }
     return green[500];
@@ -32,9 +32,28 @@ function ProjectsList({ projects }) {
                     <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                       {project.name}
                     </Typography>
-                    <Typography variant="body2">
-                      {project.description}
-                    </Typography>
+                    <Grid
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                    >
+                      <Grid item>
+                        <Typography variant="body2">
+                          {project.description}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontWeight: "bold",
+                            color: getColor(project.progress),
+                          }}
+                        >
+                          {project.state}
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
                       <Box
                         sx={{

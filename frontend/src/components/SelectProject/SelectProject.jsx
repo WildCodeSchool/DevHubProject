@@ -28,8 +28,13 @@ function SelectProject({
 
   const getProjectsByUserID = async () => {
     try {
+      const token = localStorage.getItem("token");
+      const userId = parseInt(localStorage.getItem("userId"), 10);
       const response = await axios.get(
-        "http://localhost:5000/users/1/projects"
+        `http://localhost:5000/users/${userId}/projects`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       const projects = response.data.map((projectMap) => ({
         ...projectMap,

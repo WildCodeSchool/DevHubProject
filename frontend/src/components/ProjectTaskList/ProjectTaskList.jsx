@@ -9,11 +9,11 @@ function ProjectTaskList({ idProject }) {
 
   const [tasks, setTasks] = useState([]);
 
-  const getTasksByProjectId = async (projectId) => {
+  const getTasksByProjectId = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:5000/projects/${projectId}/tasks`,
+        `http://localhost:5000/projects/${idProject}/tasks`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ function ProjectTaskList({ idProject }) {
   useEffect(() => {
     if (idProject) {
       console.info("Selected project ID:", idProject);
-      getTasksByProjectId(idProject);
+      getTasksByProjectId();
     }
   }, [idProject]);
 
