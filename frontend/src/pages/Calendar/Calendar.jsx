@@ -30,8 +30,8 @@ function Calendar() {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [deleteEvent, setDeleteEvent] = useState({ id: "", event: null });
 
-  // const [deleteEvent, setDeleteEvent] = useState({ id: "", event: null });
   // const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const handleDateClick = (selected) => {
@@ -40,13 +40,8 @@ function Calendar() {
   };
 
   const handleEventClick = (selected) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
-      )
-    ) {
-      selected.event.remove();
-    }
+    setDeleteEvent({ id: selected.event.id, event: selected.event });
+    setOpen(true);
   };
 
   const handleSave = () => {
@@ -146,22 +141,44 @@ function Calendar() {
         </Box>
       </Box>
       <Box m="20px">
-        {/* ... */}
         <Dialog open={open} onClose={() => setOpen(false)}>
-          <DialogTitle>New Event</DialogTitle>
+          <DialogTitle>
+            {deleteEvent.event ? "Delete Event" : "New Event"}
+          </DialogTitle>
           <DialogContent>
-            <TextField
-              label="Title"
-              fullWidth
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            {deleteEvent.event ? (
+              <Typography>
+                Are you sure you want to delete the event '
+                {deleteEvent.event.title}'?
+              </Typography>
+            ) : (
+              <TextField
+                label="Title"
+                fullWidth
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            )}
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} variant="contained" color="primary">
-              Save
-            </Button>
+            {deleteEvent.event ? (
+              <Button
+                onClick={() => {
+                  deleteEvent.event.remove();
+                  setOpen(false);
+                  setDeleteEvent({ id: "", event: null });
+                }}
+                variant="contained"
+                color="primary"
+              >
+                Delete
+              </Button>
+            ) : (
+              <Button onClick={handleSave} variant="contained" color="primary">
+                Save
+              </Button>
+            )}
           </DialogActions>
         </Dialog>
       </Box>
