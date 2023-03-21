@@ -13,6 +13,7 @@ import UserTask from "../../components/UserTask/UserTask";
 import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
 import TeamTitle from "../../components/TeamTitle/TeamTitle";
 import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
+import Calendar from "../Calendar/Calendar";
 import { tokens } from "../../theme";
 
 function Dashboard() {
@@ -190,15 +191,14 @@ function Dashboard() {
           </Paper>
         </Box>
       </Grid>
-      <Grid xs={4} display="flex" justifyContent="center" sx={{ border: 1 }}>
-        <Typography
-          variant="h4"
-          color={colors.grey[100]}
-          fontWeight="bold"
-          letterSpacing="0.15em"
-        >
-          CHAT COMPONENT
-        </Typography>
+      <Grid
+        xs={4}
+        display="flex"
+        justifyContent="center"
+        flexDirection="column"
+        sx={{ border: 1 }}
+      >
+        <Calendar />
       </Grid>
       <Grid
         xs={3}

@@ -86,7 +86,7 @@ function Calendar() {
                 <ListItemText
                   primary={event.title}
                   secondary={
-                    <Typography>
+                    <Typography variant="h6">
                       {formatDate(event.start, {
                         year: "numeric",
                         month: "short",
