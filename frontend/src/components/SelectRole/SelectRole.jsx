@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Paper, useTheme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
@@ -34,7 +34,7 @@ function SelectRole({ setSelectedRole }) {
   }, []);
 
   return (
-    <Box width="250px">
+    <Paper elevation="10" sx={{ backgroundColor: colors.primary[500] }}>
       <TextField
         label="Role List"
         select
@@ -43,16 +43,35 @@ function SelectRole({ setSelectedRole }) {
         fullWidth
         size="small"
         style={{
-          color: colors.grey[100],
+          backgroundColor: colors.primary[500],
+          width: "100%",
+          borderRadius: "10px",
+          height: "40px",
+          color: "#ffffff",
         }}
       >
         {roleList.map((roleMap) => (
-          <MenuItem key={roleMap} value={roleMap}>
+          <MenuItem
+            sx={{
+              backgroundColor: colors.primary[500],
+              "&:hover": {
+                backgroundColor: colors.primary[400],
+              },
+              "&.Mui-selected": {
+                backgroundColor: colors.primary[700],
+              },
+              "&.Mui-selected:hover": {
+                backgroundColor: colors.primary[400],
+              },
+            }}
+            key={roleMap}
+            value={roleMap}
+          >
             {roleMap}
           </MenuItem>
         ))}
       </TextField>
-    </Box>
+    </Paper>
   );
 }
 

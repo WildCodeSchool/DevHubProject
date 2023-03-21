@@ -88,7 +88,10 @@ function Dashboard() {
       <Grid
         item
         xs={12}
-        sx={{ border: 1, padding: "0 10px 0 10px" }}
+        sx={{
+          padding: "0 10px 0 10px",
+          backgroundColor: colors.grey[400],
+        }}
         display="flex"
         justifyContent="space-between"
       >
@@ -107,7 +110,7 @@ function Dashboard() {
         flexDirection="column"
         item
         xs={5}
-        sx={{ border: 1, p: "1em" }}
+        sx={{ p: "1em" }}
       >
         <Grid
           display="flex"
@@ -126,70 +129,96 @@ function Dashboard() {
             alignItems="center"
             width="100%"
           >
-            <TeamTitle selectedRole={selectedRole} />
-            <Box sx={{ border: 1, borderRadius: "5px" }}>
+            <Paper elevation="10">
+              <TeamTitle selectedRole={selectedRole} />
+            </Paper>
+            <Paper
+              sx={{
+                borderRadius: "10px",
+                backgroundColor: colors.primary[500],
+                width: "100%",
+              }}
+            >
               <SelectRole setSelectedRole={setSelectedRole} />
-            </Box>
+            </Paper>
           </Grid>
         </Grid>
-        <Box sx={{ border: 1, padding: "1em" }}>
+        <Paper
+          elevation="10"
+          sx={{ padding: "1em", backgroundColor: colors.grey[500] }}
+        >
           <SliderTeam selectedRole={selectedRole} idProject={idProject} />
-        </Box>
+        </Paper>
         <Box
           display="flex"
           justifyContent="flexStart"
           flexDirection="column"
           height="200px"
-          sx={{ border: 1, paddingTop: "0.2em" }}
+          sx={{ paddingTop: "0.2em" }}
         >
-          <Box
+          <Paper
+            elevation="10"
             display="flex"
             justifyContent="center"
             alignItems="center"
             sx={{
-              border: 1,
               height: "50px",
               borderRadius: "5px",
               width: "100%",
+              padding: "10px",
+              background: colors.primary[500],
             }}
           >
             <Typography
               variant="h4"
-              color={colors.grey[100]}
+              color="text.primary"
               fontWeight="bold"
               letterSpacing="0.15em"
             >
               TASK LIST
             </Typography>
-          </Box>
+          </Paper>
+
           <Box display="flex" justifyContent="center" overflow="auto" m="0.5em">
             <UserTask idProject={idProject} />
           </Box>
         </Box>
-        <Box sx={{ mt: "10px" }}>
+        <Paper
+          elevation="10"
+          sx={{
+            mt: "10px",
+            background: colors.grey[300],
+            borderRadius: "10px",
+            p: "1em",
+          }}
+        >
           <Box display="flex" justifyContent="space-between">
-            <Box
+            <Paper
+              elevation="10"
               display="flex"
               justifyContent="center"
               sx={{
                 mb: "1em",
-                background: `${colors.grey[400]}`,
+                background: colors.primary[500],
                 borderRadius: "10px",
                 p: "1rem",
                 minHeight: "15px",
-                width: "30%",
+                width: "50%",
               }}
             >
-              <Typography variant="h5" color={colors.primary[500]}>
-                Your notes
+              <Typography variant="h4" color={colors.grey[300]}>
+                YOUR NOTES
               </Typography>
-            </Box>
+            </Paper>
             <AddNote handleAddNote={addNote} />
           </Box>
-          <Paper elevation="10">
+          <Paper elevation="10" sx={{ borderRadius: "10px" }}>
             <SearchBar handleSearchNote={setSearchText} />
           </Paper>
-          <Paper elevation="10" sx={{ borderRadius: "10px" }}>
+          <Paper
+            elevation="10"
+            sx={{ borderRadius: "10px", background: colors.primary[500] }}
+          >
             <NoteList
               notes={notes.filter(
                 (note) =>
@@ -199,14 +228,13 @@ function Dashboard() {
               handleDeleteNote={deleteNote}
             />
           </Paper>
-        </Box>
+        </Paper>
       </Grid>
       <Grid
         xs={4}
         display="flex"
         justifyContent="center"
         flexDirection="column"
-        sx={{ border: 1 }}
       >
         <Calendar />
       </Grid>
@@ -216,7 +244,7 @@ function Dashboard() {
         justifyContent="flexStart"
         flexDirection="column"
         alignItems="center"
-        sx={{ border: 1 }}
+        sx={{ border: 1, borderRadius: "10px" }}
       >
         <Box
           display="flex"

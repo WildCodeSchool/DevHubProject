@@ -14,7 +14,7 @@ function Note({ id, description, date, handleDeleteNote }) {
       flexDirection="column"
       justifyContent="space-between"
       sx={{
-        background: `${colors.primary[400]}`,
+        background: `${colors.primary[500]}`,
         mb: "10px",
         borderRadius: "10px",
         p: "1rem",

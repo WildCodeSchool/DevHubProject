@@ -8,14 +8,21 @@ function SearchBar({ handleSearchNote }) {
   return (
     <Box
       display="flex"
-      backgroundColor={colors.primary[400]}
-      borderRadius="5px"
+      backgroundColor={colors.primary[500]}
+      borderRadius="10px"
       sx={{
         mb: "20px",
       }}
     >
       <InputBase
-        sx={{ ml: 2, flex: 1 }}
+        sx={{
+          ml: 2,
+          flex: 1,
+          color: colors.grey[300],
+          "&:placeholder": {
+            color: colors.grey[300],
+          },
+        }}
         onChange={(event) => handleSearchNote(event.target.value)}
         placeholder="Search..."
         type="text"

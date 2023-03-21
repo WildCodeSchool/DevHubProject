@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { Box, Typography, MenuItem } from "@mui/material";
 import axios from "axios";
@@ -6,7 +6,6 @@ import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-// import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -23,12 +22,11 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+// import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+// import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import { ColorModeContext, tokens } from "../../theme";
-// import { UserProvider } from "../../context/userContext";
+import { tokens } from "../../theme";
 
 const drawerWidth = 240;
 
@@ -117,7 +115,7 @@ export default function MiniDrawer() {
   const [randomUserImage, setRandomUserImage] = useState("");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { toggleColorMode } = useContext(ColorModeContext);
+  // const { toggleColorMode } = useContext(ColorModeContext);
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -165,9 +163,7 @@ export default function MiniDrawer() {
         position="fixed"
         open={open}
         sx={{
-          background: colors.primary[700],
-          border: 1,
-          borderColor: colors.safran[400],
+          background: colors.primary[500],
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -185,13 +181,13 @@ export default function MiniDrawer() {
           </IconButton>
           <Box sx={{ ...styles.iconsBox, ...(open ? {} : { flexGrow: 0 }) }}>
             <Box display="flex">
-              <IconButton onClick={toggleColorMode}>
+              {/* <IconButton onClick={toggleColorMode}>
                 {theme.palette.mode === "dark" ? (
                   <DarkModeOutlinedIcon sx={{ color: colors.safran[500] }} />
                 ) : (
                   <LightModeOutlinedIcon sx={{ color: colors.safran[500] }} />
                 )}
-              </IconButton>
+              </IconButton> */}
               <IconButton>
                 <NotificationsOutlinedIcon sx={{ color: colors.safran[500] }} />
               </IconButton>
@@ -205,9 +201,8 @@ export default function MiniDrawer() {
       <Drawer
         PaperProps={{
           sx: {
-            border: "1px solid",
             color: colors.safran[500],
-            backgroundColor: colors.primary[700], // changez ici les propriétés de bordure selon vos besoins
+            backgroundColor: colors.primary[500],
           },
         }}
         variant="permanent"
