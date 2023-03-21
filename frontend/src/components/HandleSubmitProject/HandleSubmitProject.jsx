@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
-import { FormControl } from "@mui/material";
+import { FormControl, useTheme } from "@mui/material";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { tokens } from "../../theme";
 
 const initialValues = {
   name: "",
@@ -21,18 +22,17 @@ const initialValues = {
 };
 
 function AddProjectForm({ setProjectName }) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [isEditable, setIsEditable] = useState(true);
   const [projectId, setProjectId] = useState();
 
-  console.info(projectId, "projectId");
   const handleSubmit = async (values) => {
-    console.info(values);
     setIsEditable(false);
     try {
       const result = await axios.post("http://localhost:5000/projects", values);
       setProjectName(values.name);
       setProjectId(result.data);
-      console.info(projectId);
       console.info("Project added successfully!", result);
     } catch (error) {
       console.info("Error adding project.");
@@ -208,7 +208,7 @@ function AddProjectForm({ setProjectName }) {
             <div>
               <Button
                 variant="contained"
-                color="primary"
+                color={colors.primary[500]}
                 onClick={() => handleDialOpen()}
               >
                 Add Project
@@ -247,7 +247,6 @@ function AddProjectForm({ setProjectName }) {
                 </DialogActions>
               </Dialog>
             </div>
-
             <div>
               <Button
                 variant="contained"
@@ -353,22 +352,6 @@ function AddProjectForm({ setProjectName }) {
                 </DialogActions>
               </Dialog>
             </div>
-
-            {/* <Button
-              onClick= {() => handleUpdate(values)}
-              variant="contained"
-              color="greenAccent"
-            >
-              Update Project
-            </Button> */}
-
-            {/* <Button
-              onClick={handleDelete}
-              variant="contained"
-              color="secondary"
-            >
-              Delete Project
-            </Button> */}
           </FormControl>
         </Form>
       )}

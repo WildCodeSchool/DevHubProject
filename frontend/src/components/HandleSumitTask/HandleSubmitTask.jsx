@@ -3,10 +3,9 @@ import { Formik, Form, Field } from "formik";
 import {
   TextField,
   Button,
-  // Card,
-  // CardContent,
-  // // Grid,
-  // Typography,
+  Card,
+  CardContent,
+  Typography,
 } from "@material-ui/core";
 import axios from "axios";
 import {
@@ -33,39 +32,11 @@ const initialValues = {
   user_id: [],
 };
 
-function AddTaskRoadmap({ projectName }) {
-  const [isEditable, setIsEditable] = useState(true);
+function AddTaskForm({ projectName }) {
   const [taskId, setTaskId] = useState();
-  console.info(isEditable, "isEditable");
+  const [selectTaskId, setSelectTaskId] = useState();
 
-  const [task, setTask] = useState([]);
-
-  const getTaskRoadmap = () => {
-    axios
-      .get("http://localhost:5000/tasks")
-      .then((response) => response.data)
-      .then((data) => {
-        const formattedData = data.map((item) => {
-          const formattedStartDate = new Date(item.task_start_date)
-            .toLocaleDateString("fr-FR")
-            .slice(0, 10);
-          const formattedEndDate = new Date(item.task_end_date)
-            .toLocaleDateString("fr-FR")
-            .slice(0, 10);
-          return {
-            ...item,
-            task_start_date: formattedStartDate,
-            task_end_date: formattedEndDate,
-          };
-        });
-        setTask(formattedData);
-      })
-      .catch((error) => console.error(error));
-  };
-
-  useEffect(() => {
-    getTaskRoadmap();
-  }, []);
+  console.info(taskId, "taskid 1");
 
   // Here for the dialogs adds ------------------------------------------//
   const [openAddTask, setOpenAddTask] = useState(false);
@@ -76,18 +47,11 @@ function AddTaskRoadmap({ projectName }) {
     setOpenAddTask(false);
   };
 
-  // Here for the dialogs update ------------------------------------------//
-  const [openUpdateTask, setOpenUpdateTask] = useState(false);
-  const handleUpdateTaskOpen = () => {
-    setOpenUpdateTask(true);
-  };
-  const handleUpdateTaskClose = () => {
-    setOpenUpdateTask(false);
-  };
-
   // Here for the dialogs delete------------------------------------------//
+
   const [openDeleteTask, setOpenDeleteTask] = useState(false);
-  const handleDeleteTaskOpen = () => {
+  const handleDeleteTaskOpen = (taskIdSelect) => {
+    setSelectTaskId(taskIdSelect);
     setOpenDeleteTask(true);
   };
   const handleDeleteTaskClose = () => {
@@ -98,17 +62,20 @@ function AddTaskRoadmap({ projectName }) {
   // Request axios post tasks -------------------------------------------//
   const [submittedValues, setSubmittedValues] = useState([]);
   const [user, setUser] = useState([]);
+  const [task, setTask] = useState([]);
 
   const handleSubmitCard = (values) => {
     setSubmittedValues([...submittedValues, values]);
+    console.info(submittedValues, "submitvalues");
   };
 
   const handleSubmit = async (values) => {
-    setIsEditable(false);
     try {
       const result = await axios.post("http://localhost:5000/tasks", values);
       setTaskId(result.data);
       console.info("Task added successfully!", result);
+      // eslint-disable-next-line no-param-reassign
+      values = { ...values, id: result.data };
       handleSubmitCard(values);
     } catch (error) {
       console.info("Error adding Task.");
@@ -116,27 +83,25 @@ function AddTaskRoadmap({ projectName }) {
     }
   };
 
-  // Request axios put tasks -------------------------------------------//
-  const handleUpdateTask = async (values) => {
-    try {
-      await axios.put(`http://localhost:5000/tasks/${taskId}`, values);
-      console.info("Task updated successfully!");
-    } catch (error) {
-      console.info("Error updating Task.");
-    }
-  };
-
   // Request axios delete tasks -------------------------------------------//
   const handleDeleteTask = async (values) => {
+    console.info(submittedValues, "submittedValues");
+    console.info(values, "valuesHandleDeleteTask");
+    console.info(selectTaskId, "id tache selectionnee");
     try {
-      await axios.delete(`http://localhost:5000/tasks/${taskId}`, values);
+      await axios.delete(`http://localhost:5000/tasks/${selectTaskId}`, values);
+
+      setSubmittedValues(
+        submittedValues.filter((value) => {
+          console.info(value, "valueMap", values.id, "valuesId");
+          return value.id !== selectTaskId;
+        })
+      );
       console.info("Task deleted successfully!");
-      // setDeletedTaskIds(taskId)
     } catch (error) {
       console.info("Error deleting Task.");
     }
   };
-  // const [deletedTaskIds, setDeletedTaskIds] = useState(null);
 
   // Unique task types to show all different types in select only once --------------------//
   const uniqueTaskTypes = new Set();
@@ -388,70 +353,81 @@ function AddTaskRoadmap({ projectName }) {
                   </DialogActions>
                 </Dialog>
               </div>
-              <div>
-                <Button
-                  variant="contained"
-                  color="greenAccent"
-                  onClick={() => setIsEditable(true)}
-                >
-                  Update
-                </Button>
+            </FormControl>
+          </Form>
+        )}
+      </Formik>
+
+      <Card direction="row" justifyContent="center">
+        {submittedValues.map((values) => {
+          const findUser = user.find(
+            (userFind) => userFind.id === values.user_id
+          );
+          const userName = findUser
+            ? `${findUser.firstname} ${findUser.lastname}`
+            : "Unknown User";
+          return (
+            <CardContent direction="row" justifyContent="spacebetween">
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography gutterBottom variant="h5" component="h3">
+                  Name : {values.name}
+                </Typography>
+
+                <Typography gutterBottom variant="h5" component="h3">
+                  State : {values.state}
+                </Typography>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: "2%",
+                }}
+              >
+                <Typography variant="h6" color="textSecondary" component="h6">
+                  Start date : {values.task_start_date}
+                </Typography>
+                <Typography variant="h6" color="textSecondary" component="h6">
+                  End date : {values.task_end_date}
+                </Typography>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: "2%",
+                }}
+              >
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Description : {values.description}
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingBottom: "2%",
+                }}
+              >
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Progress : {values.progress}%
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Task Type : {values.type}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  User : {userName}
+                </Typography>
               </div>
 
               <div>
                 <Button
                   variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    setIsEditable(false);
-                    handleUpdateTaskOpen();
-                  }}
-                >
-                  Save Update
-                </Button>
-                <Dialog
-                  open={openUpdateTask}
-                  onClose={handleUpdateTaskClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                  color="#0f206e"
-                >
-                  <DialogTitle
-                    id="alert-dialog-update"
-                    sx={{ backgroundColor: "#0f206e" }}
-                  >
-                    Save update ?
-                  </DialogTitle>
-                  <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
-                    <DialogContentText
-                      id="alert-dialog-description"
-                      color="primary"
-                    >
-                      Do you really want to save your update to your task now ?
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
-                    <Button onClick={handleUpdateTaskClose} color="secondary">
-                      Disagree
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        handleUpdateTask(values);
-                        handleUpdateTaskClose();
-                      }}
-                      color="primary"
-                    >
-                      Agree
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              </div>
-              <div>
-                <Button
-                  variant="contained"
                   color="secondary"
                   onClick={() => {
-                    handleDeleteTaskOpen();
+                    handleDeleteTaskOpen(values.id);
                   }}
                 >
                   Delete Task
@@ -493,13 +469,12 @@ function AddTaskRoadmap({ projectName }) {
                   </DialogActions>
                 </Dialog>
               </div>
-            </FormControl>
-          </Form>
-        )}
-      </Formik>
-      );
+            </CardContent>
+          );
+        })}
+      </Card>
     </>
   );
 }
 
-export default AddTaskRoadmap;
+export default AddTaskForm;

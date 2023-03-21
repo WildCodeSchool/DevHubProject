@@ -1,9 +1,13 @@
 import React from "react";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { amber, blue, green, red } from "@mui/material/colors";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
+import { tokens } from "../../theme";
 
 function TaskCard(props) {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const { name, state, progress, description, startDate, endDate, type } =
     props;
 
@@ -24,12 +28,10 @@ function TaskCard(props) {
     <Card>
       <CardContent sx={{ maxWidth: "30em" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6" component="h2" color="primary">
+          <Typography sx={{ fontWeight: "bold", color: colors.primary[200] }}>
             Task name : {name}
           </Typography>
-          <Typography variant="h6" component="h6" color="secondary">
-            Status : {state}
-          </Typography>
+          <Typography color="secondary">Status : {state}</Typography>
         </div>
         <div
           style={{
@@ -38,14 +40,10 @@ function TaskCard(props) {
             color: "grey",
           }}
         >
-          <Typography variant="h6" component="h3" maxwidth="120">
-            {description}
-          </Typography>
+          <Typography maxwidth="120">{description}</Typography>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6" component="h4">
-            Type : {type}
-          </Typography>
+          <Typography>Type : {type}</Typography>
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -71,12 +69,8 @@ function TaskCard(props) {
               mt: 1,
             }}
           >
-            <Typography variant="h6" component="h4">
-              Progress :
-            </Typography>
-            <Typography variant="h6" component="h4">
-              {progress}%
-            </Typography>
+            <Typography>Progress :</Typography>
+            <Typography>{progress}%</Typography>
           </div>
 
           <Box
