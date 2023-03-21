@@ -16,7 +16,6 @@ import Register from "./pages/Register/Register";
 import NotFound from "./pages/NotFound/NotFound";
 import Progress from "./pages/Progress/Progress";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { UserContextProvider } from "./context/userContext";
 import { RegisterContextProvider } from "./context/RegisterContext";
 import "./App.css";
 
@@ -42,30 +41,28 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <UserContextProvider>
-          <div className="app">
-            {showTopbar && <Sidebar />}
-            <main className="content">
-              <RegisterContextProvider>
-                <Routes>
-                  <Route path="*" element={<NotFound />} />
-                  <Route path="/" element={<Home />} />
-                  <Route path="/add-project" element={<AddProject />} />
-                  <Route path="/calendar" element={<Calendar />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/join-project" element={<JoinProject />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/mailbox" element={<Mailbox />} />
-                  <Route path="/user-profile/:id" element={<UserProfile />} />
-                  <Route path="/roadmap" element={<Roadmap />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/progress" element={<Progress />} />
-                </Routes>
-              </RegisterContextProvider>
-            </main>
-          </div>
-        </UserContextProvider>
+        <div className="app">
+          {showTopbar && <Sidebar />}
+          <main className="content">
+            <RegisterContextProvider>
+              <Routes>
+                <Route path="*" element={<NotFound />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/add-project" element={<AddProject />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/join-project" element={<JoinProject />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/mailbox" element={<Mailbox />} />
+                <Route path="/user-profile/:id" element={<UserProfile />} />
+                <Route path="/roadmap" element={<Roadmap />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/progress" element={<Progress />} />
+              </Routes>
+            </RegisterContextProvider>
+          </main>
+        </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

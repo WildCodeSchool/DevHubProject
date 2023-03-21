@@ -163,7 +163,7 @@ function Dashboard() {
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" overflow="auto" m="0.5em">
-            <UserTask setIdProject={setIdProject} />
+            <UserTask idProject={idProject} />
           </Box>
         </Box>
         <Box sx={{ mt: "10px" }}>
