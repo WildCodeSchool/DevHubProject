@@ -32,8 +32,6 @@ function Calendar() {
   const [selectedDate, setSelectedDate] = useState("");
   const [deleteEvent, setDeleteEvent] = useState({ id: "", event: null });
 
-  // const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
   const handleDateClick = (selected) => {
     setSelectedDate(selected);
     setOpen(true);
@@ -142,10 +140,10 @@ function Calendar() {
       </Box>
       <Box m="20px">
         <Dialog open={open} onClose={() => setOpen(false)}>
-          <DialogTitle>
+          <DialogTitle sx={{ backgroundColor: colors.primary[400] }}>
             {deleteEvent.event ? "Delete Event" : "New Event"}
           </DialogTitle>
-          <DialogContent>
+          <DialogContent sx={{ backgroundColor: colors.primary[400] }}>
             {deleteEvent.event ? (
               <Typography>
                 Are you sure you want to delete the event '
@@ -160,7 +158,7 @@ function Calendar() {
               />
             )}
           </DialogContent>
-          <DialogActions>
+          <DialogActions sx={{ backgroundColor: colors.primary[400] }}>
             <Button onClick={() => setOpen(false)}>Cancel</Button>
             {deleteEvent.event ? (
               <Button
