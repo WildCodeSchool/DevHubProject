@@ -158,7 +158,7 @@ function Sidebar() {
                     ${currentUser.lastname}`}
                   </Box>
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" color={colors.safran[500]}>
                   <Box key={currentUser.id}>{currentUser.user_role}</Box>
                 </Typography>
               </Box>

@@ -330,7 +330,7 @@ function AddTaskCard({ projectName }) {
               >
                 Complete
               </Button>
-              <Button type="submit" variant="contained" color="greenAccent">
+              <Button type="submit" variant="contained" color="safran">
                 Update
               </Button>
               <Button type="submit" variant="contained" color="secondary">

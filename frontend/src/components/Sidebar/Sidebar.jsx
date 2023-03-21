@@ -161,7 +161,15 @@ export default function MiniDrawer() {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar position="fixed" open={open}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{
+          background: colors.primary[700],
+          border: 1,
+          borderColor: colors.safran[400],
+        }}
+      >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
@@ -173,30 +181,34 @@ export default function MiniDrawer() {
               ...(open && { display: "none" }),
             }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: colors.safran[500] }} />
           </IconButton>
           <Box sx={{ ...styles.iconsBox, ...(open ? {} : { flexGrow: 0 }) }}>
             <Box display="flex">
               <IconButton onClick={toggleColorMode}>
                 {theme.palette.mode === "dark" ? (
-                  <DarkModeOutlinedIcon />
+                  <DarkModeOutlinedIcon sx={{ color: colors.safran[500] }} />
                 ) : (
-                  <LightModeOutlinedIcon />
+                  <LightModeOutlinedIcon sx={{ color: colors.safran[500] }} />
                 )}
               </IconButton>
               <IconButton>
-                <NotificationsOutlinedIcon />
+                <NotificationsOutlinedIcon sx={{ color: colors.safran[500] }} />
               </IconButton>
               <IconButton href={`/user-profile/${currentUserId}`}>
-                <PersonOutlinedIcon />
+                <PersonOutlinedIcon sx={{ color: colors.safran[500] }} />
               </IconButton>
             </Box>
           </Box>
         </Toolbar>
       </AppBar>
       <Drawer
-        style={{
-          backgroundColor: colors.primary[500],
+        PaperProps={{
+          sx: {
+            border: "1px solid",
+            color: colors.safran[500],
+            backgroundColor: colors.primary[700], // changez ici les propriétés de bordure selon vos besoins
+          },
         }}
         variant="permanent"
         open={open}
@@ -226,15 +238,15 @@ export default function MiniDrawer() {
               <Box>
                 <IconButton onClick={handleDrawerClose}>
                   {theme.direction === "rtl" ? (
-                    <ChevronRightIcon />
+                    <ChevronRightIcon sx={{ color: colors.safran[500] }} />
                   ) : (
-                    <ChevronLeftIcon />
+                    <ChevronLeftIcon sx={{ color: colors.safran[500] }} />
                   )}
                 </IconButton>
               </Box>
               <Typography
                 variant="h4"
-                color={colors.grey[100]}
+                color={colors.safran[500]}
                 sx={{ pl: "1em" }}
               >
                 DevHub Project
@@ -273,14 +285,14 @@ export default function MiniDrawer() {
                     ${currentUser.lastname}`}
                   </Box>
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" color={colors.safran[500]}>
                   <Box key={currentUser.id}>{currentUser.user_role}</Box>
                 </Typography>
               </Box>
             </Box>
           )}
         </DrawerHeader>
-        <Divider />
+        <Divider sx={{ backgroundColor: colors.safran[400] }} />
 
         {/* ITEM */}
 
@@ -301,11 +313,13 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <DashboardCustomizeOutlinedIcon />
+                <DashboardCustomizeOutlinedIcon
+                  sx={{ color: colors.safran[500] }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary="Dashboard"
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
               />
             </ListItemButton>
           </ListItem>
@@ -325,9 +339,12 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <EmailOutlinedIcon />
+                <EmailOutlinedIcon sx={{ color: colors.safran[500] }} />
               </ListItemIcon>
-              <ListItemText primary="Mailbox" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary="Mailbox"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
             </ListItemButton>
           </ListItem>
 
@@ -347,13 +364,16 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <ContactMailOutlinedIcon />
+                <ContactMailOutlinedIcon sx={{ color: colors.safran[500] }} />
               </ListItemIcon>
-              <ListItemText primary="Contacts" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary="Contacts"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
             </ListItemButton>
           </ListItem>
         </List>
-        <Divider />
+        <Divider sx={{ backgroundColor: colors.safran[400] }} />
         <List>
           <ListItem key="Add Project" disablePadding sx={{ display: "block" }}>
             <ListItemButton
@@ -371,11 +391,13 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <AddCircleOutlineOutlinedIcon />
+                <AddCircleOutlineOutlinedIcon
+                  sx={{ color: colors.safran[500] }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary="Add Project"
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
               />
             </ListItemButton>
           </ListItem>
@@ -395,9 +417,12 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <CalendarTodayOutlinedIcon />
+                <CalendarTodayOutlinedIcon sx={{ color: colors.safran[500] }} />
               </ListItemIcon>
-              <ListItemText primary="Calendar" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary="Calendar"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -420,18 +445,25 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <PieChartOutlineOutlinedIcon />
+                <PieChartOutlineOutlinedIcon
+                  sx={{ color: colors.safran[500] }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary="Project Progress"
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
               />
             </ListItemButton>
           </ListItem>
         </List>
-        <Divider />
+        <Divider sx={{ backgroundColor: colors.safran[400] }} />
+
         <List
-          sx={{ display: "flex", flexDirection: "column", marginTop: "auto" }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "auto",
+          }}
         >
           <ListItem key="LogOut" disablePadding sx={{ display: "block" }}>
             <ListItemButton
@@ -449,16 +481,18 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-                <LogoutOutlinedIcon />
+                <LogoutOutlinedIcon sx={{ color: colors.safran[500] }} />
               </ListItemIcon>
-              <ListItemText primary="LogOut" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary="LogOut"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
             </ListItemButton>
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-      </Box>
+
+      <DrawerHeader />
     </Box>
   );
 }

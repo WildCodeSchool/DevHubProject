@@ -88,7 +88,7 @@ function Dashboard() {
       <Grid
         item
         xs={12}
-        sx={{ border: 1, padding: "0 10px 0 10px", mt: "70px" }}
+        sx={{ border: 1, padding: "0 10px 0 10px" }}
         display="flex"
         justifyContent="space-between"
       >

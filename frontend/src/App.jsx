@@ -42,8 +42,8 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {showTopbar && <Sidebar />}
           <main className="content">
+            {showTopbar && <Sidebar />}
             <RegisterContextProvider>
               <Routes>
                 <Route path="*" element={<NotFound />} />
