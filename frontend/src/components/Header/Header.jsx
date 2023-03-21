@@ -1,4 +1,4 @@
-import { Typography, Box, useTheme } from "@mui/material";
+import { Typography, Paper, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import { tokens } from "../../theme";
 
@@ -6,19 +6,26 @@ function Header({ title, subtitle }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Box mb="30px">
+    <Paper
+      elevation="10"
+      mb="30px"
+      sx={{
+        background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+        p: "0.5rem 2rem",
+      }}
+    >
       <Typography
         variant="h2"
-        color={colors.primary[400]}
+        color={colors.grey[500]}
         fontWeight="bold"
-        sx={{ m: "0 0 5px 0" }}
+        sx={{ m: "0 0 5px 0", letterSpacing: "0.15em" }}
       >
         {title}
       </Typography>
       <Typography variant="h5" color={colors.safran[500]}>
         {subtitle}
       </Typography>
-    </Box>
+    </Paper>
   );
 }
 Header.propTypes = {

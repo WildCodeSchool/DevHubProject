@@ -58,7 +58,7 @@ function AddNote({ handleAddNote }) {
     <Paper elevation="10" sx={{ height: "60px", borderRadius: "10px" }}>
       <Button
         sx={{
-          background: `${colors.primary[500]}`,
+          background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
           mb: "10px",
           borderRadius: "10px",
           p: "1rem",

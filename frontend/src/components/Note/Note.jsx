@@ -22,13 +22,7 @@ function Note({ id, description, date, handleDeleteNote }) {
         whiteSpace: "pre-wrap",
       }}
     >
-      <TextField
-        label="Your Notes"
-        multiline
-        rows={4}
-        value={description}
-        variant="filled"
-      />
+      <TextField multiline rows={4} value={description} variant="filled" />
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h7">{date}</Typography>
         <DeleteForeverIcon

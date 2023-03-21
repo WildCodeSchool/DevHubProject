@@ -9,11 +9,12 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import PieChart from "../../components/PieChart/PieChart";
 import SelectProject from "../../components/SelectProject/SelectProject";
 import SelectRole from "../../components/SelectRole/SelectRole";
-import UserTask from "../../components/UserTask/UserTask";
+// import UserTask from "../../components/UserTask/UserTask";
+import ProjectsList from "../../components/ProjectsList/ProjectsList";
 import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
 import TeamTitle from "../../components/TeamTitle/TeamTitle";
 import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
-import Calendar from "../Calendar/Calendar";
+import DashBoardCalendar from "../../components/Calendar/DashboardCalendar";
 import { tokens } from "../../theme";
 
 function Dashboard() {
@@ -89,14 +90,17 @@ function Dashboard() {
         item
         xs={12}
         sx={{
+          mb: "15px",
           padding: "0 10px 0 10px",
           backgroundColor: colors.grey[400],
+          boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
+          p: "1rem",
         }}
         display="flex"
         justifyContent="space-between"
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-        <Box sx={{ width: "250px", marginTop: "1  5px" }}>
+        <Box sx={{ width: "250px", marginTop: " 5px" }}>
           <SelectProject
             handleProjectSelect={handleProjectSelect}
             setIdProject={setIdProject}
@@ -110,7 +114,7 @@ function Dashboard() {
         flexDirection="column"
         item
         xs={5}
-        sx={{ p: "1em" }}
+        sx={{ pt: "1em" }}
       >
         <Grid
           display="flex"
@@ -118,7 +122,7 @@ function Dashboard() {
           alignItems="center"
           sx={{
             height: "50px",
-            borderRadius: "5px",
+            borderRadius: "10px",
             width: "100%",
             marginBottom: "1em",
           }}
@@ -128,6 +132,12 @@ function Dashboard() {
             justifyContent="space-between"
             alignItems="center"
             width="100%"
+            sx={{
+              backgroundColor: colors.grey[300],
+              height: "70px",
+              borderRadius: "10px",
+              p: "0 5px",
+            }}
           >
             <Paper elevation="10">
               <TeamTitle selectedRole={selectedRole} />
@@ -145,7 +155,7 @@ function Dashboard() {
         </Grid>
         <Paper
           elevation="10"
-          sx={{ padding: "1em", backgroundColor: colors.grey[500] }}
+          sx={{ padding: "1em", backgroundColor: colors.grey[300] }}
         >
           <SliderTeam selectedRole={selectedRole} idProject={idProject} />
         </Paper>
@@ -163,10 +173,11 @@ function Dashboard() {
             alignItems="center"
             sx={{
               height: "50px",
-              borderRadius: "5px",
+              borderRadius: "10px",
               width: "100%",
               padding: "10px",
-              background: colors.primary[500],
+              background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+              textAlign: "center",
             }}
           >
             <Typography
@@ -180,7 +191,7 @@ function Dashboard() {
           </Paper>
 
           <Box display="flex" justifyContent="center" overflow="auto" m="0.5em">
-            <UserTask idProject={idProject} />
+            <ProjectsList />
           </Box>
         </Box>
         <Paper
@@ -199,11 +210,12 @@ function Dashboard() {
               justifyContent="center"
               sx={{
                 mb: "1em",
-                background: colors.primary[500],
+                background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
                 borderRadius: "10px",
                 p: "1rem",
                 minHeight: "15px",
                 width: "50%",
+                textAlign: "center",
               }}
             >
               <Typography variant="h4" color={colors.grey[300]}>
@@ -235,8 +247,12 @@ function Dashboard() {
         display="flex"
         justifyContent="center"
         flexDirection="column"
+        sx={{
+          background: colors.grey[300],
+          borderRadius: "5px",
+        }}
       >
-        <Calendar />
+        <DashBoardCalendar />
       </Grid>
       <Grid
         xs={3}
@@ -246,19 +262,21 @@ function Dashboard() {
         alignItems="center"
         sx={{ border: 1, borderRadius: "10px" }}
       >
-        <Box
+        <Paper
+          elevation="10"
           display="flex"
           justifyContent="center"
           alignItems="center"
           sx={{
-            borderBottom: 1,
+            borderRadius: "10px",
             height: "100px",
             width: "100%",
             padding: "10px",
+            backgroundColor: colors.grey[500],
           }}
         >
           <ProjectTitle selectedProjectName={selectedProjectName} />
-        </Box>
+        </Paper>
         <Box
           display="flex"
           justifyContent="center"
@@ -267,28 +285,31 @@ function Dashboard() {
         >
           <PieChart />
         </Box>
-        <Box
+        <Paper
+          elevation="10"
           display="flex"
           justifyContent="center"
           alignItems="center"
           sx={{
-            border: 1,
             height: "50px",
-            borderRadius: "5px",
+            borderRadius: "10px",
             width: "90%",
             marginTop: "10px",
             padding: "10px",
+            background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+            textAlign: "center",
           }}
         >
           <Typography
             variant="h4"
-            color={colors.grey[100]}
+            color={colors.grey[500]}
             fontWeight="bold"
             letterSpacing="0.15em"
           >
             Project Task List
           </Typography>
-        </Box>
+        </Paper>
+
         <ProjectTaskList idProject={idProject} />
       </Grid>
     </Grid>

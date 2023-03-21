@@ -1,5 +1,4 @@
 import { useState } from "react";
-import frLocale from "@fullcalendar/core/locales/fr";
 import FullCalendar from "@fullcalendar/react";
 import { formatDate } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -20,13 +19,14 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import Header from "../../components/Header/Header";
+import Header from "../Header/Header";
 import { tokens } from "../../theme";
 
-function Calendar() {
+function DashBoardCalendar() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -62,56 +62,22 @@ function Calendar() {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+      <Header
+        title="CALENDAR"
+        sx={{
+          background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+        }}
+      />
 
       <Box display="flex" justifyContent="space-between">
-        {/* CALENDAR SIDEBAR */}
-        <Box
-          flex="1 1 20%"
-          p="15px"
-          borderRadius="4px"
-          sx={{
-            background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
-            mt: "10px",
-          }}
-        >
-          <Typography variant="h5">Events</Typography>
-          <List>
-            {currentEvents.map((event) => (
-              <ListItem
-                key={event.id}
-                sx={{
-                  backgroundColor: colors.safran[500],
-                  margin: "10px 0",
-                  borderRadius: "2px",
-                }}
-              >
-                <ListItemText
-                  primary={event.title}
-                  secondary={
-                    <Typography variant="h6">
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-
         {/* CALENDAR */}
         <Box
           flex="1 1 100%"
-          ml="15px"
-          mt="10px"
           sx={{
             background: colors.primary[400],
             borderRadius: "5px",
             p: "0.5em",
+            mt: "10px",
           }}
         >
           <FullCalendar
@@ -147,7 +113,6 @@ function Calendar() {
                 date: "2022-09-28",
               },
             ]}
-            locale={frLocale}
           />
         </Box>
       </Box>
@@ -192,9 +157,43 @@ function Calendar() {
             )}
           </DialogActions>
         </Dialog>
+        {/* CALENDAR SIDEBAR */}
+        <Box
+          flex="1 1 20%"
+          backgroundColor={colors.primary[400]}
+          p="15px"
+          borderRadius="4px"
+        >
+          <Typography variant="h5">Events</Typography>
+          <List>
+            {currentEvents.map((event) => (
+              <ListItem
+                key={event.id}
+                sx={{
+                  backgroundColor: colors.safran[500],
+                  margin: "10px 0",
+                  borderRadius: "2px",
+                }}
+              >
+                <ListItemText
+                  primary={event.title}
+                  secondary={
+                    <Typography variant="h6">
+                      {formatDate(event.start, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       </Box>
     </Box>
   );
 }
 
-export default Calendar;
+export default DashBoardCalendar;

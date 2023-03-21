@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useEffect } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Paper, useTheme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
@@ -53,7 +53,10 @@ function SelectProject({
   }, []);
 
   return (
-    <Box width="250px">
+    <Paper
+      elevation="10"
+      sx={{ backgroundColor: colors.primary[500], border: "none" }}
+    >
       <TextField
         label="Liste de projets"
         select
@@ -62,17 +65,36 @@ function SelectProject({
         fullWidth
         size="small"
         style={{
-          color: colors.grey[100],
+          backgroundColor: colors.primary[500],
+          width: "100%",
+          borderRadius: "10px",
+          height: "40px",
+          color: "#ffffff",
         }}
         helperText="Veuillez sélectionner votre projet"
       >
         {projectList.map((project) => (
-          <MenuItem key={project.id} value={project}>
+          <MenuItem
+            sx={{
+              backgroundColor: colors.primary[500],
+              "&:hover": {
+                backgroundColor: colors.primary[400],
+              },
+              "&.Mui-selected": {
+                backgroundColor: colors.primary[700],
+              },
+              "&.Mui-selected:hover": {
+                backgroundColor: colors.primary[400],
+              },
+            }}
+            key={project.id}
+            value={project}
+          >
             {project.name}
           </MenuItem>
         ))}
       </TextField>
-    </Box>
+    </Paper>
   );
 }
 

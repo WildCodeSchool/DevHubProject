@@ -158,12 +158,12 @@ export default function MiniDrawer() {
   }, []);
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box style={{ display: "flex" }}>
       <AppBar
         position="fixed"
         open={open}
         sx={{
-          background: colors.primary[500],
+          background: `linear-gradient(to right, ${colors.primary[400]}, ${colors.primary[700]})`,
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -202,7 +202,7 @@ export default function MiniDrawer() {
         PaperProps={{
           sx: {
             color: colors.safran[500],
-            backgroundColor: colors.primary[500],
+            backgroundImage: `linear-gradient(to top , ${colors.primary[700]}, ${colors.primary[400]})`,
           },
         }}
         variant="permanent"
