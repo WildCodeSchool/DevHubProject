@@ -46,8 +46,6 @@ function SelectRole({ setSelectedRole }) {
           backgroundColor: colors.primary[500],
           width: "100%",
           borderRadius: "10px",
-          height: "40px",
-          color: "#ffffff",
         }}
       >
         {roleList.map((roleMap) => (

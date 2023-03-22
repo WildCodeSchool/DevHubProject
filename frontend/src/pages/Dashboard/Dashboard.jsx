@@ -145,7 +145,6 @@ function Dashboard() {
             <Paper
               sx={{
                 borderRadius: "10px",
-                backgroundColor: colors.primary[500],
                 width: "100%",
               }}
             >

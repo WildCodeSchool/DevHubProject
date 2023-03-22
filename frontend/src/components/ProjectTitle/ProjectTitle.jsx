@@ -1,12 +1,13 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Paper, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 
 function ProjectTitle({ selectedProjectName }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Box
+    <Paper
+      elevation="10"
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -17,6 +18,7 @@ function ProjectTitle({ selectedProjectName }) {
         padding: "10px",
         border: "none",
         background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+        textAlign: "center",
       }}
     >
       <Typography
@@ -27,7 +29,7 @@ function ProjectTitle({ selectedProjectName }) {
       >
         {selectedProjectName || "Project Name"}
       </Typography>
-    </Box>
+    </Paper>
   );
 }
 
