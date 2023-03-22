@@ -276,11 +276,7 @@ function AddTaskForm({ projectName }) {
                 Add Task
               </Button>
 
-              <Button
-                onClick={handleUpdate}
-                variant="contained"
-                color="greenAccent"
-              >
+              <Button onClick={handleUpdate} variant="contained" color="safran">
                 Update Task
               </Button>
 

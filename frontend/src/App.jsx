@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./theme";
+import { useMode } from "./theme";
 import Home from "./pages/Home/Home";
 import AddProject from "./pages/AddProject/AddProject";
 import Calendar from "./pages/Calendar/Calendar";
@@ -20,7 +20,7 @@ import { RegisterContextProvider } from "./context/RegisterContext";
 import "./App.css";
 
 function App() {
-  const [theme, colorMode] = useMode();
+  const [theme] = useMode();
   const { pathname } = useLocation();
   const routesWithSidebarAndTopbar = [
     "/contact",
@@ -38,33 +38,31 @@ function App() {
   const showTopbar = showSidebar;
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          {showTopbar && <Sidebar />}
-          <main className="content">
-            <RegisterContextProvider>
-              <Routes>
-                <Route path="*" element={<NotFound />} />
-                <Route path="/" element={<Home />} />
-                <Route path="/add-project" element={<AddProject />} />
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/join-project" element={<JoinProject />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/mailbox" element={<Mailbox />} />
-                <Route path="/user-profile/:id" element={<UserProfile />} />
-                <Route path="/roadmap" element={<Roadmap />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/progress" element={<Progress />} />
-              </Routes>
-            </RegisterContextProvider>
-          </main>
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="app">
+        {showTopbar && <Sidebar />}
+        <main className="content">
+          <RegisterContextProvider>
+            <Routes>
+              <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/add-project" element={<AddProject />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/join-project" element={<JoinProject />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/mailbox" element={<Mailbox />} />
+              <Route path="/user-profile/:id" element={<UserProfile />} />
+              <Route path="/roadmap" element={<Roadmap />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/progress" element={<Progress />} />
+            </Routes>
+          </RegisterContextProvider>
+        </main>
+      </div>
+    </ThemeProvider>
   );
 }
 

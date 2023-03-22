@@ -172,11 +172,7 @@ function AddProjectForm({ setProjectName }) {
               Add Project
             </Button>
 
-            <Button
-              onClick={handleUpdate}
-              variant="contained"
-              color="greenAccent"
-            >
+            <Button onClick={handleUpdate} variant="contained" color="safran">
               Update Project
             </Button>
 
