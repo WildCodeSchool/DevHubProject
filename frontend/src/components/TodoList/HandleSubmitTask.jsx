@@ -63,6 +63,7 @@ function AddTaskForm({ projectName }) {
   const [submittedValues, setSubmittedValues] = useState([]);
   const [user, setUser] = useState([]);
   const [task, setTask] = useState([]);
+  const token = localStorage.getItem("token");
 
   const handleSubmitCard = (values) => {
     setSubmittedValues([...submittedValues, values]);
@@ -71,7 +72,9 @@ function AddTaskForm({ projectName }) {
 
   const handleSubmit = async (values) => {
     try {
-      const result = await axios.post("http://localhost:5000/tasks", values);
+      const result = await axios.post("http://localhost:5000/tasks", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setTaskId(result.data);
       console.info("Task added successfully!", result);
       // eslint-disable-next-line no-param-reassign
@@ -89,8 +92,9 @@ function AddTaskForm({ projectName }) {
     console.info(values, "valuesHandleDeleteTask");
     console.info(selectTaskId, "id tache selectionnee");
     try {
-      await axios.delete(`http://localhost:5000/tasks/${selectTaskId}`, values);
-
+      await axios.put(`http://localhost:5000/tasks/${selectTaskId}`, values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setSubmittedValues(
         submittedValues.filter((value) => {
           console.info(value, "valueMap", values.id, "valuesId");
@@ -118,7 +122,9 @@ function AddTaskForm({ projectName }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/tasks")
+      .get("http://localhost:5000/tasks", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => response.data)
       .then((data) => {
         setTask(data);
@@ -353,9 +359,6 @@ function AddTaskForm({ projectName }) {
                   </DialogActions>
                 </Dialog>
               </div>
-              <Button type="submit" variant="contained" color="primary">
-                Add Task
-              </Button>
             </FormControl>
           </Form>
         )}
