@@ -34,7 +34,11 @@ function AddNote({ handleAddNote }) {
     // ajouter async
     if (noteText.trim().length > 0) {
       try {
+        const token = localStorage.getItem("token");
         const response = await axios.post("http://localhost:5000/notes", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           description: noteText,
           user_id: 1,
         });
@@ -43,6 +47,9 @@ function AddNote({ handleAddNote }) {
         handleClose();
         const getResponse = await axios.get("http://localhost:5000/notes", {
           user_id: 1,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         console.info(getResponse.data);
       } catch (error) {
@@ -55,12 +62,12 @@ function AddNote({ handleAddNote }) {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Paper elevation="10" sx={{ height: "60px", borderRadius: "10px" }}>
+    <Paper elevation="10" sx={{ height: "60px", borderRadius: "5px" }}>
       <Button
         sx={{
           background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
           mb: "10px",
-          borderRadius: "10px",
+          borderRadius: "5px",
           p: "1rem",
           height: "100%",
           width: "150px",
@@ -86,7 +93,7 @@ function AddNote({ handleAddNote }) {
           sx={{
             background: `${colors.grey[600]}`,
             mb: "10px",
-            borderRadius: "10px",
+            borderRadius: "5px",
             p: "1rem",
             width: "500px",
           }}

@@ -15,8 +15,7 @@ function Note({ id, description, date, handleDeleteNote }) {
       justifyContent="space-between"
       sx={{
         background: `${colors.primary[500]}`,
-        mb: "10px",
-        borderRadius: "10px",
+        borderRadius: "5px",
         p: "1rem",
         minHeight: "170px",
         whiteSpace: "pre-wrap",

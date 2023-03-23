@@ -14,7 +14,7 @@ function TeamTitle({ selectedRole }) {
         letterSpacing="0.15em"
         textAlign="center"
         sx={{
-          borderRadius: "10px",
+          borderRadius: "5px",
           padding: "0.4em",
           width: "300px",
           backgroundColor: colors.primary[500],

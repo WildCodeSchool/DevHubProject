@@ -53,12 +53,9 @@ function SelectProject({
   }, []);
 
   return (
-    <Paper
-      elevation="10"
-      sx={{ backgroundColor: colors.primary[500], border: "none" }}
-    >
+    <Paper elevation="10" sx={{ background: "transparent" }}>
       <TextField
-        label="Liste de projets"
+        label="Projects List"
         select
         value={selectedProject}
         onChange={handleChange}
@@ -66,12 +63,10 @@ function SelectProject({
         size="small"
         style={{
           backgroundColor: colors.primary[500],
+          border: "none",
           width: "100%",
-          borderRadius: "10px",
-          height: "40px",
-          color: "#ffffff",
+          borderRadius: "5px",
         }}
-        helperText="Veuillez sélectionner votre projet"
       >
         {projectList.map((project) => (
           <MenuItem

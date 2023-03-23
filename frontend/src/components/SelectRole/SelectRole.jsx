@@ -17,9 +17,16 @@ function SelectRole({ setSelectedRole }) {
   };
 
   const getRole = () => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:5000/users`)
+
+      .get(`http://localhost:5000/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => response.data)
+
       .then((data) => {
         const roles = new Set();
         data.forEach((roleMap) => {
@@ -31,7 +38,7 @@ function SelectRole({ setSelectedRole }) {
 
   useEffect(() => {
     getRole();
-  }, []);
+  }, [role]);
 
   return (
     <Paper elevation="10" sx={{ backgroundColor: colors.primary[500] }}>
@@ -45,7 +52,7 @@ function SelectRole({ setSelectedRole }) {
         style={{
           backgroundColor: colors.primary[500],
           width: "100%",
-          borderRadius: "10px",
+          borderRadius: "5px",
         }}
       >
         {roleList.map((roleMap) => (

@@ -40,7 +40,7 @@ function ProjectTaskList({ idProject }) {
     <Paper
       sx={{
         height: "100%",
-        borderRadius: "10px",
+        borderRadius: "5px",
         width: "90%",
         marginTop: "10px",
         textAlign: "center",
@@ -71,7 +71,7 @@ function ProjectTaskList({ idProject }) {
             sx={{
               p: 2,
               backgroundColor: colors.grey[500],
-              borderRadius: "10px",
+              borderRadius: "5px",
               m: "1em",
             }}
           >
