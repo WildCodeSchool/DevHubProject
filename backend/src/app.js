@@ -9,20 +9,24 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://127.0.0.1:5173",
+    origin: [
+      process.env.FRONTEND_URL ?? "http://localhost:3000/",
+      "http://127.0.0.1:5173/",
+      "http://localhost:5173/",
+    ],
     optionsSuccessStatus: 200,
   })
 );
 
-// Ajouter l'en-tête Access-Control-Allow-Origin
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+// // Ajouter l'en-tête Access-Control-Allow-Origin
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
 const router = require("./router");
 

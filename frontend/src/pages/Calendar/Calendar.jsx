@@ -1,5 +1,11 @@
 import { useState } from "react";
+import frLocale from "@fullcalendar/core/locales/fr";
+import FullCalendar from "@fullcalendar/react";
 import { formatDate } from "@fullcalendar/core";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
 import {
   Box,
   List,
@@ -7,42 +13,83 @@ import {
   ListItemText,
   Typography,
   useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
 } from "@mui/material";
 import Header from "../../components/Header/Header";
 import { tokens } from "../../theme";
-import CalendarComponent from "../../components/Calendar/Calendar";
 
 function Calendar() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [deleteEvent, setDeleteEvent] = useState({ id: "", event: null });
+
+  const handleDateClick = (selected) => {
+    setSelectedDate(selected);
+    setOpen(true);
+  };
+
+  const handleEventClick = (selected) => {
+    setDeleteEvent({ id: selected.event.id, event: selected.event });
+    setOpen(true);
+  };
+
+  const handleSave = () => {
+    const calendarApi = selectedDate.view.calendar;
+    calendarApi.unselect();
+
+    if (title) {
+      calendarApi.addEvent({
+        id: `${selectedDate.dateStr}-${title}`,
+        title,
+        start: selectedDate.startStr,
+        end: selectedDate.endStr,
+        allDay: selectedDate.allDay,
+      });
+
+      setTitle("");
+      setOpen(false);
+    }
+  };
 
   return (
     <Box m="20px">
-      <Header title="CALENDAR" subtitle="Full Calendar Interactive Page" />
-      <Box display="flex" justify-content="space-between">
+      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+
+      <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
         <Box
           flex="1 1 20%"
-          backgroundColor={colors.primary[400]}
           p="15px"
           borderRadius="4px"
+          sx={{
+            background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+            mt: "10px",
+          }}
         >
           <Typography variant="h5">Events</Typography>
           <List>
             {currentEvents.map((event) => (
               <ListItem
-                Key={event.id}
+                key={event.id}
                 sx={{
-                  backgroundColor: colors.greenAccent[500],
-                  margin: "10x 0",
+                  backgroundColor: colors.safran[500],
+                  margin: "10px 0",
                   borderRadius: "2px",
                 }}
               >
                 <ListItemText
                   primary={event.title}
-                  greenAccent={
-                    <Typography>
+                  secondary={
+                    <Typography variant="h6">
                       {formatDate(event.start, {
                         year: "numeric",
                         month: "short",
@@ -55,7 +102,96 @@ function Calendar() {
             ))}
           </List>
         </Box>
-        <CalendarComponent setCurrentEvents={setCurrentEvents} />
+
+        {/* CALENDAR */}
+        <Box
+          flex="1 1 100%"
+          ml="15px"
+          mt="10px"
+          sx={{
+            background: colors.primary[400],
+            borderRadius: "5px",
+            p: "0.5em",
+          }}
+        >
+          <FullCalendar
+            height="75vh"
+            plugins={[
+              dayGridPlugin,
+              timeGridPlugin,
+              interactionPlugin,
+              listPlugin,
+            ]}
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+            }}
+            initialView="dayGridMonth"
+            editable
+            selectable
+            selectMirror
+            dayMaxEvents
+            select={handleDateClick}
+            eventClick={handleEventClick}
+            eventsSet={(events) => setCurrentEvents(events)}
+            initialEvents={[
+              {
+                id: "12315",
+                title: "All-day event",
+                date: "2022-09-14",
+              },
+              {
+                id: "5123",
+                title: "Timed event",
+                date: "2022-09-28",
+              },
+            ]}
+            locale={frLocale}
+          />
+        </Box>
+      </Box>
+      <Box m="20px">
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogTitle sx={{ backgroundColor: colors.primary[400] }}>
+            {deleteEvent.event ? "Delete Event" : "New Event"}
+          </DialogTitle>
+          <DialogContent sx={{ backgroundColor: colors.primary[400] }}>
+            {deleteEvent.event ? (
+              <Typography>
+                Are you sure you want to delete the event '
+                {deleteEvent.event.title}'?
+              </Typography>
+            ) : (
+              <TextField
+                label="Title"
+                fullWidth
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            )}
+          </DialogContent>
+          <DialogActions sx={{ backgroundColor: colors.primary[400] }}>
+            <Button onClick={() => setOpen(false)}>Cancel</Button>
+            {deleteEvent.event ? (
+              <Button
+                onClick={() => {
+                  deleteEvent.event.remove();
+                  setOpen(false);
+                  setDeleteEvent({ id: "", event: null });
+                }}
+                variant="contained"
+                color="primary"
+              >
+                Delete
+              </Button>
+            ) : (
+              <Button onClick={handleSave} variant="contained" color="primary">
+                Save
+              </Button>
+            )}
+          </DialogActions>
+        </Dialog>
       </Box>
     </Box>
   );

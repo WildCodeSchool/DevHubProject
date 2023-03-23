@@ -10,8 +10,12 @@ function SliderTeam({ selectedRole, idProject }) {
 
   const getUsersByProjectId = async (projectId) => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:5000/projects/${projectId}/users`
+        `http://localhost:5000/projects/${projectId}/users`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       setUsers(response.data);
       console.info("Users retrieved successfully:", response.data);
@@ -38,9 +42,10 @@ function SliderTeam({ selectedRole, idProject }) {
   const settings = {
     infinite: true,
     speed: 300,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 3,
     spacing: "10px",
+    focusOnSelect: true,
     responsive: [
       {
         breakpoint: 1024,

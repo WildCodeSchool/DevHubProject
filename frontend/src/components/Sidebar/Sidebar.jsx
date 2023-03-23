@@ -1,59 +1,144 @@
 import { useState, useEffect } from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import { Box, Typography, MenuItem } from "@mui/material";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import "react-pro-sidebar/dist/css/styles.css";
+import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
+import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
+// import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+// import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { tokens } from "../../theme";
-import defaultUserImage from "../../assets/user.png";
 
-function Item({ title, to, icon, selected, setSelected }) {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  return (
-    <MenuItem
-      active={selected === title}
-      style={{
-        color: colors.grey[100],
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Typography>{title}</Typography>
-      <Link to={to} />
-    </MenuItem>
-  );
-}
+const drawerWidth = 240;
 
-Item.propTypes = {
-  title: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  icon: PropTypes.element.isRequired,
-  selected: PropTypes.string.isRequired,
-  setSelected: PropTypes.func.isRequired,
+const styles = {
+  iconsBox: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    flexGrow: 1,
+  },
 };
 
-function Sidebar() {
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
+export default function MiniDrawer() {
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentUserId, setCurrentUserId] = useState({});
+  console.info(
+    "🚀 ~ file: Sidebar.jsx:112 ~ MiniDrawer ~ currentUserId:",
+    currentUserId
+  );
+
+  const [randomUserImage, setRandomUserImage] = useState("");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
-  const [currentUser, setCurrentUser] = useState({});
+  // const { toggleColorMode } = useContext(ColorModeContext);
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  // Appel à l'API pour afficher l'utilisateur connecté
+  const userId = localStorage.getItem("userId");
 
   const getUser = () => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:5000/users/1`)
+      .get(`http://localhost:5000/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => response.data)
       .then((data) => {
         setCurrentUser(data);
+        setCurrentUserId(data.id);
       });
   };
 
@@ -61,69 +146,123 @@ function Sidebar() {
     getUser();
   }, []);
 
+  useEffect(() => {
+    async function fetchRandomUserImage() {
+      const response = await axios.get(
+        "https://randomuser.me/api/?gender=male"
+      );
+      const image = response.data.results[0].picture.large;
+      setRandomUserImage(image);
+    }
+    fetchRandomUserImage();
+  }, []);
+
   return (
-    <Box
-      sx={{
-        "& .pro-sidebar-inner": {
-          background: `${colors.primary[400]} !important`,
-        },
-        "& .pro-icon-wrapper": {
-          backgroundColor: "transparent !important",
-        },
-        "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
-        },
-        "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
-        },
-        "& .pro-menu-item.active": {
-          color: "#6870fa !important",
-        },
-      }}
-    >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+    <Box style={{ display: "flex" }}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{
+          background: `linear-gradient(to right, ${colors.primary[400]}, ${colors.primary[700]})`,
+        }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: 5,
+              ...(open && { display: "none" }),
+            }}
+          >
+            <MenuIcon sx={{ color: colors.safran[500] }} />
+          </IconButton>
+          <Box sx={{ ...styles.iconsBox, ...(open ? {} : { flexGrow: 0 }) }}>
+            <Box display="flex">
+              {/* <IconButton onClick={toggleColorMode}>
+                {theme.palette.mode === "dark" ? (
+                  <DarkModeOutlinedIcon sx={{ color: colors.safran[500] }} />
+                ) : (
+                  <LightModeOutlinedIcon sx={{ color: colors.safran[500] }} />
+                )}
+              </IconButton> */}
+              <IconButton>
+                <NotificationsOutlinedIcon sx={{ color: colors.safran[500] }} />
+              </IconButton>
+              <IconButton href={`/user-profile/${currentUserId}`}>
+                <PersonOutlinedIcon sx={{ color: colors.safran[500] }} />
+              </IconButton>
+            </Box>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        PaperProps={{
+          sx: {
+            color: colors.safran[500],
+            backgroundImage: `linear-gradient(to top , ${colors.primary[700]}, ${colors.primary[400]})`,
+          },
+        }}
+        variant="permanent"
+        open={open}
+      >
+        <DrawerHeader
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           {/* LOGO AND MENU ICON */}
           <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",
               color: colors.grey[100],
             }}
           >
-            {!isCollapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-              >
-                <Typography variant="h4" color={colors.grey[100]}>
-                  DevHub Project
-                </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                  <MenuOutlinedIcon />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box>
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === "rtl" ? (
+                    <ChevronRightIcon sx={{ color: colors.safran[500] }} />
+                  ) : (
+                    <ChevronLeftIcon sx={{ color: colors.safran[500] }} />
+                  )}
                 </IconButton>
               </Box>
-            )}
+              <Typography
+                variant="h4"
+                color={colors.safran[500]}
+                sx={{ pl: "1em" }}
+              >
+                DevHub Project
+              </Typography>
+            </Box>
           </MenuItem>
           {/* USER */}
-
-          {!isCollapsed && (
+          {open && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Box key={currentUser.id}>
                   {currentUser.user_image ? (
                     <img
-                      style={{ width: "150px" }}
+                      style={{ width: "150px", borderRadius: "50%" }}
                       src={currentUser.user_image}
                       alt="user"
                     />
                   ) : (
                     <img
-                      style={{ width: "150px" }}
-                      src={defaultUserImage}
+                      style={{ width: "150px", borderRadius: "50%" }}
+                      src={randomUserImage}
                       alt="default user"
                     />
                   )}
@@ -131,7 +270,7 @@ function Sidebar() {
               </Box>
               <Box textAlign="center">
                 <Typography
-                  variant="h2"
+                  variant="h3"
                   color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
@@ -141,86 +280,214 @@ function Sidebar() {
                     ${currentUser.lastname}`}
                   </Box>
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" color={colors.safran[500]}>
                   <Box key={currentUser.id}>{currentUser.user_role}</Box>
                 </Typography>
               </Box>
             </Box>
           )}
-          {/* MENU ITEMS  */}
+        </DrawerHeader>
+        <Divider sx={{ backgroundColor: colors.safran[400] }} />
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Dashboard"
+        {/* ITEM */}
+
+        <List>
+          <ListItem key="Dashboard" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
               to="/dashboard"
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
             >
-              Data
-            </Typography>
-            <Item
-              title="Mailbox"
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <DashboardCustomizeOutlinedIcon
+                  sx={{ color: colors.safran[500] }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Dashboard"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="Mailbox" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
               to="/mailbox"
-              icon={<MailOutlineIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Contacts "
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <EmailOutlinedIcon sx={{ color: colors.safran[500] }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="Mailbox"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem key="Contacts" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
               to="/contact"
-              icon={<AlternateEmailOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
             >
-              Pages
-            </Typography>
-            <Item
-              title="Add Project"
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <ContactMailOutlinedIcon sx={{ color: colors.safran[500] }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="Contacts"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider sx={{ backgroundColor: colors.safran[400] }} />
+        <List>
+          <ListItem key="Add Project" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
               to="/add-project"
-              icon={<AddCircleOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
             >
-              Charts
-            </Typography>
-            <Item
-              title="Project Progress"
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AddCircleOutlineOutlinedIcon
+                  sx={{ color: colors.safran[500] }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Add Project"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="Calendar" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              to="/calendar"
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <CalendarTodayOutlinedIcon sx={{ color: colors.safran[500] }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="Calendar"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            key="Project Progress"
+            disablePadding
+            sx={{ display: "block" }}
+          >
+            <ListItemButton
               to="/progress"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          </Box>
-        </Menu>
-      </ProSidebar>
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <PieChartOutlineOutlinedIcon
+                  sx={{ color: colors.safran[500] }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Project Progress"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider sx={{ backgroundColor: colors.safran[400] }} />
+
+        <List
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "auto",
+          }}
+        >
+          <ListItem key="LogOut" disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              to="/"
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <LogoutOutlinedIcon sx={{ color: colors.safran[500] }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="LogOut"
+                sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Drawer>
+
+      <DrawerHeader />
     </Box>
   );
 }
-
-export default Sidebar;

@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { Card } from "@material-ui/core";
 import axios from "axios";
-import TaskCard from "@components/TaskCard/TaskCard";
 import { CardContent } from "@mui/material";
+import TaskCard from "../TaskCard/TaskCard";
 
 function Task() {
   const [task, setTask] = useState([]);
-
+  const token = localStorage.getItem("token");
   const getTask = () => {
     axios
-      .get("http://localhost:5000/tasks")
+      .get("http://localhost:5000/tasks", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => response.data)
       .then((data) => {
         const formattedData = data.map((item) => {

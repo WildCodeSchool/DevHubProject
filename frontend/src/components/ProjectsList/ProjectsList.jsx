@@ -1,88 +1,95 @@
-import * as React from "react";
+import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { amber, blue, green, red } from "@mui/material/colors";
 
-const projects = [
-  { name: "Projet A", description: "Fatigue", progress: 60 },
-  {
-    name: "Dev Hub Connect",
-    description: "Fanny et fred G ne font rien",
-    progress: 20,
-  },
-  { name: "Dev Hub Project", description: "Au top les poulets", progress: 100 },
-  { name: "Projet D", description: "Bienveillance", progress: 45 },
-  {
-    name: "Dev Hub Share",
-    description: "Heureusement les filles sont là",
-    progress: 75,
-  },
-];
-
-function ProjectsList() {
+function ProjectsList({ projects }) {
   const getColor = (progress) => {
-    if (progress < 25) {
-      return red[500]; // Rouge pour une valeur de progress <= 25
+    if (progress < 26) {
+      return red[500];
     }
-    if (progress < 50) {
-      return amber[500]; // Orange pour une valeur de progress > 25 et <= 50
+    if (progress < 51) {
+      return amber[500];
     }
-    if (progress < 75) {
-      return blue[500]; // Bleu pour une valeur de progress > 50 et <= 75
+    if (progress < 80) {
+      return blue[500];
     }
-    return green[500]; // Vert pour une valeur de progress > 75
+    return green[500];
   };
 
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
         <Box sx={{ mt: 3 }}>
-          {projects.map((project) => (
-            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-              <Box sx={{ width: "100%", mr: 1 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                  {project.name}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "text.greenAccent" }}>
-                  {project.description}
-                </Typography>
-                <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                  <Box
-                    sx={{
-                      flexGrow: 1,
-                      height: 8,
-                      borderRadius: 5,
-                      overflow: "hidden",
-                      background: "#ccc",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        height: "100%",
-                        borderRadius: 5,
-                        background: getColor(project.progress), // La couleur de fond dépend de la valeur de progress
-                        backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.2)), ${getColor(
-                          project.progress
-                        )}`,
-                        width: `${project.progress}%`, // La largeur dépend de la valeur de progress
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{ ml: 1, Width: 70 }}>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        textAlign: "right",
-                        color: getColor(project.progress),
-                      }}
-                    >
-                      {`${project.progress}%`}{" "}
-                      {/* La valeur affichée dépend de la valeur de progress */}
+          {projects &&
+            projects.map((project) => {
+              console.info(project);
+              return (
+                <Box
+                  key={project.id}
+                  sx={{ display: "flex", alignItems: "center", mb: 2 }}
+                >
+                  <Box sx={{ width: "100%", mr: 1 }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                      {project.name}
                     </Typography>
+                    <Grid
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                    >
+                      <Grid item>
+                        <Typography variant="body2">
+                          {project.description}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontWeight: "bold",
+                            color: getColor(project.progress),
+                          }}
+                        >
+                          {project.state}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
+                      <Box
+                        sx={{
+                          flexGrow: 1,
+                          height: 8,
+                          borderRadius: 5,
+                          overflow: "hidden",
+                          background: "#ccc",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            height: "100%",
+                            borderRadius: 5,
+                            background: getColor(project.progress),
+                            width: `${project.progress}%`,
+                          }}
+                        />
+                      </Box>
+
+                      <Box sx={{ ml: 1, Width: 70 }}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            textAlign: "right",
+                          }}
+                        >
+                          {`${project.progress}%`}{" "}
+                          {/* La valeur affichée dépend de la valeur de progress */}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            </Box>
-          ))}
+              );
+            })}
         </Box>
       </Grid>
     </Grid>

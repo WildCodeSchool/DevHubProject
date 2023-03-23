@@ -42,7 +42,7 @@ class TaskManager extends AbstractManager {
 
   getTasksByProjectId(projectId) {
     return this.database.query(
-      `SELECT * FROM task INNER JOIN task_project ON task.id = task_project.task_id 
+      `SELECT task.* FROM task INNER JOIN task_project ON task.id = task_project.task_id 
       WHERE task_project.project_id = ?`,
       [projectId]
     );
@@ -52,6 +52,16 @@ class TaskManager extends AbstractManager {
     return this.database.query(`SELECT * FROM task WHERE user_id = ?`, [
       userId,
     ]);
+  }
+
+  getTasksByUserIdAndProjectId(userId, projectId) {
+    return this.database.query(
+      `SELECT task.* FROM task 
+       INNER JOIN task_project ON task.id = task_project.task_id 
+       INNER JOIN user_project ON user_project.project_id = task_project.project_id
+       WHERE task_project.project_id = ? AND user_project.user_id = ?`,
+      [projectId, userId]
+    );
   }
 }
 

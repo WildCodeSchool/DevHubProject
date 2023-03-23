@@ -1,7 +1,7 @@
-// import { useState } from "react";
+import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./theme";
+import { useMode } from "./theme";
 import Home from "./pages/Home/Home";
 import AddProject from "./pages/AddProject/AddProject";
 import Calendar from "./pages/Calendar/Calendar";
@@ -15,12 +15,12 @@ import Roadmap from "./pages/Roadmap/Roadmap";
 import Register from "./pages/Register/Register";
 import NotFound from "./pages/NotFound/NotFound";
 import Progress from "./pages/Progress/Progress";
-import Topbar from "./components/Topbar/Topbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import { RegisterContextProvider } from "./context/RegisterContext";
 import "./App.css";
 
 function App() {
-  const [theme, colorMode] = useMode();
+  const [theme] = useMode();
   const { pathname } = useLocation();
   const routesWithSidebarAndTopbar = [
     "/contact",
@@ -38,13 +38,12 @@ function App() {
   const showTopbar = showSidebar;
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          {showSidebar && <Sidebar />}
-          <main className="content">
-            {showTopbar && <Topbar />}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="app">
+        {showTopbar && <Sidebar />}
+        <main className="content">
+          <RegisterContextProvider>
             <Routes>
               <Route path="*" element={<NotFound />} />
               <Route path="/" element={<Home />} />
@@ -60,10 +59,10 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/progress" element={<Progress />} />
             </Routes>
-          </main>
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+          </RegisterContextProvider>
+        </main>
+      </div>
+    </ThemeProvider>
   );
 }
 

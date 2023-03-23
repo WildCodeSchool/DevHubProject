@@ -31,6 +31,10 @@ function AddProjectForm({ setProjectName }) {
     setIsEditable(false);
     try {
       const result = await axios.post("http://localhost:5000/projects", values);
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:5000/projects", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setProjectName(values.name);
       setProjectId(result.data);
       console.info("Project added successfully!", result);
@@ -41,6 +45,14 @@ function AddProjectForm({ setProjectName }) {
   const handleDelete = async (values) => {
     try {
       await axios.delete(`http://localhost:5000/projects/${projectId}`, values);
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `http://localhost:5000/projects/${projectId}`,
+        values,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.info("Project deleted successfully!");
     } catch (error) {
       console.info("Error deleting project.");
@@ -50,6 +62,10 @@ function AddProjectForm({ setProjectName }) {
     console.info(values, "values");
     try {
       await axios.put(`http://localhost:5000/projects/${projectId}`, values);
+      const token = localStorage.getItem("token");
+      await axios.put(`http://localhost:5000/projects/${projectId}`, values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       console.info("Project updated successfully!");
     } catch (error) {
       console.info("Error updating project.");

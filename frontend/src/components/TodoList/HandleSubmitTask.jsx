@@ -353,6 +353,9 @@ function AddTaskForm({ projectName }) {
                   </DialogActions>
                 </Dialog>
               </div>
+              <Button type="submit" variant="contained" color="primary">
+                Add Task
+              </Button>
             </FormControl>
           </Form>
         )}

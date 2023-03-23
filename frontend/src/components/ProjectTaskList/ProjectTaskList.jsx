@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, useTheme, Typography } from "@mui/material";
+import { Paper, Box, useTheme, Typography } from "@mui/material";
 import axios from "axios";
 import { tokens } from "../../theme";
 
@@ -9,13 +9,22 @@ function ProjectTaskList({ idProject }) {
 
   const [tasks, setTasks] = useState([]);
 
-  const getTasksByProjectId = async (projectId) => {
+  const getTasksByProjectId = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:5000/projects/${projectId}/tasks`
+        `http://localhost:5000/projects/${idProject}/tasks`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setTasks(response.data);
-      console.info("Users retrieved successfully:", response.data);
+      console.info(
+        "getTasksByProjectId retrieved successfully:",
+        response.data
+      );
     } catch (error) {
       console.info(error);
     }
@@ -23,48 +32,59 @@ function ProjectTaskList({ idProject }) {
   useEffect(() => {
     if (idProject) {
       console.info("Selected project ID:", idProject);
-      getTasksByProjectId(idProject);
+      getTasksByProjectId();
     }
   }, [idProject]);
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
+    <Paper
       sx={{
-        border: 1,
         height: "100%",
-        borderRadius: "5px",
+        borderRadius: "10px",
         width: "90%",
         marginTop: "10px",
+        textAlign: "center",
+        backgroundColor: colors.grey[500],
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        pt: "0.5em",
       }}
     >
-      <Typography
-        variant="h4"
-        color={colors.grey[100]}
-        fontWeight="bold"
-        letterSpacing="0.15em"
-        mb={2}
+      <Paper
+        elevation="10"
+        sx={{
+          width: "90%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          background: colors.primary[500],
+        }}
       >
-        LISTE DES TÂCHES
-      </Typography>
-      <Box sx={{ width: "90%", display: "flex", flexDirection: "column" }}>
         {tasks.map((task) => (
           <Box
             key={task.id}
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            sx={{ borderBottom: 1, p: 2 }}
+            sx={{
+              p: 2,
+              backgroundColor: colors.grey[500],
+              borderRadius: "10px",
+              m: "1em",
+            }}
           >
-            <Typography>{task.name}</Typography>
-            <Typography>{task.status}</Typography>
+            <Typography sx={{ color: colors.primary[500] }}>
+              {task.name}
+            </Typography>
+            <Typography sx={{ color: colors.primary[500] }}>
+              {task.status}
+            </Typography>
           </Box>
         ))}
-      </Box>
-    </Box>
+      </Paper>
+    </Paper>
   );
 }
 

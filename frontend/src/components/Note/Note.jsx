@@ -14,7 +14,7 @@ function Note({ id, description, date, handleDeleteNote }) {
       flexDirection="column"
       justifyContent="space-between"
       sx={{
-        background: `${colors.primary[400]}`,
+        background: `${colors.primary[500]}`,
         mb: "10px",
         borderRadius: "10px",
         p: "1rem",
@@ -22,13 +22,7 @@ function Note({ id, description, date, handleDeleteNote }) {
         whiteSpace: "pre-wrap",
       }}
     >
-      <TextField
-        label="Your Notes"
-        multiline
-        rows={4}
-        value={description}
-        variant="filled"
-      />
+      <TextField multiline rows={4} value={description} variant="filled" />
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography variant="h7">{date}</Typography>
         <DeleteForeverIcon
