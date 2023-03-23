@@ -11,6 +11,7 @@ import JoinProject from "./pages/JoinProject/JoinProject";
 import Login from "./pages/Login/Login";
 import Mailbox from "./pages/Mailbox/Mailbox";
 import UserProfile from "./pages/UserProfile/UserProfile";
+import MyProfile from "./pages/MyProfile/MyProfile";
 import Roadmap from "./pages/Roadmap/Roadmap";
 import Register from "./pages/Register/Register";
 import NotFound from "./pages/NotFound/NotFound";
@@ -34,7 +35,8 @@ function App() {
   ];
   const showSidebar =
     routesWithSidebarAndTopbar.some((route) => pathname.startsWith(route)) ||
-    pathname.startsWith("/user-profile/");
+    pathname.startsWith("/user-profile/") ||
+    pathname.startsWith("/myprofile/");
   const showTopbar = showSidebar;
 
   return (
@@ -55,6 +57,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/mailbox" element={<Mailbox />} />
               <Route path="/user-profile/:id" element={<UserProfile />} />
+              <Route path="/myprofile/:id" element={<MyProfile />} />
               <Route path="/roadmap" element={<Roadmap />} />
               <Route path="/register" element={<Register />} />
               <Route path="/progress" element={<Progress />} />

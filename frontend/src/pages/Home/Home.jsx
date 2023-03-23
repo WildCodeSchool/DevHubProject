@@ -9,10 +9,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Image from "mui-image";
 import HomeP3 from "../../assets/Home.png";
+import Logo from "../../assets/logo/Logo.png";
 
 const styles = {
   paperContainer: {
     backgroundImage: `url(${HomeP3})`,
+  },
+  logo: {
+    width: "30%",
+    height: "auto",
   },
 };
 
@@ -34,6 +39,9 @@ export default function Home() {
             justifyContent: "center",
           }}
         >
+          <Stack justifyContent="flex-start" alignItems="center" spacing={2}>
+            <img src={Logo} alt="logo" style={styles.logo} />
+          </Stack>
           <Stack
             direction="column"
             justifyContent="center"
@@ -50,12 +58,12 @@ export default function Home() {
             >
               <Typography
                 gutterBottom
-                variant="h3"
+                variant="h2"
                 component="div"
                 sx={{ color: "#B28011" }}
                 style={{ marginBottom: "8%" }}
               >
-                Connectez-vous avec DevHubProjects et donnez vie à vos projets.
+                Connectez-vous avec DevHubProject et donnez vie à vos projets.
               </Typography>
             </Stack>
             <Stack spacing={2} direction="row">
