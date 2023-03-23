@@ -3,7 +3,6 @@ import { Formik, Form, Field } from "formik";
 import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
 import { FormControl, useTheme } from "@mui/material";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -49,10 +48,10 @@ function AddProjectForm({ setProjectName }) {
     try {
       await axios.delete(
         `http://localhost:5000/projects/${projectId}`,
-        values,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
+        values
       );
       console.info("Project deleted successfully!");
     } catch (error) {
@@ -77,7 +76,6 @@ function AddProjectForm({ setProjectName }) {
   const handleDialClose = () => {
     setDialogOpen(false);
   };
-
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
