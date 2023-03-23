@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { TextField, Button } from "@material-ui/core";
 import axios from "axios";
-import { FormControl, useTheme } from "@mui/material";
+import { FormControl, useTheme, Stack } from "@mui/material";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -44,14 +44,13 @@ function AddProjectForm({ setProjectName }) {
   };
   const handleDelete = async (values) => {
     try {
-      await axios.delete(`http://localhost:5000/projects/${projectId}`, values);
       const token = localStorage.getItem("token");
       await axios.delete(
         `http://localhost:5000/projects/${projectId}`,
-        values,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
+        values
       );
       console.info("Project deleted successfully!");
     } catch (error) {
@@ -98,280 +97,291 @@ function AddProjectForm({ setProjectName }) {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values, handleChange }) => (
-        <Form>
-          <FormControl
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "row",
-              marginBottom: "1%",
-            }}
-          >
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="name"
-              label="Project Name"
-              value={values.name}
-              onChange={handleChange}
-              disabled={!isEditable}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="state"
-              label="State"
-              value={values.state}
-              onChange={handleChange}
-              disabled={!isEditable}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="progress"
-              label="Progress"
-              type="number"
-              value={values.progress}
-              onChange={handleChange}
-              disabled={!isEditable}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="project_manager"
-              label="Project Manager"
-              value={values.project_manager}
-              onChange={handleChange}
-              disabled={!isEditable}
-            />
-          </FormControl>
+    <Stack
+      sx={{
+        justifyContent: "center",
+        flexDirection: "column",
+        marginBottom: "1%",
+        borderColor: "primary",
+        backgroundColor: colors.primary[500],
+      }}
+    >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        {({ values, handleChange }) => (
+          <Form>
+            <FormControl
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "row",
+                marginBottom: "1%",
+              }}
+            >
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="name"
+                label="Project Name"
+                value={values.name}
+                onChange={handleChange}
+                disabled={!isEditable}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="state"
+                label="State"
+                value={values.state}
+                onChange={handleChange}
+                disabled={!isEditable}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="progress"
+                label="Progress"
+                type="number"
+                value={values.progress}
+                onChange={handleChange}
+                disabled={!isEditable}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="project_manager"
+                label="Project Manager"
+                value={values.project_manager}
+                onChange={handleChange}
+                disabled={!isEditable}
+              />
+            </FormControl>
 
-          <FormControl
-            sx={{
-              display: "flex",
-              direction: "row",
-              width: "100%",
-              marginBottom: "2%",
-            }}
-          >
-            <Field
-              as={TextField}
-              id="outlined-multiline-flexible"
-              labelid="Multiline"
-              multiline
-              maxRows={4}
-              name="description"
-              label="Description"
-              value={values.description}
-              onChange={handleChange}
-              disabled={!isEditable}
-            />
-          </FormControl>
+            <FormControl
+              sx={{
+                display: "flex",
+                direction: "row",
+                width: "100%",
+                marginBottom: "2%",
+              }}
+            >
+              <Field
+                as={TextField}
+                id="outlined-multiline-flexible"
+                labelid="Multiline"
+                multiline
+                maxRows={4}
+                name="description"
+                label="Description"
+                value={values.description}
+                onChange={handleChange}
+                disabled={!isEditable}
+              />
+            </FormControl>
 
-          <FormControl
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              marginBottom: "1%",
-            }}
-          >
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="project_start_date"
-              label="Start Date"
-              type="date"
-              value={values.project_start_date}
-              onChange={handleChange}
-              InputLabelProps={{ shrink: true }}
-              disabled={!isEditable}
-            />
-            <Field
-              as={TextField}
-              id="outlined-basic"
-              labelid="Outlined"
-              variant="outlined"
-              name="project_end_date"
-              label="End Date"
-              type="date"
-              value={values.project_end_date}
-              onChange={handleChange}
-              InputLabelProps={{ shrink: true }}
-              disabled={!isEditable}
-            />
-          </FormControl>
-          <FormControl
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              marginBottom: "1%",
-            }}
-          >
-            <div>
-              <Button
-                variant="contained"
-                color={colors.primary[500]}
-                onClick={() => handleDialOpen()}
-              >
-                Add Project
-              </Button>
-              <Dialog
-                open={dialogOpen}
-                onClose={handleDialClose}
-                aria-labelledby="alert-dialog-add"
-                aria-describedby="alert-dialog-add"
-                color="#0f206e"
-              >
-                <DialogTitle
-                  id="alert-dialog-add"
-                  sx={{ backgroundColor: "#0f206e" }}
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                marginBottom: "1%",
+              }}
+            >
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="project_start_date"
+                label="Start Date"
+                type="date"
+                value={values.project_start_date}
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+                disabled={!isEditable}
+              />
+              <Field
+                as={TextField}
+                id="outlined-basic"
+                labelid="Outlined"
+                variant="outlined"
+                name="project_end_date"
+                label="End Date"
+                type="date"
+                value={values.project_end_date}
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+                disabled={!isEditable}
+              />
+            </FormControl>
+            <FormControl
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                marginBottom: "1%",
+              }}
+            >
+              <div>
+                <Button
+                  variant="contained"
+                  color={colors.primary[500]}
+                  onClick={() => handleDialOpen()}
                 >
-                  Here the last step to add your project !
-                </DialogTitle>
-                <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
-                  <DialogContentText id="alert-dialog-add" color="primary">
-                    Do you really want to add your new project now ?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
-                  <Button onClick={handleDialClose} color="secondary">
-                    Disagree
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      handleSubmit(values);
-                      handleDialClose();
-                    }}
-                    color="primary"
-                  >
-                    Agree
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-            <div>
-              <Button
-                variant="contained"
-                color="greenAccent"
-                onClick={() => setIsEditable(true)}
-              >
-                Update
-              </Button>
-            </div>
-            <div>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  setIsEditable(false);
-                  handleClickOpen();
-                }}
-              >
-                Save Update
-              </Button>
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                color="#0f206e"
-              >
-                <DialogTitle
-                  id="alert-dialog-update"
-                  sx={{ backgroundColor: "#0f206e" }}
+                  Add Project
+                </Button>
+                <Dialog
+                  open={dialogOpen}
+                  onClose={handleDialClose}
+                  aria-labelledby="alert-dialog-add"
+                  aria-describedby="alert-dialog-add"
+                  color="#0f206e"
                 >
-                  Save update ?
-                </DialogTitle>
-                <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
-                  <DialogContentText
-                    id="alert-dialog-description"
-                    color="primary"
+                  <DialogTitle
+                    id="alert-dialog-add"
+                    sx={{ backgroundColor: "#0f206e" }}
                   >
-                    Do you really want to save your update to your project now ?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
-                  <Button onClick={handleClose} color="secondary">
-                    Disagree
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      handleUpdate(values);
-                      handleClose();
-                    }}
-                    color="primary"
+                    Here the last step to add your project !
+                  </DialogTitle>
+                  <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
+                    <DialogContentText id="alert-dialog-add" color="primary">
+                      Do you really want to add your new project now ?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
+                    <Button onClick={handleDialClose} color="secondary">
+                      Disagree
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleSubmit(values);
+                        handleDialClose();
+                      }}
+                      color="primary"
+                    >
+                      Agree
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+              <div>
+                <Button
+                  variant="contained"
+                  color="greenAccent"
+                  onClick={() => setIsEditable(true)}
+                >
+                  Update
+                </Button>
+              </div>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setIsEditable(false);
+                    handleClickOpen();
+                  }}
+                >
+                  Save Update
+                </Button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  color="#0f206e"
+                >
+                  <DialogTitle
+                    id="alert-dialog-update"
+                    sx={{ backgroundColor: "#0f206e" }}
                   >
-                    Agree
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
+                    Save update ?
+                  </DialogTitle>
+                  <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
+                    <DialogContentText
+                      id="alert-dialog-description"
+                      color="primary"
+                    >
+                      Do you really want to save your update to your project now
+                      ?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
+                    <Button onClick={handleClose} color="secondary">
+                      Disagree
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleUpdate(values);
+                        handleClose();
+                      }}
+                      color="primary"
+                    >
+                      Agree
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
 
-            <div>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  handleDeleteOpen();
-                }}
-              >
-                Delete Project
-              </Button>
-              <Dialog
-                open={openDelete}
-                onClose={handleDeleteClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                color="#0f206e"
-              >
-                <DialogTitle
-                  id="alert-dialog-update"
-                  sx={{ backgroundColor: "#0f206e" }}
+              <div>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    handleDeleteOpen();
+                  }}
                 >
-                  Delete your Project ?
-                </DialogTitle>
-                <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
-                  <DialogContentText
-                    id="alert-dialog-description"
-                    color="primary"
+                  Delete Project
+                </Button>
+                <Dialog
+                  open={openDelete}
+                  onClose={handleDeleteClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  color="#0f206e"
+                >
+                  <DialogTitle
+                    id="alert-dialog-update"
+                    sx={{ backgroundColor: "#0f206e" }}
                   >
-                    Do you really want to delete your project now ?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
-                  <Button onClick={handleDeleteClose} color="secondary">
-                    Disagree
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      handleDelete(values);
-                      handleDeleteClose();
-                    }}
-                    color="primary"
-                  >
-                    Agree
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-          </FormControl>
-        </Form>
-      )}
-    </Formik>
+                    Delete your Project ?
+                  </DialogTitle>
+                  <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
+                    <DialogContentText
+                      id="alert-dialog-description"
+                      color="primary"
+                    >
+                      Do you really want to delete your project now ?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
+                    <Button onClick={handleDeleteClose} color="secondary">
+                      Disagree
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleDelete(values);
+                        handleDeleteClose();
+                      }}
+                      color="primary"
+                    >
+                      Agree
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+            </FormControl>
+          </Form>
+        )}
+      </Formik>
+    </Stack>
   );
 }
 export default AddProjectForm;
