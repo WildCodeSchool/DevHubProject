@@ -56,7 +56,8 @@ const add = (req, res) => {
   models.task
     .insert(task)
     .then(([result]) => {
-      res.location(`/task/${result.insertId}`).sendStatus(201);
+      res.send(`${result.insertId}`);
+      // res.location(`/task/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);

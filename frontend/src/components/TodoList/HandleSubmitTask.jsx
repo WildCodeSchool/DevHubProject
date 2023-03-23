@@ -15,8 +15,11 @@ import {
   MenuItem,
   FormHelperText,
 } from "@mui/material";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const initialValues = {
   name: "",
@@ -25,46 +28,85 @@ const initialValues = {
   description: "",
   state: "",
   progress: "",
-  type: [],
-  user_id: [1],
+  type: "",
+  user_id: [],
 };
 
 function AddTaskForm({ projectName }) {
+  const [taskId, setTaskId] = useState();
+  const [selectTaskId, setSelectTaskId] = useState();
+
+  console.info(taskId, "taskid 1");
+
+  // Here for the dialogs adds ------------------------------------------//
+  const [openAddTask, setOpenAddTask] = useState(false);
+  const handleOpenAddTask = () => {
+    setOpenAddTask(true);
+  };
+  const handleCloseAddTask = () => {
+    setOpenAddTask(false);
+  };
+
+  // Here for the dialogs delete------------------------------------------//
+
+  const [openDeleteTask, setOpenDeleteTask] = useState(false);
+  const handleDeleteTaskOpen = (taskIdSelect) => {
+    setSelectTaskId(taskIdSelect);
+    setOpenDeleteTask(true);
+  };
+  const handleDeleteTaskClose = () => {
+    setOpenDeleteTask(false);
+  };
+
+  // Here the axios requests ----------------------------------------------//
+  // Request axios post tasks -------------------------------------------//
   const [submittedValues, setSubmittedValues] = useState([]);
   const [user, setUser] = useState([]);
   const [task, setTask] = useState([]);
 
   const handleSubmitCard = (values) => {
     setSubmittedValues([...submittedValues, values]);
+    console.info(submittedValues, "submitvalues");
   };
 
   const handleSubmit = async (values) => {
     try {
-      await axios.post("http://localhost:5000/tasks", values);
-      console.info("Task added successfully!");
+      const result = await axios.post("http://localhost:5000/tasks", values);
+      setTaskId(result.data);
+      console.info("Task added successfully!", result);
+      // eslint-disable-next-line no-param-reassign
+      values = { ...values, id: result.data };
       handleSubmitCard(values);
-      console.info(values, "values");
     } catch (error) {
       console.info("Error adding Task.");
-      console.error(error, "error");
+      console.error(error);
     }
   };
-  const handleUpdate = async (values) => {
+
+  // Request axios delete tasks -------------------------------------------//
+  const handleDeleteTask = async (values) => {
+    console.info(submittedValues, "submittedValues");
+    console.info(values, "valuesHandleDeleteTask");
+    console.info(selectTaskId, "id tache selectionnee");
     try {
-      await axios.put("http://localhost:5000/tasks/:id", values);
-      console.info("Task updated successfully!");
-    } catch (error) {
-      console.info("Error updating Task.");
-    }
-  };
-  const handleDelete = async (values) => {
-    try {
-      await axios.delete("http://localhost:5000/tasks/:id", values);
+      await axios.delete(`http://localhost:5000/tasks/${selectTaskId}`, values);
+
+      setSubmittedValues(
+        submittedValues.filter((value) => {
+          console.info(value, "valueMap", values.id, "valuesId");
+          return value.id !== selectTaskId;
+        })
+      );
       console.info("Task deleted successfully!");
     } catch (error) {
       console.info("Error deleting Task.");
     }
   };
+
+  // Unique task types to show all different types in select only once --------------------//
+  const uniqueTaskTypes = new Set();
+  task.forEach((tasks) => uniqueTaskTypes.add(tasks.type));
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/users")
@@ -83,13 +125,10 @@ function AddTaskForm({ projectName }) {
       });
   }, []);
 
-  const uniqueTaskTypes = new Set();
-  task.forEach((tasks) => uniqueTaskTypes.add(tasks.type));
-
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ values, handleChange, setFieldValue }) => (
+        {({ values, handleChange, setFieldValue, resetForm }) => (
           <Form>
             <FormControl
               sx={{
@@ -101,8 +140,8 @@ function AddTaskForm({ projectName }) {
             >
               <Field
                 as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
+                id="outlined-secondary"
+                labelid="Outlined-secondary"
                 variant="outlined"
                 disabled
                 defaultValue="Project Name"
@@ -199,6 +238,7 @@ function AddTaskForm({ projectName }) {
                 InputLabelProps={{ shrink: true }}
               />
             </FormControl>
+
             <FormControl
               sx={{
                 display: "flex",
@@ -217,8 +257,8 @@ function AddTaskForm({ projectName }) {
                   labelId="demo-simple-select-standard-label"
                   fullWidth
                   variant="outlined"
-                  value={task.type}
-                  onChange={setFieldValue}
+                  value={values.type}
+                  onChange={(e) => setFieldValue("type", e.target.value)}
                   label="Select Type"
                   sx={{
                     width: 250,
@@ -243,19 +283,16 @@ function AddTaskForm({ projectName }) {
                   labelId="demo-simple-select-standard-label"
                   fullWidth
                   variant="outlined"
-                  value={task.user_id}
-                  onChange={setFieldValue}
-                  label="Select Type"
+                  value={values.user_id}
+                  onChange={(e) => setFieldValue("user_id", e.target.value)}
+                  label="Select User"
                   sx={{
                     width: 250,
                   }}
                 >
                   {user.map((users) => {
                     return (
-                      <MenuItem
-                        key={users.id}
-                        value={`${users.firstname} ${users.lastname}`}
-                      >
+                      <MenuItem key={users.id} value={users.id}>
                         {`${users.firstname} ${users.lastname}`}
                       </MenuItem>
                     );
@@ -264,6 +301,7 @@ function AddTaskForm({ projectName }) {
                 <FormHelperText>Please Select User</FormHelperText>
               </FormControl>
             </FormControl>
+
             <FormControl
               sx={{
                 display: "flex",
@@ -272,29 +310,66 @@ function AddTaskForm({ projectName }) {
                 marginBottom: "1%",
               }}
             >
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleOpenAddTask()}
+                >
+                  Add Task
+                </Button>
+                <Dialog
+                  open={openAddTask}
+                  onClose={handleCloseAddTask}
+                  aria-labelledby="alert-task-add"
+                  aria-describedby="alert-task-add"
+                  color="#0f206e"
+                >
+                  <DialogTitle
+                    id="alert-task-add"
+                    sx={{ backgroundColor: "#0f206e" }}
+                  >
+                    Here the last step to add your task !
+                  </DialogTitle>
+                  <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
+                    <DialogContentText id="alert-dialog-add" color="primary">
+                      Do you really want to add your new task now ?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
+                    <Button onClick={handleCloseAddTask} color="secondary">
+                      Disagree
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleSubmit(values);
+                        handleCloseAddTask();
+                        resetForm();
+                      }}
+                      color="primary"
+                    >
+                      Agree
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
               <Button type="submit" variant="contained" color="primary">
                 Add Task
-              </Button>
-
-              <Button onClick={handleUpdate} variant="contained" color="safran">
-                Update Task
-              </Button>
-
-              <Button
-                onClick={handleDelete}
-                variant="contained"
-                color="secondary"
-              >
-                Delete Task
               </Button>
             </FormControl>
           </Form>
         )}
       </Formik>
 
-      <Card>
-        {submittedValues.map((values) => (
-          <Card direction="row" justifyContent="center">
+      <Card direction="row" justifyContent="center">
+        {submittedValues.map((values) => {
+          const findUser = user.find(
+            (userFind) => userFind.id === values.user_id
+          );
+          const userName = findUser
+            ? `${findUser.firstname} ${findUser.lastname}`
+            : "Unknown User";
+          return (
             <CardContent direction="row" justifyContent="spacebetween">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography gutterBottom variant="h5" component="h3">
@@ -332,7 +407,6 @@ function AddTaskForm({ projectName }) {
                   Description : {values.description}
                 </Typography>
               </div>
-
               <div
                 style={{
                   display: "flex",
@@ -347,14 +421,63 @@ function AddTaskForm({ projectName }) {
                   Task Type : {values.type}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  User : {values.user_id}
+                  User : {userName}
                 </Typography>
               </div>
+
+              <div>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    handleDeleteTaskOpen(values.id);
+                  }}
+                >
+                  Delete Task
+                </Button>
+                <Dialog
+                  open={openDeleteTask}
+                  onClose={handleDeleteTaskClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  color="#0f206e"
+                >
+                  <DialogTitle
+                    id="alert-dialog-delete-task"
+                    sx={{ backgroundColor: "#0f206e" }}
+                  >
+                    Delete this task ?
+                  </DialogTitle>
+                  <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
+                    <DialogContentText
+                      id="alert-dialog-description"
+                      color="primary"
+                    >
+                      Do you really want to delete this task now ?
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
+                    <Button onClick={handleDeleteTaskClose} color="secondary">
+                      Disagree
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleDeleteTask(values);
+                        handleDeleteTaskClose();
+                      }}
+                      color="primary"
+                    >
+                      Agree
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
             </CardContent>
-          </Card>
-        ))}
+          );
+        })}
       </Card>
     </>
   );
 }
+
 export default AddTaskForm;

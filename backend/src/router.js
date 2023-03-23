@@ -38,6 +38,8 @@ router.get("/projects", projectControllers.browse);
 router.get("/projects/:id", projectControllers.read);
 router.put("/projects/:id", projectControllers.edit);
 router.post("/projects", projectControllers.add);
+router.post("/projects/task/:id", projectControllers.addTask);
+router.post("/projects/user/:id", projectControllers.addProject);
 router.delete("/projects/:id", projectControllers.destroy);
 
 const noteControllers = require("./controllers/noteControllers");
