@@ -33,10 +33,11 @@ const initialValues = {
 };
 
 function AddTaskForm({ projectName }) {
-  const [taskId, setTaskId] = useState();
+  const [user, setUser] = useState([]);
+  const [task, setTask] = useState([]);
+  const [submittedValues, setSubmittedValues] = useState([]);
   const [selectTaskId, setSelectTaskId] = useState();
-
-  console.info(taskId, "taskid 1");
+  const token = localStorage.getItem("token");
 
   // Here for the dialogs adds ------------------------------------------//
   const [openAddTask, setOpenAddTask] = useState(false);
@@ -48,7 +49,6 @@ function AddTaskForm({ projectName }) {
   };
 
   // Here for the dialogs delete------------------------------------------//
-
   const [openDeleteTask, setOpenDeleteTask] = useState(false);
   const handleDeleteTaskOpen = (taskIdSelect) => {
     setSelectTaskId(taskIdSelect);
@@ -60,37 +60,35 @@ function AddTaskForm({ projectName }) {
 
   // Here the axios requests ----------------------------------------------//
   // Request axios post tasks -------------------------------------------//
-  const [submittedValues, setSubmittedValues] = useState([]);
-  const [user, setUser] = useState([]);
-  const [task, setTask] = useState([]);
-
   const handleSubmitCard = (values) => {
     setSubmittedValues([...submittedValues, values]);
     console.info(submittedValues, "submitvalues");
   };
-
   const handleSubmit = async (values) => {
     try {
-      const result = await axios.post("http://localhost:5000/tasks", values);
-      setTaskId(result.data);
+      const result = await axios.post("http://localhost:5000/tasks", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setSelectTaskId(result.data);
       console.info("Task added successfully!", result);
       // eslint-disable-next-line no-param-reassign
       values = { ...values, id: result.data };
       handleSubmitCard(values);
     } catch (error) {
-      console.info("Error adding Task.");
-      console.error(error);
+      console.error("Error adding Task.");
     }
   };
 
   // Request axios delete tasks -------------------------------------------//
   const handleDeleteTask = async (values) => {
-    console.info(submittedValues, "submittedValues");
-    console.info(values, "valuesHandleDeleteTask");
-    console.info(selectTaskId, "id tache selectionnee");
     try {
-      await axios.delete(`http://localhost:5000/tasks/${selectTaskId}`, values);
-
+      await axios.delete(
+        `http://localhost:5000/tasks/${selectTaskId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+        values
+      );
       setSubmittedValues(
         submittedValues.filter((value) => {
           console.info(value, "valueMap", values.id, "valuesId");
@@ -99,14 +97,12 @@ function AddTaskForm({ projectName }) {
       );
       console.info("Task deleted successfully!");
     } catch (error) {
-      console.info("Error deleting Task.");
+      console.error("Error deleting Task.");
     }
   };
-
   // Unique task types to show all different types in select only once --------------------//
   const uniqueTaskTypes = new Set();
   task.forEach((tasks) => uniqueTaskTypes.add(tasks.type));
-
   useEffect(() => {
     axios
       .get("http://localhost:5000/users")
@@ -118,7 +114,9 @@ function AddTaskForm({ projectName }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/tasks")
+      .get("http://localhost:5000/tasks", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => response.data)
       .then((data) => {
         setTask(data);
@@ -150,7 +148,6 @@ function AddTaskForm({ projectName }) {
                 value={projectName || ""}
                 onChange={handleChange}
               />
-
               <Field
                 as={TextField}
                 id="outlined-basic"
@@ -353,9 +350,6 @@ function AddTaskForm({ projectName }) {
                   </DialogActions>
                 </Dialog>
               </div>
-              <Button type="submit" variant="contained" color="primary">
-                Add Task
-              </Button>
             </FormControl>
           </Form>
         )}
