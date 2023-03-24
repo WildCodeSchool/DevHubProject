@@ -91,6 +91,7 @@ function MyProfile() {
       )
       .then((response) => {
         setCurrentUser(response.data);
+        window.location.reload();
       })
       .catch((error) => {
         console.error(error);
