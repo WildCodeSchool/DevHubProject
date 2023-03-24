@@ -28,7 +28,7 @@ router.post(
 
 router.use(verifyToken); // Authentication Wall
 
-router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
+router.put("/users/:id", verifyId, userControllers.edit);
 router.delete("/users/:id", verifyId, userControllers.destroy);
 
 const projectControllers = require("./controllers/projectControllers");

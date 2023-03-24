@@ -60,15 +60,14 @@ function Mailbox() {
     }
   };
 
-  const handleDeleteMessage = async (id) => {
+  const handleDeleteMessage = async (id, event) => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:5000/messages/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setFilteredMessages(
-        filteredMessages.filter((message) => message.id !== id)
-      );
+      const parentElement = event.currentTarget.closest(".MuiGrid-root");
+      parentElement.style.display = "none";
     } catch (error) {
       console.error(error);
     }
