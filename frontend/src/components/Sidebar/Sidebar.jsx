@@ -196,13 +196,13 @@ export default function MiniDrawer() {
                   <LightModeOutlinedIcon sx={{ color: colors.safran[500] }} />
                 )}
               </IconButton> */}
-              <Box display="flex" alignItems="center" marginRight={70}>
+              <Box display="flex" alignItems="center" marginRight={5}>
                 <img
                   src={Logo}
                   alt="Logo"
                   style={{ width: "auto", height: "40px", marginRight: "10px" }}
                 />
-                <Typography variant="h4" sx={{ color: colors.safran[500] }}>
+                <Typography variant="h5" sx={{ color: colors.safran[500] }}>
                   DevHubProject
                 </Typography>
               </Box>
