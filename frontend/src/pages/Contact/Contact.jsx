@@ -48,7 +48,13 @@ function Contact() {
         <Typography gutterBottom variant="h3" align="center" />
         <Grid item>
           <Box mt={3}>
-            <Card style={{ maxWidth: 450, padding: "2% 1%" }}>
+            <Card
+              style={{
+                maxWidth: 450,
+                padding: "2% 1%",
+                backgroundColor: "#f5f5f5",
+              }}
+            >
               <CardContent style={{ textAlign: "center" }}>
                 <Typography gutterBottom variant="h3">
                   Contact Us
@@ -83,6 +89,8 @@ function Contact() {
                         helperText={
                           formik.touched.firstName && formik.errors.firstName
                         }
+                        InputProps={{ style: { color: "black" } }}
+                        InputLabelProps={{ style: { color: "black" } }}
                       />
                     </Grid>
                     <Grid xs={12} sm={6} item>
@@ -103,6 +111,8 @@ function Contact() {
                         helperText={
                           formik.touched.lastName && formik.errors.lastName
                         }
+                        InputProps={{ style: { color: "black" } }}
+                        InputLabelProps={{ style: { color: "black" } }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -121,6 +131,8 @@ function Contact() {
                           formik.touched.email && Boolean(formik.errors.email)
                         }
                         helperText={formik.touched.email && formik.errors.email}
+                        InputProps={{ style: { color: "black" } }}
+                        InputLabelProps={{ style: { color: "black" } }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -139,6 +151,8 @@ function Contact() {
                           formik.touched.phone && Boolean(formik.errors.phone)
                         }
                         helperText={formik.touched.phone && formik.errors.phone}
+                        InputProps={{ style: { color: "black" } }}
+                        InputLabelProps={{ style: { color: "black" } }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -197,6 +211,8 @@ function Contact() {
                         helperText={
                           formik.touched.message && formik.errors.message
                         }
+                        InputProps={{ style: { color: "black" } }}
+                        InputLabelProps={{ style: { color: "black" } }}
                       />
                     </Grid>
                     <Grid item xs={12}>
