@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 import UserCard from "../UserCard/UserCard";
 
 function SliderTeam({ selectedRole, idProject }) {
@@ -77,14 +78,15 @@ function SliderTeam({ selectedRole, idProject }) {
     <Slider {...settings}>
       {filteredUsers.map((user) => {
         return (
-          <UserCard
-            key={user.id}
-            firstname={user.firstname}
-            lastname={user.lastname}
-            email={user.email}
-            user_image={user.user_image}
-            role={user.user_role}
-          />
+          <Link to={`/user-profile/${user.id}`} key={user.id}>
+            <UserCard
+              firstname={user.firstname}
+              lastname={user.lastname}
+              email={user.email}
+              user_image={user.user_image}
+              role={user.user_role}
+            />
+          </Link>
         );
       })}
     </Slider>

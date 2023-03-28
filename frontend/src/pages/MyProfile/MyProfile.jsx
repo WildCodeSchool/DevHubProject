@@ -9,7 +9,8 @@ import ProjectsList from "../../components/ProjectsList/ProjectsList";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: `${theme.spacing(3)}px 0 ${theme.spacing(3)}px 0`,
+    paddingTop: "10%",
     marginBottom: 0,
     width: "100%",
     backgroundColor: theme.palette.background.paper,
