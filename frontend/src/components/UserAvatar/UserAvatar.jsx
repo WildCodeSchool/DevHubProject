@@ -10,13 +10,13 @@ function UserAvatar() {
   const [color, setColor] = useState("");
   const theme = useTheme();
 
+  const { id } = useParams();
+  const token = localStorage.getItem("token");
+
   const randomColor = () => {
     const colors = tokens(theme.palette.mode);
     return colors[Math.floor(Math.random() * colors.length)];
   };
-
-  const { id } = useParams();
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     axios
@@ -36,7 +36,7 @@ function UserAvatar() {
       .catch((error) => {
         console.error("Error fetching user data: ", error);
       });
-  }, [id, token, theme.palette.mode]);
+  }, [id, token, theme]);
 
   return (
     <Avatar
