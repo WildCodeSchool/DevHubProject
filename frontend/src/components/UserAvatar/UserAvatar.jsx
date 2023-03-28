@@ -2,34 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
-
-const randomColor = () => {
-  const colors = [
-    "#F44336",
-    "#E91E63",
-    "#9C27B0",
-    "#673AB7",
-    "#3F51B5",
-    "#2196F3",
-    "#03A9F4",
-    "#00BCD4",
-    "#009688",
-    "#4CAF50",
-    "#8BC34A",
-    "#CDDC39",
-    "#FFC107",
-    "#FF9800",
-    "#FF5722",
-    "#795548",
-    "#9E9E9E",
-    "#607D8B",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-};
+import { useTheme } from "@material-ui/core/styles";
+import { tokens } from "../../theme";
 
 function UserAvatar() {
   const [userInitials, setUserInitials] = useState("");
   const [color, setColor] = useState("");
+  const theme = useTheme();
+
+  const randomColor = () => {
+    const colors = tokens(theme.palette.mode);
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
 
   const { id } = useParams();
   const token = localStorage.getItem("token");
@@ -52,7 +36,7 @@ function UserAvatar() {
       .catch((error) => {
         console.error("Error fetching user data: ", error);
       });
-  }, [id, token]);
+  }, [id, token, theme.palette.mode]);
 
   return (
     <Avatar
