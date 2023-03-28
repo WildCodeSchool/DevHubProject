@@ -28,7 +28,6 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";
-import Logo from "../../assets/logo/Logo.png";
 
 const drawerWidth = 240;
 
@@ -189,19 +188,7 @@ export default function MiniDrawer() {
           </IconButton>
           <Box sx={{ ...styles.iconsBox, ...(open ? {} : { flexGrow: 0 }) }}>
             <Box display="flex">
-              {/* <IconButton onClick={toggleColorMode}>
-                {theme.palette.mode === "dark" ? (
-                  <DarkModeOutlinedIcon sx={{ color: colors.safran[500] }} />
-                ) : (
-                  <LightModeOutlinedIcon sx={{ color: colors.safran[500] }} />
-                )}
-              </IconButton> */}
               <Box display="flex" alignItems="center" marginRight={5}>
-                <img
-                  src={Logo}
-                  alt="Logo"
-                  style={{ width: "auto", height: "40px", marginRight: "10px" }}
-                />
                 <Typography variant="h5" sx={{ color: colors.safran[500] }}>
                   DevHubProject
                 </Typography>
