@@ -58,7 +58,8 @@ const add = (req, res) => {
   models.project
     .insert(project)
     .then(([result]) => {
-      res.location(`/projects/${result.insertId}`).sendStatus(201);
+      res.send(`${result.insertId}`);
+      // res.location(`/projects/${result.insertId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);

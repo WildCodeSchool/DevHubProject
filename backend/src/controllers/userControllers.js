@@ -32,7 +32,7 @@ const edit = (req, res) => {
   const user = req.body;
 
   user.id = parseInt(req.params.id, 10);
-
+  console.info(user, "updateuser");
   models.user
     .update(user)
     .then(([result]) => {

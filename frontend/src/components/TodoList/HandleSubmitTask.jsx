@@ -10,13 +10,20 @@ import {
 import axios from "axios";
 import {
   FormControl,
+  useTheme,
   InputLabel,
   Select,
   MenuItem,
   FormHelperText,
+  Paper,
+  Stack,
 } from "@mui/material";
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { tokens } from "../../theme";
 
 const initialValues = {
   name: "",
@@ -25,46 +32,82 @@ const initialValues = {
   description: "",
   state: "",
   progress: "",
-  type: [],
-  user_id: [1],
+  type: "",
+  user_id: [],
 };
 
 function AddTaskForm({ projectName }) {
-  const [submittedValues, setSubmittedValues] = useState([]);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [user, setUser] = useState([]);
   const [task, setTask] = useState([]);
+  const [submittedValues, setSubmittedValues] = useState([]);
+  const [selectTaskId, setSelectTaskId] = useState();
+  const token = localStorage.getItem("token");
 
+  // Here for the dialogs adds ------------------------------------------//
+  const [openAddTask, setOpenAddTask] = useState(false);
+  const handleOpenAddTask = () => {
+    setOpenAddTask(true);
+  };
+  const handleCloseAddTask = () => {
+    setOpenAddTask(false);
+  };
+
+  // Here for the dialogs delete------------------------------------------//
+  const [openDeleteTask, setOpenDeleteTask] = useState(false);
+  const handleDeleteTaskOpen = (taskIdSelect) => {
+    setSelectTaskId(taskIdSelect);
+    setOpenDeleteTask(true);
+  };
+  const handleDeleteTaskClose = () => {
+    setOpenDeleteTask(false);
+  };
+
+  // Here the axios requests ----------------------------------------------//
+  // Request axios post tasks -------------------------------------------//
   const handleSubmitCard = (values) => {
     setSubmittedValues([...submittedValues, values]);
+    console.info(submittedValues, "submitvalues");
   };
-
   const handleSubmit = async (values) => {
     try {
-      await axios.post("http://localhost:5000/tasks", values);
-      console.info("Task added successfully!");
+      const result = await axios.post("http://localhost:5000/tasks", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setSelectTaskId(result.data);
+      console.info("Task added successfully!", result);
+      // eslint-disable-next-line no-param-reassign
+      values = { ...values, id: result.data };
       handleSubmitCard(values);
-      console.info(values, "values");
     } catch (error) {
-      console.info("Error adding Task.");
-      console.error(error, "error");
+      console.error("Error adding Task.");
     }
   };
-  const handleUpdate = async (values) => {
+  // Request axios delete tasks -------------------------------------------//
+  const handleDeleteTask = async (values) => {
     try {
-      await axios.put("http://localhost:5000/tasks/:id", values);
-      console.info("Task updated successfully!");
-    } catch (error) {
-      console.info("Error updating Task.");
-    }
-  };
-  const handleDelete = async (values) => {
-    try {
-      await axios.delete("http://localhost:5000/tasks/:id", values);
+      await axios.delete(
+        `http://localhost:5000/tasks/${selectTaskId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+        values
+      );
+      setSubmittedValues(
+        submittedValues.filter((value) => {
+          console.info(value, "valueMap", values.id, "valuesId");
+          return value.id !== selectTaskId;
+        })
+      );
       console.info("Task deleted successfully!");
     } catch (error) {
-      console.info("Error deleting Task.");
+      console.error("Error deleting Task.");
     }
   };
+  // Unique task types to show all different types in select only once --------------------//
+  const uniqueTaskTypes = new Set();
+  task.forEach((tasks) => uniqueTaskTypes.add(tasks.type));
   useEffect(() => {
     axios
       .get("http://localhost:5000/users")
@@ -76,285 +119,516 @@ function AddTaskForm({ projectName }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/tasks")
+      .get("http://localhost:5000/tasks", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => response.data)
       .then((data) => {
         setTask(data);
       });
   }, []);
 
-  const uniqueTaskTypes = new Set();
-  task.forEach((tasks) => uniqueTaskTypes.add(tasks.type));
-
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ values, handleChange, setFieldValue }) => (
-          <Form>
-            <FormControl
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "row",
-                marginBottom: "1%",
-              }}
-            >
-              <Field
-                as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
-                variant="outlined"
-                disabled
-                defaultValue="Project Name"
-                name="name"
-                label="Project Name"
-                value={projectName || ""}
-                onChange={handleChange}
-              />
-
-              <Field
-                as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
-                variant="outlined"
-                name="name"
-                label="Task Name"
-                value={values.name}
-                onChange={handleChange}
-              />
-              <Field
-                as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
-                variant="outlined"
-                name="state"
-                label="State"
-                value={values.state}
-                onChange={handleChange}
-              />
-              <Field
-                as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
-                variant="outlined"
-                name="progress"
-                label="Progress"
-                type="number"
-                value={values.progress}
-                onChange={handleChange}
-              />
-            </FormControl>
-
-            <FormControl
-              sx={{
-                display: "flex",
-                direction: "row",
-                width: "100%",
-                marginBottom: "2%",
-              }}
-            >
-              <Field
-                as={TextField}
-                id="outlined-multiline-flexible"
-                labelid="Multiline"
-                multiline
-                maxRows={4}
-                name="description"
-                label="Description"
-                value={values.description}
-                onChange={handleChange}
-              />
-            </FormControl>
-
-            <FormControl
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginBottom: "1%",
-              }}
-            >
-              <Field
-                as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
-                variant="outlined"
-                name="task_start_date"
-                label="Start Date"
-                type="date"
-                value={values.task_start_date}
-                onChange={handleChange}
-                InputLabelProps={{ shrink: true }}
-              />
-              <Field
-                as={TextField}
-                id="outlined-basic"
-                labelid="Outlined"
-                variant="outlined"
-                name="task_end_date"
-                label="End Date"
-                type="date"
-                value={values.task_end_date}
-                onChange={handleChange}
-                InputLabelProps={{ shrink: true }}
-              />
-            </FormControl>
-            <FormControl
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginBottom: "1%",
-              }}
-            >
-              <FormControl
-                sx={{ display: "flex", flexDirection: "column", m: "1" }}
-              >
-                <InputLabel id="demo-simple-select-standard-label">
-                  Select Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  fullWidth
-                  variant="outlined"
-                  value={task.type}
-                  onChange={setFieldValue}
-                  label="Select Type"
+      <Paper
+        elevation="10"
+        mb="30px"
+        sx={{
+          background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
+          p: "1%",
+        }}
+      >
+        <Stack
+          sx={{
+            justifyContent: "center",
+            flexDirection: "column",
+            borderColor: "primary",
+            borderRadius: "5px",
+            backgroundColor: colors.grey[100],
+            p: "8px",
+          }}
+        >
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            sx={{ flexDirection: { xs: "column", md: "column" } }}
+          >
+            {({ values, handleChange, setFieldValue, resetForm }) => (
+              <Form>
+                <FormControl
                   sx={{
-                    width: 250,
+                    display: "flex",
+                    justifyContent: "space-around",
+                    flexDirection: { xs: "column", md: "row" },
+                    marginBottom: "4%",
                   }}
                 >
-                  {[...uniqueTaskTypes].map((type) => (
-                    <MenuItem key={type.id} value={type}>
-                      {type}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>Please Select Task Type</FormHelperText>
-              </FormControl>
+                  <Field
+                    as={TextField}
+                    id="outlined-secondary"
+                    labelid="Outlined-secondary"
+                    variant="outlined"
+                    disabled
+                    defaultValue="Project Name"
+                    name="name"
+                    label="Project Name"
+                    value={projectName || ""}
+                    onChange={handleChange}
+                    style={{
+                      backgroundColor: colors.grey[400],
+                      borderRadius: "5px",
+                    }}
+                  />
+                  <Field
+                    as={TextField}
+                    id="outlined-basic"
+                    labelid="Outlined"
+                    variant="outlined"
+                    name="name"
+                    label="Task Name"
+                    value={values.name}
+                    onChange={handleChange}
+                    style={{
+                      backgroundColor: colors.grey[400],
+                      borderRadius: "5px",
+                    }}
+                  />
+                  <Field
+                    as={TextField}
+                    id="outlined-basic"
+                    labelid="Outlined"
+                    variant="outlined"
+                    name="state"
+                    label="State"
+                    value={values.state}
+                    onChange={handleChange}
+                    style={{
+                      backgroundColor: colors.grey[400],
+                      borderRadius: "5px",
+                    }}
+                  />
+                  <Field
+                    as={TextField}
+                    id="outlined-basic"
+                    labelid="Outlined"
+                    variant="outlined"
+                    name="progress"
+                    label="Progress"
+                    type="number"
+                    value={values.progress}
+                    onChange={handleChange}
+                    style={{
+                      backgroundColor: colors.grey[400],
+                      borderRadius: "5px",
+                    }}
+                  />
+                </FormControl>
 
-              <FormControl
-                sx={{ display: "flex", flexDirection: "column", m: "1" }}
-              >
-                <InputLabel id="demo-simple-select-label">
-                  Select User
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-standard-label"
-                  fullWidth
-                  variant="outlined"
-                  value={task.user_id}
-                  onChange={setFieldValue}
-                  label="Select Type"
+                <FormControl
                   sx={{
-                    width: 250,
+                    display: "flex",
+                    direction: "row",
+                    marginBottom: "4%",
+                    marginTop: "4%",
                   }}
                 >
-                  {user.map((users) => {
-                    return (
-                      <MenuItem
-                        key={users.id}
-                        value={`${users.firstname} ${users.lastname}`}
+                  <Field
+                    as={TextField}
+                    id="outlined-multiline-flexible"
+                    labelid="Multiline"
+                    multiline
+                    maxRows={4}
+                    name="description"
+                    label="Description"
+                    value={values.description}
+                    onChange={handleChange}
+                    style={{
+                      backgroundColor: colors.grey[400],
+                      borderRadius: "5px",
+                    }}
+                  />
+                </FormControl>
+
+                <FormControl
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    marginBottom: "1%",
+                  }}
+                >
+                  <Field
+                    as={TextField}
+                    id="outlined-basic"
+                    labelid="Outlined"
+                    variant="outlined"
+                    name="task_start_date"
+                    label="Start Date"
+                    type="date"
+                    value={values.task_start_date}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                    style={{
+                      backgroundColor: colors.grey[400],
+                      borderRadius: "5px",
+                    }}
+                  />
+                  <Field
+                    as={TextField}
+                    id="outlined-basic"
+                    labelid="Outlined"
+                    variant="outlined"
+                    name="task_end_date"
+                    label="End Date"
+                    type="date"
+                    value={values.task_end_date}
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                    style={{
+                      backgroundColor: colors.grey[400],
+                      borderRadius: "5px",
+                    }}
+                  />
+                </FormControl>
+
+                <FormControl
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", md: "row" },
+                    justifyContent: "space-around",
+                    alignItems: { xs: "center", md: "space-around" },
+                    marginBottom: "1%",
+                    marginTop: "4%",
+                  }}
+                >
+                  <FormControl
+                    sx={{ display: "flex", flexDirection: "column", m: "1" }}
+                  >
+                    <InputLabel
+                      id="demo-simple-select-standard-label"
+                      sx={{ color: colors.primary[500] }}
+                    >
+                      Select Type
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      fullWidth
+                      variant="outlined"
+                      value={values.type}
+                      onChange={(e) => setFieldValue("type", e.target.value)}
+                      label="Select Type"
+                      sx={{
+                        width: 250,
+                        border: 1,
+                      }}
+                      style={{
+                        backgroundColor: colors.grey[400],
+                        borderColor: colors.primary[500],
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {[...uniqueTaskTypes].map((type) => (
+                        <MenuItem key={type.id} value={type}>
+                          {type}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText sx={{ color: colors.primary[500] }}>
+                      Please Select Task Type
+                    </FormHelperText>
+                  </FormControl>
+
+                  <FormControl
+                    sx={{ display: "flex", flexDirection: "column", m: "1" }}
+                  >
+                    <InputLabel
+                      id="demo-simple-select-label"
+                      sx={{ color: colors.primary[500] }}
+                    >
+                      Select User
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      fullWidth
+                      variant="outlined"
+                      value={values.user_id}
+                      onChange={(e) => setFieldValue("user_id", e.target.value)}
+                      label="Select User"
+                      sx={{
+                        width: 250,
+                        border: 1,
+                      }}
+                      style={{
+                        backgroundColor: colors.grey[400],
+                        borderColor: colors.primary[500],
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {user.map((users) => {
+                        return (
+                          <MenuItem key={users.id} value={users.id}>
+                            {`${users.firstname} ${users.lastname}`}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                    <FormHelperText sx={{ color: colors.primary[500] }}>
+                      Please Select User
+                    </FormHelperText>
+                  </FormControl>
+                </FormControl>
+
+                <FormControl
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    marginBottom: "1%",
+                  }}
+                >
+                  <div>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleOpenAddTask()}
+                    >
+                      Add Task
+                    </Button>
+                    <Dialog
+                      open={openAddTask}
+                      onClose={handleCloseAddTask}
+                      aria-labelledby="alert-task-add"
+                      aria-describedby="alert-task-add"
+                      color="#0f206e"
+                    >
+                      <DialogTitle
+                        id="alert-task-add"
+                        sx={{ backgroundColor: "#0f206e" }}
                       >
-                        {`${users.firstname} ${users.lastname}`}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-                <FormHelperText>Please Select User</FormHelperText>
-              </FormControl>
-            </FormControl>
-            <FormControl
+                        Here the last step to add your task !
+                      </DialogTitle>
+                      <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
+                        <DialogContentText
+                          id="alert-dialog-add"
+                          color="primary"
+                        >
+                          Do you really want to add your new task now ?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
+                        <Button onClick={handleCloseAddTask} color="secondary">
+                          Disagree
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleSubmit(values);
+                            handleCloseAddTask();
+                            resetForm();
+                          }}
+                          color="primary"
+                        >
+                          Agree
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </div>
+                </FormControl>
+              </Form>
+            )}
+          </Formik>
+        </Stack>
+      </Paper>
+      <Card
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        padding="8px"
+        paddingBottom="16px"
+      >
+        {submittedValues.map((values) => {
+          const findUser = user.find(
+            (userFind) => userFind.id === values.user_id
+          );
+          const userName = findUser
+            ? `${findUser.firstname} ${findUser.lastname}`
+            : "Unknown User";
+          return (
+            <Paper
+              elevation="10"
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginBottom: "1%",
+                background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+                p: "1%",
+                mt: "4%",
               }}
             >
-              <Button type="submit" variant="contained" color="primary">
-                Add Task
-              </Button>
-
-              <Button onClick={handleUpdate} variant="contained" color="safran">
-                Update Task
-              </Button>
-
-              <Button
-                onClick={handleDelete}
-                variant="contained"
-                color="secondary"
-              >
-                Delete Task
-              </Button>
-            </FormControl>
-          </Form>
-        )}
-      </Formik>
-
-      <Card>
-        {submittedValues.map((values) => (
-          <Card direction="row" justifyContent="center">
-            <CardContent direction="row" justifyContent="spacebetween">
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography gutterBottom variant="h5" component="h3">
-                  Name : {values.name}
-                </Typography>
-
-                <Typography gutterBottom variant="h5" component="h3">
-                  State : {values.state}
-                </Typography>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingBottom: "2%",
+              <Stack
+                sx={{
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  borderColor: "primary",
+                  borderRadius: "5px",
+                  backgroundColor: colors.grey[100],
+                  p: "1%",
                 }}
               >
-                <Typography variant="h6" color="textSecondary" component="h6">
-                  Start date : {values.task_start_date}
-                </Typography>
-                <Typography variant="h6" color="textSecondary" component="h6">
-                  End date : {values.task_end_date}
-                </Typography>
-              </div>
+                <CardContent
+                  flexDirection="column"
+                  justifyContent="spacebetween"
+                >
+                  <CardContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography
+                      color="primary"
+                      gutterBottom
+                      variant="h4"
+                      component="h3"
+                    >
+                      Name : {values.name}
+                    </Typography>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingBottom: "2%",
-                }}
-              >
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Description : {values.description}
-                </Typography>
-              </div>
+                    <Typography
+                      color="primary"
+                      gutterBottom
+                      variant="h4"
+                      component="h3"
+                    >
+                      State : {values.state}
+                    </Typography>
+                  </CardContent>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  paddingBottom: "2%",
-                }}
-              >
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Progress : {values.progress}%
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Task Type : {values.type}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  User : {values.user_id}
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                  <CardContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      paddingBottom: "2%",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      color="textSecondary"
+                      component="h6"
+                    >
+                      Start date : {values.task_start_date}
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      color="textSecondary"
+                      component="h6"
+                    >
+                      End date : {values.task_end_date}
+                    </Typography>
+                  </CardContent>
+
+                  <CardContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      paddingBottom: "2%",
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Description : {values.description}
+                    </Typography>
+                  </CardContent>
+                  <CardContent
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      paddingBottom: "2%",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Progress : {values.progress}%
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Task Type : {values.type}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      User : {userName}
+                    </Typography>
+                  </CardContent>
+
+                  <CardContent>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => {
+                        handleDeleteTaskOpen(values.id);
+                      }}
+                    >
+                      Delete Task
+                    </Button>
+                    <Dialog
+                      open={openDeleteTask}
+                      onClose={handleDeleteTaskClose}
+                      aria-labelledby="alert-dialog-title"
+                      aria-describedby="alert-dialog-description"
+                      color="#0f206e"
+                    >
+                      <DialogTitle
+                        id="alert-dialog-delete-task"
+                        sx={{ backgroundColor: "#0f206e" }}
+                      >
+                        Delete this task ?
+                      </DialogTitle>
+                      <DialogContent sx={{ backgroundColor: "#FFFFFF" }}>
+                        <DialogContentText
+                          id="alert-dialog-description"
+                          color="primary"
+                        >
+                          Do you really want to delete this task now ?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions sx={{ backgroundColor: "#FFFFFF" }}>
+                        <Button
+                          onClick={handleDeleteTaskClose}
+                          color="secondary"
+                        >
+                          Disagree
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleDeleteTask(values);
+                            handleDeleteTaskClose();
+                          }}
+                          color="primary"
+                        >
+                          Agree
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </CardContent>
+                </CardContent>
+              </Stack>
+            </Paper>
+          );
+        })}
       </Card>
     </>
   );
 }
+
 export default AddTaskForm;

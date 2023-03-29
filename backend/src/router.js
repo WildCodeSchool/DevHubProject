@@ -28,7 +28,7 @@ router.post(
 
 router.use(verifyToken); // Authentication Wall
 
-router.put("/users/:id", verifyId, hashPassword, userControllers.edit);
+router.put("/users/:id", verifyId, userControllers.edit);
 router.delete("/users/:id", verifyId, userControllers.destroy);
 
 const projectControllers = require("./controllers/projectControllers");
@@ -38,6 +38,8 @@ router.get("/projects", projectControllers.browse);
 router.get("/projects/:id", projectControllers.read);
 router.put("/projects/:id", projectControllers.edit);
 router.post("/projects", projectControllers.add);
+router.post("/projects/task/:id", projectControllers.addTask);
+router.post("/projects/user/:id", projectControllers.addProject);
 router.delete("/projects/:id", projectControllers.destroy);
 
 const noteControllers = require("./controllers/noteControllers");

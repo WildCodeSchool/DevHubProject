@@ -13,7 +13,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ExpandMore, Delete } from "@material-ui/icons";
-import Message from "../../components/Messages/Message";
 
 function Mailbox() {
   const [messages, setMessages] = useState([]);
@@ -60,23 +59,26 @@ function Mailbox() {
     }
   };
 
-  const handleDeleteMessage = async (id) => {
+  const handleDeleteMessage = async (id, event) => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:5000/messages/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setFilteredMessages(
-        filteredMessages.filter((message) => message.id !== id)
-      );
+      const parentElement = event.currentTarget.closest(".MuiGrid-root");
+      parentElement.style.display = "none";
     } catch (error) {
       console.error(error);
     }
   };
+  const getRandomColor = () => {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsl(${hue}, 60%, 90%)`;
+  };
 
   return (
-    <Box py={3}>
-      <Container maxWidth="md">
+    <Box py={3} style={{ paddingTop: "5%" }}>
+      <Container maxWidth="sm">
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} sm={6}>
             <Typography variant="h3">Mailbox</Typography>
@@ -98,14 +100,31 @@ function Mailbox() {
           <Grid container spacing={3}>
             {filteredMessages.map((message) => (
               <Grid item key={message.id} xs={12}>
-                <Accordion>
+                <Accordion style={{ background: getRandomColor() }}>
                   <AccordionSummary expandIcon={<ExpandMore />}>
                     <Typography variant="h6">{message.title}</Typography>
+                    <Typography variant="caption">
+                      {message.author} - {message.date}
+                    </Typography>
                   </AccordionSummary>
+
                   <AccordionDetails>
-                    <Paper elevation={3}>
+                    <Paper
+                      elevation={3}
+                      style={{ width: "100%", backgroundColor: "#f5f5f5" }}
+                    >
                       <Box p={3}>
-                        <Message message={message} />
+                        <Typography variant="body1">
+                          {message.content}
+                        </Typography>
+                        <Box display="flex" justifyContent="space-between">
+                          <Typography variant="caption">
+                            {message.author}
+                          </Typography>
+                          <Typography variant="caption">
+                            {message.date}
+                          </Typography>
+                        </Box>
                         <IconButton
                           color="secondary"
                           onClick={() => handleDeleteMessage(message.id)}

@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Box } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Informations from "../../components/Informations/Informations";
-import userimage from "../../assets/user.png";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
-import SendMessage from "../../components/SendMessage/SendMessage";
+import UserAvatar from "../../components/UserAvatar/UserAvatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    paddingTop: "2%",
     marginBottom: 0,
     width: "100%",
     backgroundColor: theme.palette.background.paper,
@@ -36,18 +36,8 @@ function UserProfile() {
   const classes = useStyles();
   const [user, setUser] = useState({});
   const [projects, setProjects] = useState([]);
-  const [inbox, setInbox] = useState([]);
 
   const { id } = useParams();
-
-  const handleSendMessage = (subject, message) => {
-    const newMessage = {
-      subject,
-      message,
-      date: new Date(),
-    };
-    setInbox([...inbox, newMessage]);
-  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -84,17 +74,7 @@ function UserProfile() {
         <Grid item xs={12} md={6}>
           <Grid container direction="column" spacing={3}>
             <Grid item>
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={userimage}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
-              </Box>
-            </Grid>
-            <Grid item>
+              <UserAvatar />
               <Informations
                 firstname={user.firstname}
                 lastname={user.lastname}
@@ -115,13 +95,6 @@ function UserProfile() {
               </Grid>
             </Grid>
           </Paper>
-          <Grid item className={classes.sendMessageContainer}>
-            <SendMessage
-              firstname={user.firstname}
-              lastname={user.lastname}
-              onSendMessage={handleSendMessage}
-            />
-          </Grid>
         </Grid>
       </Grid>
     </div>

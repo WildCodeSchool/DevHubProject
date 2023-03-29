@@ -25,6 +25,7 @@ const hashPassword = (req, res, next) => {
       res.sendStatus(500);
     });
 };
+
 const verifyPassword = (req, res) => {
   console.info("verifyPassword function called");
   argon2
@@ -34,7 +35,7 @@ const verifyPassword = (req, res) => {
         const payload = { sub: req.user.id };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-          expiresIn: "4h",
+          expiresIn: "8h",
         });
 
         delete req.user.hashedPassword;
@@ -51,6 +52,30 @@ const verifyPassword = (req, res) => {
     });
 };
 
+// const verifyToken = (req, res, next) => {
+//   console.info("verifyToken function called");
+//   try {
+//     const authorizationHeader = req.get("Authorization");
+
+//     if (authorizationHeader == null) {
+//       throw new Error("Authorization header is missing");
+//     }
+
+//     const [type, token] = authorizationHeader.split(" ");
+
+//     if (type !== "Bearer") {
+//       throw new Error("Authorization header has not the 'Bearer' type");
+//     }
+
+//     req.payload = jwt.verify(token, process.env.JWT_SECRET);
+
+//     next();
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(401);
+//   }
+// };
+
 const verifyToken = (req, res, next) => {
   console.info("verifyToken function called");
   try {
@@ -66,9 +91,19 @@ const verifyToken = (req, res, next) => {
       throw new Error("Authorization header has not the 'Bearer' type");
     }
 
-    req.payload = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-    next();
+    if (decodedToken.exp <= Date.now() / 1000) {
+      // Token has expired
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("tokenExpiration");
+      window.location.href = "/";
+    } else {
+      // Token is still valid
+      req.payload = decodedToken;
+      next();
+    }
   } catch (err) {
     console.error(err);
     res.sendStatus(401);

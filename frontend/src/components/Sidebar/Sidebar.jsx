@@ -26,6 +26,7 @@ import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomi
 // import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import { useNavigate } from "react-router-dom";
 import { tokens } from "../../theme";
 
 const drawerWidth = 240;
@@ -111,7 +112,7 @@ export default function MiniDrawer() {
     "🚀 ~ file: Sidebar.jsx:112 ~ MiniDrawer ~ currentUserId:",
     currentUserId
   );
-
+  const navigate = useNavigate();
   const [randomUserImage, setRandomUserImage] = useState("");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -156,6 +157,12 @@ export default function MiniDrawer() {
     fetchRandomUserImage();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    navigate("/");
+  };
+
   return (
     <Box style={{ display: "flex" }}>
       <AppBar
@@ -180,17 +187,15 @@ export default function MiniDrawer() {
           </IconButton>
           <Box sx={{ ...styles.iconsBox, ...(open ? {} : { flexGrow: 0 }) }}>
             <Box display="flex">
-              {/* <IconButton onClick={toggleColorMode}>
-                {theme.palette.mode === "dark" ? (
-                  <DarkModeOutlinedIcon sx={{ color: colors.safran[500] }} />
-                ) : (
-                  <LightModeOutlinedIcon sx={{ color: colors.safran[500] }} />
-                )}
-              </IconButton> */}
+              <Box display="flex" alignItems="center" marginRight={5}>
+                <Typography variant="h5" sx={{ color: colors.safran[500] }}>
+                  DevHubProject
+                </Typography>
+              </Box>
               <IconButton>
                 <NotificationsOutlinedIcon sx={{ color: colors.safran[500] }} />
               </IconButton>
-              <IconButton href={`/user-profile/${currentUserId}`}>
+              <IconButton href={`/myprofile/${currentUserId}`}>
                 <PersonOutlinedIcon sx={{ color: colors.safran[500] }} />
               </IconButton>
             </Box>
@@ -466,6 +471,7 @@ export default function MiniDrawer() {
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
+              onClick={handleLogout}
             >
               <ListItemIcon
                 sx={{
