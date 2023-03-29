@@ -1,6 +1,15 @@
 import { useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 
+const breakpoints = {
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+  },
+};
 // color design tokens
 export const tokens = (mode) => ({
   ...(mode === "dark"
@@ -302,5 +311,5 @@ export const useMode = () => {
   );
 
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  return [theme, colorMode];
+  return [theme, colorMode, breakpoints];
 };

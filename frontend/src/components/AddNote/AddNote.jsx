@@ -15,6 +15,7 @@ function AddNote({ handleAddNote }) {
   const [noteText, setNoteText] = useState("");
   const characterLimit = 300;
   const [open, setOpen] = useState(false);
+  const userId = parseInt(localStorage.getItem("userId"), 10);
 
   const handleOpen = () => {
     setOpen(true);
@@ -31,19 +32,36 @@ function AddNote({ handleAddNote }) {
   };
 
   const handleSaveClick = async () => {
-    // ajouter async
     if (noteText.trim().length > 0) {
       try {
-        const response = await axios.post("http://localhost:5000/notes", {
-          description: noteText,
-          user_id: 1,
-        });
-        handleAddNote(response.data);
+        const token = localStorage.getItem("token");
+        const postResponse = await axios.post(
+          `http://localhost:5000/notes/user/${userId}`,
+          {
+            description: noteText,
+            user_id: `${userId}`,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        handleAddNote(postResponse.data);
         setNoteText("");
         handleClose();
-        const getResponse = await axios.get("http://localhost:5000/notes", {
-          user_id: 1,
-        });
+
+        const getResponse = await axios.get(
+          `http://localhost:5000/notes/user/${userId}`,
+          {
+            params: {
+              user_id: `${userId}`,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         console.info(getResponse.data);
       } catch (error) {
         console.info(error);
@@ -55,15 +73,21 @@ function AddNote({ handleAddNote }) {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Paper elevation="10" sx={{ height: "60px", borderRadius: "10px" }}>
+    <Paper
+      elevation="10"
+      sx={{
+        height: "60px",
+        borderRadius: "5px",
+        backgroundColor: "transparent",
+      }}
+    >
       <Button
         sx={{
-          background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+          background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
           mb: "10px",
-          borderRadius: "10px",
+          borderRadius: "5px",
           p: "1rem",
           height: "100%",
-          width: "150px",
         }}
         variant="contained"
         onClick={handleOpen}
@@ -86,7 +110,7 @@ function AddNote({ handleAddNote }) {
           sx={{
             background: `${colors.grey[600]}`,
             mb: "10px",
-            borderRadius: "10px",
+            borderRadius: "5px",
             p: "1rem",
             width: "500px",
           }}

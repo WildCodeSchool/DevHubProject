@@ -6,7 +6,7 @@ function TeamTitle({ selectedRole }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Paper>
+    <Paper elevation="10" sx={{ background: "transparent" }}>
       <Typography
         variant="h4"
         color={colors.grey[100]}
@@ -14,10 +14,10 @@ function TeamTitle({ selectedRole }) {
         letterSpacing="0.15em"
         textAlign="center"
         sx={{
-          borderRadius: "10px",
-          padding: "0.4em",
-          width: "300px",
-          backgroundColor: colors.primary[500],
+          borderRadius: "5px",
+          padding: "0.3em",
+          background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+          width: "100%",
         }}
       >
         {selectedRole || "Selected Team"}

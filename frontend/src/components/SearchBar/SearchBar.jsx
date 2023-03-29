@@ -9,9 +9,10 @@ function SearchBar({ handleSearchNote }) {
     <Box
       display="flex"
       backgroundColor={colors.primary[500]}
-      borderRadius="10px"
+      borderRadius="5px"
       sx={{
         mb: "20px",
+        height: "100%",
       }}
     >
       <InputBase
