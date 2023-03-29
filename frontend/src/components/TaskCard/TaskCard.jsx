@@ -98,12 +98,11 @@ function TaskCard(props) {
               variant="body2"
               sx={{ textAlign: "right", color: getColor(progress) }}
             >
-              {`${progress}%`} {/* {progress}% */}
+              {`${progress}%`}
             </Typography>
           </Box>
         </div>
       </CardContent>
-      {/* Progress : {progress} % */}
     </Card>
   );
 }
