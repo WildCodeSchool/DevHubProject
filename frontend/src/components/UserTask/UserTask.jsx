@@ -3,6 +3,7 @@ import { Box, CardContent } from "@mui/material";
 import axios from "axios";
 import TaskCard from "../TaskCard/TaskCard";
 
+const token = localStorage.getItem("token");
 function UserTask({ idProject }) {
   const [userTasks, setUserTasks] = useState([]);
   const userId = parseInt(localStorage.getItem("userId"), 10);
@@ -10,7 +11,6 @@ function UserTask({ idProject }) {
 
   const getTaskByUserId = () => {
     console.info(idProject, "PROJECT ID ON getTaskByUserId");
-    const token = localStorage.getItem("token");
     axios
       .get(
         `http://localhost:5000/users/${userId}/projects/${idProject}/tasks`,

@@ -7,7 +7,7 @@ import { tokens } from "../../theme";
 function Note({ id, description, date, handleDeleteNote }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  // console.info(description, "description dans NOTE.JSX");
+
   return (
     <Box
       display="flex"
@@ -15,8 +15,7 @@ function Note({ id, description, date, handleDeleteNote }) {
       justifyContent="space-between"
       sx={{
         background: `${colors.primary[500]}`,
-        mb: "10px",
-        borderRadius: "10px",
+        borderRadius: "5px",
         p: "1rem",
         minHeight: "170px",
         whiteSpace: "pre-wrap",

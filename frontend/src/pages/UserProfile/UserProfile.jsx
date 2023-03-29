@@ -5,12 +5,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Informations from "../../components/Informations/Informations";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import UserAvatar from "../../components/UserAvatar/UserAvatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    paddingTop: "10%",
+    paddingTop: "2%",
     marginBottom: 0,
     width: "100%",
     backgroundColor: theme.palette.background.paper,
@@ -73,6 +74,7 @@ function UserProfile() {
         <Grid item xs={12} md={6}>
           <Grid container direction="column" spacing={3}>
             <Grid item>
+              <UserAvatar />
               <Informations
                 firstname={user.firstname}
                 lastname={user.lastname}

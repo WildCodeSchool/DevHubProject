@@ -14,9 +14,7 @@ body,
   position: relative;
   margin-top: 4%;
 }
-.content {
-  margin-right: 1%;
-}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

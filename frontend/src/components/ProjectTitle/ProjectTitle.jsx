@@ -14,7 +14,7 @@ function ProjectTitle({ selectedProjectName }) {
       width="100%"
       sx={{
         height: "50px",
-        borderRadius: "10px",
+        borderRadius: "5px",
         padding: "10px",
         border: "none",
         background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,

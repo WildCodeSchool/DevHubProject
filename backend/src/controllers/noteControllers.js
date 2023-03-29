@@ -52,8 +52,11 @@ const edit = (req, res) => {
 
 const add = (req, res) => {
   const note = req.body;
+  const userId = parseInt(req.params.userId, 10); // récupérer l'ID de l'utilisateur depuis les paramètres de la requête
 
   // TODO validations (length, format...)
+
+  note.user_id = userId; // ajouter l'ID de l'utilisateur à l'objet note
 
   models.note
     .insert(note)
@@ -91,10 +94,43 @@ const destroy = (req, res) => {
     });
 };
 
+const findByUserId = (req, res) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  models.note
+    .findByUserId(userId)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+const deleteNoteByUserId = (req, res) => {
+  const userId = parseInt(req.params.userId, 10);
+  const noteId = parseInt(req.params.noteId, 10);
+
+  models.note
+    .deleteNoteByUserId(noteId, userId)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  findByUserId,
+  deleteNoteByUserId,
 };
