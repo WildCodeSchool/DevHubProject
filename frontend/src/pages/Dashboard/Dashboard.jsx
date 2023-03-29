@@ -139,19 +139,14 @@ function Dashboard() {
 
           <Box
             sx={{
-              height: "200px",
+              height: "280px",
               backgroundColor: colors.grey[200],
               borderRadius: "5px",
               margin: "15px 0",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
             }}
           >
-            <Box>
-              <SliderTeam selectedRole={selectedRole} idProject={idProject} />
-            </Box>
+            <SliderTeam selectedRole={selectedRole} idProject={idProject} />
           </Box>
 
           <Box
