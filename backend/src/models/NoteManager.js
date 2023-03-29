@@ -18,5 +18,20 @@ class NoteManager extends AbstractManager {
       [note.description, note.user_id, note.id]
     );
   }
+
+  findByUserId(userId) {
+    return this.database.query(
+      `SELECT * FROM ${this.table} WHERE user_id = ?`,
+      [userId]
+    );
+  }
+
+  deleteNoteByUserId(noteId, userId) {
+    return this.database.query(
+      `DELETE FROM ${this.table} WHERE id = ? AND user_id = ?`,
+      [noteId, userId]
+    );
+  }
 }
+
 module.exports = NoteManager;

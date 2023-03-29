@@ -41,7 +41,10 @@ function SelectRole({ setSelectedRole }) {
   }, [role]);
 
   return (
-    <Paper elevation="10" sx={{ backgroundColor: colors.primary[500] }}>
+    <Paper
+      elevation="10"
+      sx={{ backgroundColor: "transparent", width: "100%" }}
+    >
       <TextField
         label="Role List"
         select
@@ -50,7 +53,7 @@ function SelectRole({ setSelectedRole }) {
         fullWidth
         size="small"
         style={{
-          backgroundColor: colors.primary[500],
+          background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
           width: "100%",
           borderRadius: "5px",
         }}

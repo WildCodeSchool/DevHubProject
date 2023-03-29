@@ -1,36 +1,42 @@
 import { useState, useEffect } from "react";
-import { Box, Grid, useTheme, Typography, Paper } from "@mui/material";
 import axios from "axios";
+import { Box, Grid, Paper, useTheme, Typography } from "@mui/material";
 import Header from "../../components/Header/Header";
-import NoteList from "../../components/NotesList/NotesList";
-import SliderTeam from "../../components/SliderTeam/SliderTeam";
-import AddNote from "../../components/AddNote/AddNote";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import PieChart from "../../components/PieChart/PieChart";
 import SelectProject from "../../components/SelectProject/SelectProject";
+import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
+import NoteList from "../../components/NotesList/NotesList";
+import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
+import PieChart from "../../components/PieChart/PieChart";
+import SliderTeam from "../../components/SliderTeam/SliderTeam";
 import SelectRole from "../../components/SelectRole/SelectRole";
 import UserTask from "../../components/UserTask/UserTask";
-// import ProjectsList from "../../components/ProjectsList/ProjectsList";
-import ProjectTitle from "../../components/ProjectTitle/ProjectTitle";
-import TeamTitle from "../../components/TeamTitle/TeamTitle";
-import ProjectTaskList from "../../components/ProjectTaskList/ProjectTaskList";
+import AddNote from "../../components/AddNote/AddNote";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import DashBoardCalendar from "../../components/Calendar/DashboardCalendar";
 import { tokens } from "../../theme";
+import TeamTitle from "../../components/TeamTitle/TeamTitle";
 
 function Dashboard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [notes, setNotes] = useState([]);
+  const [noteId, setNoteId] = useState();
+
+  console.info("🚀 ~ file: Dashboard.jsx:23 ~ Dashboard ~ setNotes:", notes);
+  const userId = parseInt(localStorage.getItem("userId"), 10);
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/notes", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:5000/notes/user/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setNotes(response.data);
       } catch (error) {
@@ -50,17 +56,27 @@ function Dashboard() {
     setNotes(newNotes);
     console.info(newNotes, "NEWNOTES");
   };
-
-  const deleteNote = async (id) => {
+  const deleteNote = async () => {
+    console.info("🚀 ~ file: Dashboard.jsx:57 ~ deleteNote ~ noteId:", noteId);
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/notes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const newNotes = notes.filter((note) => note.id !== id);
-      setNotes(newNotes);
+      await axios.delete(
+        `http://localhost:5000/notes/${noteId}/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const response = await axios.get(
+        `http://localhost:5000/notes/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setNoteId(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -82,241 +98,227 @@ function Dashboard() {
     );
   };
   const [selectedRole, setSelectedRole] = useState("");
-  // eslint-disable-next-line no-unused-vars
-
   return (
-    <Grid container>
+    <Grid container sx={{ mt: "10px" }}>
       <Grid
-        item
         xs={12}
-        sx={{
-          mb: "15px",
-          padding: "0 10px 0 10px",
-          backgroundColor: colors.grey[400],
-          boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
-          p: "1rem",
+        style={{
           mt: "10px",
           borderRadius: "5px",
         }}
-        display="flex"
-        justifyContent="space-between"
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-        <Box sx={{ width: "250px", marginTop: " 8px" }}>
+      </Grid>
+
+      <Grid lg={5} md={6} sm={12} xs={12}>
+        <Grid
+          sx={{
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Box
+            sx={{
+              background: colors.grey[200],
+              p: "0.3em",
+              mt: "10px",
+              borderRadius: "5px",
+              boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              "& > *": {
+                flex: 1,
+                margin: "0 5px",
+              },
+            }}
+          >
+            <TeamTitle selectedRole={selectedRole} />
+            <SelectRole setSelectedRole={setSelectedRole} />
+          </Box>
+
+          <Box
+            sx={{
+              height: "200px",
+              backgroundColor: colors.grey[200],
+              borderRadius: "5px",
+              margin: "15px 0",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
+            }}
+          >
+            <Box>
+              <SliderTeam selectedRole={selectedRole} idProject={idProject} />
+            </Box>
+          </Box>
+
+          <Box
+            display="flex"
+            justifyContent="flexStart"
+            flexDirection="column"
+            height="200px"
+            sx={{ paddingTop: "0.2em" }}
+          >
+            <Paper
+              elevation="10"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                height: "50px",
+                borderRadius: "5px",
+                width: "100%",
+                padding: "10px",
+                background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+                textAlign: "center",
+              }}
+            >
+              <Typography
+                variant="h4"
+                color="text.primary"
+                fontWeight="bold"
+                letterSpacing="0.15em"
+              >
+                TASK LIST
+              </Typography>
+            </Paper>
+            <Box
+              display="flex"
+              justifyContent="center"
+              overflow="auto"
+              m="0.5em"
+              sx={{ height: "400px" }}
+            >
+              <UserTask idProject={idProject} />
+            </Box>
+          </Box>
+
+          <Paper
+            elevation="10"
+            sx={{
+              mt: "10px",
+              background: colors.grey[300],
+              borderRadius: "5px",
+              p: "1em",
+            }}
+          >
+            <Box display="flex" justifyContent="space-between">
+              <Paper
+                elevation="10"
+                display="flex"
+                justifyContent="center"
+                sx={{
+                  mb: "1em",
+                  background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+                  borderRadius: "5px",
+                  p: "1rem",
+                  minHeight: "15px",
+                  width: "50%",
+                  textAlign: "center",
+                }}
+              >
+                <Typography variant="h4" color={colors.grey[300]}>
+                  YOUR NOTES
+                </Typography>
+              </Paper>
+              <AddNote handleAddNote={addNote} />
+            </Box>
+            <Paper elevation="10" sx={{ borderRadius: "5px" }}>
+              <SearchBar handleSearchNote={setSearchText} />
+            </Paper>
+            <Paper
+              elevation="10"
+              sx={{ borderRadius: "5px", background: colors.primary[500] }}
+            >
+              <NoteList
+                notes={notes.filter(
+                  (note) =>
+                    typeof note.description === "string" &&
+                    note.description.toLocaleLowerCase().includes(searchText)
+                )}
+                handleDeleteNote={deleteNote}
+              />
+            </Paper>
+          </Paper>
+        </Grid>
+      </Grid>
+      <Grid xs={12} lg={4} md={6} sm={12}>
+        <DashBoardCalendar />
+      </Grid>
+      <Grid xs={12} lg={3} sm={12}>
+        <Box
+          sx={{
+            mt: "10px",
+            boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
+            borderRadius: "5px",
+          }}
+        >
           <SelectProject
             handleProjectSelect={handleProjectSelect}
             setIdProject={setIdProject}
             setSelectedProjectName={setSelectedProjectName}
           />
         </Box>
-      </Grid>
-      <Grid
-        display="flex "
-        justifyContent="flexStart"
-        flexDirection="column"
-        item
-        xs={5}
-        sx={{ pt: "1em" }}
-      >
-        <Grid
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
+        <Box
           sx={{
-            height: "50px",
+            mt: "20px",
+            boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
             borderRadius: "5px",
-            width: "100%",
-            marginBottom: "1em",
           }}
         >
-          <Grid
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            width="100%"
-            sx={{
-              backgroundColor: colors.grey[300],
-              height: "70px",
-              borderRadius: "5px",
-              p: "0 5px",
-            }}
-          >
-            <Paper elevation="10">
-              <TeamTitle selectedRole={selectedRole} />
-            </Paper>
-            <Paper
-              sx={{
-                borderRadius: "5px",
-                width: "100%",
-              }}
-            >
-              <SelectRole setSelectedRole={setSelectedRole} />
-            </Paper>
-          </Grid>
-        </Grid>
-        <Paper
-          elevation="10"
-          sx={{ padding: "1em", backgroundColor: colors.grey[300] }}
-        >
-          <SliderTeam selectedRole={selectedRole} idProject={idProject} />
-        </Paper>
+          <ProjectTitle selectedProjectName={selectedProjectName} />
+        </Box>
         <Box
-          display="flex"
-          justifyContent="flexStart"
-          flexDirection="column"
-          height="200px"
-          sx={{ paddingTop: "0.2em" }}
+          sx={{
+            mt: "20px",
+            backgroundColor: colors.grey[200],
+            borderRadius: "5px",
+            p: "0.5em",
+          }}
         >
-          <Paper
-            elevation="10"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
+          <PieChart />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Box
             sx={{
-              height: "50px",
-              borderRadius: "5px",
-              width: "100%",
-              padding: "10px",
               background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+              width: "100%",
               textAlign: "center",
+              borderRadius: "5px",
+              mt: "0.5em",
+              p: "0.5em 0",
+              boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
             }}
           >
             <Typography
               variant="h4"
-              color="text.primary"
+              color={colors.grey[100]}
               fontWeight="bold"
               letterSpacing="0.15em"
             >
-              TASK LIST
+              Project Task List
             </Typography>
-          </Paper>
+          </Box>
           <Box
-            display="flex"
-            justifyContent="center"
-            overflow="auto"
-            m="0.5em"
-            sx={{ height: "400px" }}
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <UserTask idProject={idProject} />
+            <ProjectTaskList idProject={idProject} />
           </Box>
         </Box>
-        <Paper
-          elevation="10"
-          sx={{
-            mt: "10px",
-            background: colors.grey[300],
-            borderRadius: "5px",
-            p: "1em",
-          }}
-        >
-          <Box display="flex" justifyContent="space-between">
-            <Paper
-              elevation="10"
-              display="flex"
-              justifyContent="center"
-              sx={{
-                mb: "1em",
-                background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
-                borderRadius: "5px",
-                p: "1rem",
-                minHeight: "15px",
-                width: "50%",
-                textAlign: "center",
-              }}
-            >
-              <Typography variant="h4" color={colors.grey[300]}>
-                YOUR NOTES
-              </Typography>
-            </Paper>
-            <AddNote handleAddNote={addNote} />
-          </Box>
-          <Paper elevation="10" sx={{ borderRadius: "5px" }}>
-            <SearchBar handleSearchNote={setSearchText} />
-          </Paper>
-          <Paper
-            elevation="10"
-            sx={{ borderRadius: "5px", background: colors.primary[500] }}
-          >
-            <NoteList
-              notes={notes.filter(
-                (note) =>
-                  typeof note.description === "string" &&
-                  note.description.toLocaleLowerCase().includes(searchText)
-              )}
-              handleDeleteNote={deleteNote}
-            />
-          </Paper>
-        </Paper>
-      </Grid>
-      <Grid
-        xs={4}
-        display="flex"
-        justifyContent="center"
-        flexDirection="column"
-        sx={{
-          background: colors.grey[300],
-          borderRadius: "5px",
-        }}
-      >
-        <DashBoardCalendar />
-      </Grid>
-      <Grid
-        xs={3}
-        display="flex"
-        justifyContent="flexStart"
-        flexDirection="column"
-        alignItems="center"
-        sx={{ border: 1, borderRadius: "5px" }}
-      >
-        <Paper
-          elevation="10"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            borderRadius: "5px",
-            height: "100px",
-            width: "100%",
-            padding: "10px",
-            backgroundColor: colors.grey[500],
-          }}
-        >
-          <ProjectTitle selectedProjectName={selectedProjectName} />
-        </Paper>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ borderBottom: 1, paddingBottom: "10px", width: "100%" }}
-        >
-          <PieChart />
-        </Box>
-        <Paper
-          elevation="10"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            height: "50px",
-            borderRadius: "5px",
-            width: "90%",
-            marginTop: "10px",
-            padding: "10px",
-            background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            variant="h4"
-            color={colors.grey[500]}
-            fontWeight="bold"
-            letterSpacing="0.15em"
-          >
-            Project Task List
-          </Typography>
-        </Paper>
-
-        <ProjectTaskList idProject={idProject} />
       </Grid>
     </Grid>
   );

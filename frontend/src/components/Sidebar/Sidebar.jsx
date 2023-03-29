@@ -126,7 +126,6 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
-  // Appel à l'API pour afficher l'utilisateur connecté
   const userId = localStorage.getItem("userId");
 
   const getUser = () => {
@@ -452,7 +451,6 @@ export default function MiniDrawer() {
           </ListItem>
         </List>
         <Divider sx={{ backgroundColor: colors.safran[400] }} />
-
         <List
           sx={{
             display: "flex",

@@ -61,7 +61,14 @@ function DashBoardCalendar() {
   };
 
   return (
-    <Box m="20px">
+    <Box
+      m="10px"
+      sx={{
+        backgroundColor: colors.grey[200],
+        p: "0 0.3em 0.3em 0.3em",
+        borderRadius: "5px",
+      }}
+    >
       <Header
         title="CALENDAR"
         sx={{
@@ -163,6 +170,11 @@ function DashBoardCalendar() {
           backgroundColor={colors.primary[400]}
           p="15px"
           borderRadius="4px"
+          sx={{
+            width: "100%",
+            boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
+            pb: "1em",
+          }}
         >
           <Typography variant="h5">Events</Typography>
           <List>
@@ -172,7 +184,7 @@ function DashBoardCalendar() {
                 sx={{
                   backgroundColor: colors.safran[500],
                   margin: "10px 0",
-                  borderRadius: "2px",
+                  borderRadius: "5px",
                 }}
               >
                 <ListItemText

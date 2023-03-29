@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Paper, Box, useTheme, Typography } from "@mui/material";
+import { Box, useTheme, Typography } from "@mui/material";
 import axios from "axios";
 import { tokens } from "../../theme";
 
@@ -37,54 +37,55 @@ function ProjectTaskList({ idProject }) {
   }, [idProject]);
 
   return (
-    <Paper
+    // <Box
+    //   sx={{
+    //     height: "100%",
+    //     borderRadius: "5px",
+    //     width: "90%",
+    //     marginTop: "10px",
+    //     textAlign: "center",
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     justifyContent: "flex-start",
+    //     alignItems: "center",
+    //     pt: "0.5em",
+    //   }}
+    // >
+    <Box
       sx={{
-        height: "100%",
-        borderRadius: "5px",
-        width: "90%",
-        marginTop: "10px",
-        textAlign: "center",
-        backgroundColor: colors.grey[500],
+        width: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        pt: "0.5em",
+        justifyContent: "center",
+        background: colors.primary[400],
+        borderRadius: "5px",
+        boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
+        mt: "1em",
       }}
     >
-      <Paper
-        elevation="10"
-        sx={{
-          width: "90%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          background: colors.primary[500],
-        }}
-      >
-        {tasks.map((task) => (
-          <Box
-            key={task.id}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{
-              p: 2,
-              backgroundColor: colors.grey[500],
-              borderRadius: "5px",
-              m: "1em",
-            }}
-          >
-            <Typography sx={{ color: colors.primary[500] }}>
-              {task.name}
-            </Typography>
-            <Typography sx={{ color: colors.primary[500] }}>
-              {task.status}
-            </Typography>
-          </Box>
-        ))}
-      </Paper>
-    </Paper>
+      {tasks.map((task) => (
+        <Box
+          key={task.id}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{
+            p: 2,
+            backgroundColor: colors.grey[500],
+            borderRadius: "5px",
+            m: "1em",
+          }}
+        >
+          <Typography sx={{ color: colors.primary[500] }}>
+            {task.name}
+          </Typography>
+          <Typography sx={{ color: colors.primary[500] }}>
+            {task.status}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
+    // </Box>
   );
 }
 

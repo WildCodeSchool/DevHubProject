@@ -62,7 +62,7 @@ function SelectProject({
         fullWidth
         size="small"
         style={{
-          backgroundColor: colors.primary[500],
+          background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
           border: "none",
           width: "100%",
           borderRadius: "5px",

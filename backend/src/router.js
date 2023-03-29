@@ -45,8 +45,13 @@ const noteControllers = require("./controllers/noteControllers");
 router.get("/notes", noteControllers.browse);
 router.get("/notes/:id", noteControllers.read);
 router.put("/notes/:id", noteControllers.edit);
-router.post("/notes", noteControllers.add);
+router.post("/notes/user/:userId", noteControllers.add);
 router.delete("/notes/:id", noteControllers.destroy);
+router.delete(
+  "/notes/:noteId/user/:userId",
+  noteControllers.deleteNoteByUserId
+);
+router.get("/notes/user/:userId", noteControllers.findByUserId);
 
 const taskControllers = require("./controllers/taskControllers");
 
