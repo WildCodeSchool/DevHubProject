@@ -6,7 +6,6 @@ import {
   Modal,
   TextField,
   useTheme,
-  Paper,
 } from "@mui/material";
 import axios from "axios";
 import { tokens } from "../../theme";
@@ -73,12 +72,9 @@ function AddNote({ handleAddNote }) {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Paper
-      elevation="10"
+    <Box
       sx={{
-        height: "60px",
         borderRadius: "5px",
-        backgroundColor: "transparent",
       }}
     >
       <Button
@@ -86,8 +82,7 @@ function AddNote({ handleAddNote }) {
           background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
           mb: "10px",
           borderRadius: "5px",
-          p: "1rem",
-          height: "100%",
+          p: "0.5rem",
         }}
         variant="contained"
         onClick={handleOpen}
@@ -138,7 +133,7 @@ function AddNote({ handleAddNote }) {
           </Box>
         </Box>
       </Modal>
-    </Paper>
+    </Box>
   );
 }
 

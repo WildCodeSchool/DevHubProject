@@ -208,14 +208,14 @@ function Dashboard() {
                   mb: "1em",
                   background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
                   borderRadius: "5px",
-                  p: "1rem",
+                  p: "0.5rem",
                   minHeight: "15px",
                   width: "50%",
                   textAlign: "center",
                 }}
               >
                 <Typography variant="h4" color={colors.grey[300]}>
-                  YOUR NOTES
+                  NOTES
                 </Typography>
               </Paper>
               <AddNote handleAddNote={addNote} />
