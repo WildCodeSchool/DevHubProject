@@ -19,26 +19,24 @@ function SelectRole({ setSelectedRole }) {
   const getRole = () => {
     const token = localStorage.getItem("token");
     axios
-
       .get(`http://localhost:5000/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => response.data)
-
       .then((data) => {
         const roles = new Set();
         data.forEach((roleMap) => {
           roles.add(roleMap.user_role);
         });
-        setRoleList(Array.from(roles));
+        setRoleList(["", ...Array.from(roles)]);
       });
   };
 
   useEffect(() => {
     getRole();
-  }, [role]);
+  }, []);
 
   return (
     <Paper
@@ -58,6 +56,24 @@ function SelectRole({ setSelectedRole }) {
           borderRadius: "5px",
         }}
       >
+        <MenuItem
+          sx={{
+            backgroundColor: colors.primary[500],
+            "&:hover": {
+              backgroundColor: colors.primary[400],
+            },
+            "&.Mui-selected": {
+              backgroundColor: colors.primary[700],
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: colors.primary[400],
+            },
+          }}
+          key=""
+          value=""
+        >
+          Tous les rôles
+        </MenuItem>
         {roleList.map((roleMap) => (
           <MenuItem
             sx={{
