@@ -37,20 +37,6 @@ function ProjectTaskList({ idProject }) {
   }, [idProject]);
 
   return (
-    // <Box
-    //   sx={{
-    //     height: "100%",
-    //     borderRadius: "5px",
-    //     width: "90%",
-    //     marginTop: "10px",
-    //     textAlign: "center",
-    //     display: "flex",
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "center",
-    //     pt: "0.5em",
-    //   }}
-    // >
     <Box
       sx={{
         width: "100%",
