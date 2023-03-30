@@ -1,20 +1,33 @@
-import Slider from "react-slick";
-// import { Box } from "@mui/material";
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+import { Box } from "@mui/material";
 import Note from "../Note/Note";
+import "swiper/swiper-bundle.css";
 
 function NotesList({ notes, handleDeleteNote }) {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Slider>
-      {notes.map((note) => (
-        <Note
-          key={note.id}
-          description={note.description}
-          date={note.date}
-          handleDeleteNote={handleDeleteNote}
-        />
-      ))}
-    </Slider>
+    <Box>
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={10}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination]}
+        className="mySwiper"
+      >
+        {notes.map((note) => (
+          <SwiperSlide key={note.id}>
+            <Note
+              description={note.description}
+              date={note.date}
+              handleDeleteNote={handleDeleteNote}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Box>
   );
 }
 

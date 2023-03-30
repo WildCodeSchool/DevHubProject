@@ -4,7 +4,6 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  Paper,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -34,54 +33,70 @@ function UserCard(props) {
 
   return (
     <Box
-      display="flex"
-      justify-content="center"
-      sx={{ width: "180px", height: "200px" }}
+      sx={{
+        width: "100%",
+        height: "250px",
+        p: "0.8em",
+        display: "flex",
+        justifyContent: "center",
+      }}
     >
-      <Box>
-        <Paper
-          elevation="10"
-          sx={{
-            height: "180px",
-            width: "100%",
-            background: colors.primary[400],
-            mt: "10px",
-          }}
-        >
-          <CardActionArea>
-            <Box display="flex" justifyContent="center">
-              <CardMedia
-                sx={{
-                  pt: "0.5em",
-                  cursor: "pointer",
-                  borderRadius: "50%",
-                  width: "40%",
-                  height: "40%",
-                }}
-                component="img"
-                image={userProfileImage}
-                alt={`${firstname} ${lastname}`}
-              />
-            </Box>
-            <CardContent
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
+          borderRadius: "5px",
+          textAlign: "center",
+          boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
+        }}
+      >
+        <CardActionArea>
+          <Box display="flex" justifyContent="center">
+            <CardMedia
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                p: "0.5em",
+                cursor: "pointer",
+                borderRadius: "50%",
+                width: "60%",
+                height: "60%",
               }}
+              component="img"
+              image={userProfileImage}
+              alt={`${firstname} ${lastname}`}
+            />
+          </Box>
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textDecoration: "none",
+            }}
+          >
+            <Typography
+              gutterBottom
+              variant="h4"
+              component="div"
+              sx={{ color: colors.grey[100] }}
             >
-              <Typography gutterBottom variant="h4" component="div">
-                {`${firstname} ${lastname}`}
-              </Typography>
-              <Typography variant="body2" color="text.safran">
-                {email}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {role}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Paper>
+              {`${firstname} ${lastname}`}
+            </Typography>
+            <Typography variant="body2" sx={{ color: colors.safran[500] }}>
+              {email}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              sx={{ color: colors.grey[100] }}
+            >
+              {role}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
       </Box>
     </Box>
   );

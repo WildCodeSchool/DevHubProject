@@ -139,19 +139,14 @@ function Dashboard() {
 
           <Box
             sx={{
-              height: "200px",
+              height: "280px",
               backgroundColor: colors.grey[200],
               borderRadius: "5px",
               margin: "15px 0",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
               boxShadow: "0px 7px 8px 0px rgba(83,84,85,0.65)",
             }}
           >
-            <Box>
-              <SliderTeam selectedRole={selectedRole} idProject={idProject} />
-            </Box>
+            <SliderTeam selectedRole={selectedRole} idProject={idProject} />
           </Box>
 
           <Box
@@ -213,14 +208,14 @@ function Dashboard() {
                   mb: "1em",
                   background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
                   borderRadius: "5px",
-                  p: "1rem",
+                  p: "0.5rem",
                   minHeight: "15px",
                   width: "50%",
                   textAlign: "center",
                 }}
               >
                 <Typography variant="h4" color={colors.grey[300]}>
-                  YOUR NOTES
+                  NOTES
                 </Typography>
               </Paper>
               <AddNote handleAddNote={addNote} />
