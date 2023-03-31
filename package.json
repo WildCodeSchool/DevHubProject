@@ -39,6 +39,7 @@
     "@mui/material": "^5.11.10",
     "@mui/styled-engine-sc": "^5.11.9",
     "formik": "^2.2.9",
+    "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
     "react-router-dom": "^6.9.0",
     "react-toastify": "^9.1.1",

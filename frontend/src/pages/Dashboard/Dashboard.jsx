@@ -273,7 +273,7 @@ function Dashboard() {
             p: "0.5em",
           }}
         >
-          <PieChart />
+          <PieChart idProject={idProject} />
         </Box>
         <Box
           sx={{

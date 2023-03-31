@@ -51,7 +51,6 @@ function SendMessage(props) {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const { onSendMessage, firstname, lastname } = props;
-  console.info(firstname, lastname, "nom et prénom");
 
   const handleOpen = (event) => {
     setOpen(true);
@@ -64,19 +63,29 @@ function SendMessage(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!subject || !message) {
+      return;
+    }
     console.info(`Sending message ${message} to "${firstname} ${lastname}"`);
     onSendMessage(subject, message);
+    setSubject("");
+    setMessage("");
     handleClose();
     setSnackbarMessage("Message sent with success");
     setSnackbarSeverity("success");
     setSnackbarOpen(true);
   };
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
   };
+
+  console.info("subject", subject);
+  console.info("message", message);
+  console.info("snackbarOpen", snackbarOpen);
 
   return (
     <div className={classes.root}>
@@ -125,33 +134,33 @@ function SendMessage(props) {
             >
               Send
             </Button>
+            <Snackbar
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              open={snackbarOpen}
+              autoHideDuration={6000}
+              onClose={handleSnackbarClose}
+              message={snackbarMessage}
+              action={
+                <IconButton
+                  size="small"
+                  aria-label="close"
+                  color="inherit"
+                  onClick={handleSnackbarClose}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              }
+              severity={snackbarSeverity}
+            />
             <Button variant="outlined" color="secondary" onClick={handleClose}>
               Cancel
             </Button>
           </form>
         </div>
       </Modal>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        message={snackbarMessage}
-        action={
-          <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={handleSnackbarClose}
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        }
-        severity={snackbarSeverity}
-      />
     </div>
   );
 }
