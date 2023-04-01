@@ -66,7 +66,7 @@ function ProjectTaskList({ idProject }) {
             {task.name}
           </Typography>
           <Typography sx={{ color: colors.primary[500] }}>
-            {task.status}
+            {task.state}
           </Typography>
         </Box>
       ))}
