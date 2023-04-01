@@ -7,7 +7,7 @@ import Header from "../../components/Header/Header";
 import { tokens } from "../../theme";
 import ProfileCard from "../../components/MyProfile/ProfileCard/ProfileCard";
 import AccountCard from "../../components/MyProfile/AccountCard/AccountCard";
-// import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import ProjectsList from "../../components/ProjectsList/ProjectsList";
 
 function MyProfile() {
   const theme = useTheme();
@@ -154,6 +154,7 @@ function MyProfile() {
           </Grid>
           <Grid item xs={12} md={5} sx={{ mt: "20px" }}>
             <ProfileCard />
+            <ProjectsList />
           </Grid>
         </Grid>
       </Grid>

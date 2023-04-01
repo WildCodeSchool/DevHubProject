@@ -42,7 +42,7 @@ function ProfileCard() {
                   borderStyle: "none",
                   transform: "translate(-50%, -30%)",
                   transition: "all 0.15s ease 0s",
-                  boxShadow: "0px 0px 2rem rgba(136, 152, 170, 0.15",
+                  boxShadow: "0px 0px 2rem rgba(136, 152, 170, 0.15)",
                 }}
               />
             </Box>
@@ -62,7 +62,7 @@ function ProfileCard() {
               cursor: "pointer",
               textDecoration: "none",
               position: "relative",
-              letterSpacing: "0.025em",
+              letterSpacing: "0.05em",
               border: `1px solid ${colors.grey[500]} `,
               background: colors.grey[200],
               color: colors.primary[500],
@@ -71,19 +71,19 @@ function ProfileCard() {
               },
             }}
           >
-            Connect
+            Edit
           </Button>
           <Button
             sx={{
               cursor: "pointer",
               textDecoration: "none",
               position: "relative",
-              letterSpacing: "0.025em",
+              letterSpacing: "0.05em",
               border: `1px solid ${colors.primary[500]} `,
               background: colors.primary[500],
-              color: colors.grey[500],
+              color: colors.grey[200],
               "&:hover": {
-                background: colors.grey[500],
+                background: colors.grey[200],
                 color: colors.primary[500],
               },
             }}

@@ -49,7 +49,7 @@ export const tokens = (mode) => ({
           900: "#2a2a2a",
         },
 
-        menthe: {
+        green: {
           100: "#ccece2",
           200: "#99d9c6",
           300: "#66c7a9",
@@ -60,7 +60,7 @@ export const tokens = (mode) => ({
           800: "#00402d",
           900: "#002016",
         },
-        RougeAssistance: {
+        red: {
           100: "#f7ccd6",
           200: "#ee99ad",
           300: "#e66684",
@@ -71,7 +71,7 @@ export const tokens = (mode) => ({
           800: "#550014",
           900: "#2b000a",
         },
-        bleuPrimaire: {
+        blue: {
           100: "#cce7f4",
           200: "#99ceea",
           300: "#66b6df",
@@ -152,7 +152,7 @@ export const tokens = (mode) => ({
           800: "#ecedee",
           900: "#f6f6f6",
         },
-        menthe: {
+        green: {
           100: "#002016",
           200: "#00402d",
           300: "#006143",
@@ -163,7 +163,7 @@ export const tokens = (mode) => ({
           800: "#99d9c6",
           900: "#ccece2",
         },
-        RougeAssistance: {
+        red: {
           100: "#2b000a",
           200: "#550014",
           300: "#80001e",
@@ -174,7 +174,7 @@ export const tokens = (mode) => ({
           800: "#ee99ad",
           900: "#f7ccd6",
         },
-        bleuPrimaire: {
+        blue: {
           100: "#001b28",
           200: "#003551",
           300: "#005079",
