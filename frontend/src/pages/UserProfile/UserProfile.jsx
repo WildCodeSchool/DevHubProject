@@ -68,6 +68,12 @@ function UserProfile() {
   }, [id]);
 
   console.info(projects);
+  const handleSendMessage = (subject, message) => {
+    // Envoyer le message ici
+    console.info(
+      `Sending message with subject "${subject}" and content "${message}"`
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -101,7 +107,11 @@ function UserProfile() {
             justifyContent="center"
             className={classes.sendMessageContainer}
           >
-            <SendMessage firstname={user.firstname} lastname={user.lastname} />
+            <SendMessage
+              onSendMessage={handleSendMessage}
+              firstname={user.firstname}
+              lastname={user.lastname}
+            />
           </Grid>
         </Grid>
       </Grid>
