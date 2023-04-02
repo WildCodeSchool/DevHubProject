@@ -9,6 +9,7 @@ import {
   FormGroup,
   FormLabel,
   FormControl,
+  Input,
   Divider,
   TextField,
   Button,
@@ -21,67 +22,86 @@ function AccountCard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [isEditing, setIsEditing] = useState(false);
-
-  const [userInfo, setUserInfo] = useState({
-    firstname: "",
-    lastname: "",
-    phone: "",
-    city: "",
-    email: "",
-    github_page: "",
-    biography: "",
-  });
-
   const { id } = useParams();
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/users/${id}`);
-      setUserInfo(response.data);
-    } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des informations de l'utilisateur:",
-        error
-      );
-    }
-  };
+  const [editing, setEditing] = useState(false);
+
+  const [currentUser, setCurrentUser] = useState([]);
+  const [userUpdate, setUserUpdate] = useState({});
+
   useEffect(() => {
-    fetchUserInfo();
-  }, []);
+    const token = localStorage.getItem("token");
+    axios
+      .get(`http://localhost:5000/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.info(response.data);
+        setCurrentUser(response.data);
+        setUserUpdate(response.data);
+        console.info(currentUser, "current");
+      })
+      .catch((error) => {
+        console.info(error);
+      });
+  }, [id]);
 
-  const saveProfileChanges = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const url = `http://localhost:5000/users/${id}`;
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.put(url, userInfo, { headers });
-      setUserInfo(response.data);
-    } catch (error) {
-      console.error("Error saving profile changes:", error);
-    }
-  };
-  useEffect(() => {
-    if (!isEditing) {
-      fetchUserInfo();
-    }
-  }, [isEditing]);
-
-  const handleEditClick = () => {
-    if (isEditing) {
-      saveProfileChanges();
-    }
-    setIsEditing(!isEditing);
-  };
-
-  const handleInputChange = (event, field) => {
-    setUserInfo({ ...userInfo, [field]: event.target.value });
+  const handleEdit = () => {
+    setEditing(!editing);
+    setUserUpdate({
+      firstname: currentUser.firstname,
+      lastname: currentUser.lastname,
+      phone: currentUser.phone,
+      city: currentUser.city,
+      email: currentUser.email,
+      github_page: currentUser.github_page,
+      biography: currentUser.biography,
+    });
   };
 
-  const handleCancelEdit = () => {
-    setIsEditing(false);
+  const handleSaveChanges = (event) => {
+    event.preventDefault();
+
+    const token = localStorage.getItem("token");
+    axios
+      .put(`http://localhost:5000/users/${id}`, userUpdate, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setCurrentUser(response.data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleFirstnameChange = (event) => {
+    setUserUpdate({ ...userUpdate, firstname: event.target.value });
+  };
+
+  const handleLastnameChange = (event) => {
+    setUserUpdate({ ...userUpdate, lastname: event.target.value });
+  };
+
+  const handlePhoneChange = (event) => {
+    setUserUpdate({ ...userUpdate, phone: event.target.value });
+  };
+
+  const handleCityChange = (event) => {
+    setUserUpdate({ ...userUpdate, city: event.target.value });
+  };
+
+  const handleEmailChange = (event) => {
+    setUserUpdate({ ...userUpdate, email: event.target.value });
+  };
+
+  const handleGithubChange = (event) => {
+    setUserUpdate({ ...userUpdate, github_page: event.target.value });
+  };
+
+  const handleBiographyChange = (event) => {
+    setUserUpdate({ ...userUpdate, biography: event.target.value });
   };
 
   return (
@@ -115,18 +135,16 @@ function AccountCard() {
             >
               USER INFORMATION
             </Typography>
-
-            {isEditing ? (
-              <Button sx={theme.cancelButton} onClick={handleCancelEdit}>
-                Cancel
+            {editing ? (
+              <Button onClick={handleSaveChanges} sx={theme.editButton}>
+                save
               </Button>
-            ) : null}
-
-            <Button sx={theme.editButton} onClick={handleEditClick}>
-              {isEditing ? "Save" : "Edit"}
-            </Button>
+            ) : (
+              <Button onClick={handleEdit} sx={theme.editButton}>
+                edit
+              </Button>
+            )}
           </Box>
-
           <Box sx={{ pl: "1.5rem" }}>
             <Grid
               container
@@ -153,23 +171,15 @@ function AccountCard() {
                       width: "100%",
                     }}
                   >
-                    <TextField
+                    <Input
                       type="text"
-                      value={userInfo.firstname || ""}
-                      style={{
-                        ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                      value={currentUser.firstname}
+                      onChange={handleFirstnameChange}
+                      readOnly={!editing}
+                      sx={{
+                        ...theme.inputStyle,
+                        backgroundColor: editing ? colors.grey[300] : "#ffffff",
                       }}
-                      inputProps={{
-                        style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
-                      }}
-                      fullWidth
-                      size="small"
-                      variant="outlined"
-                      onChange={(event) =>
-                        handleInputChange(event, "firstname")
-                      }
                     />
                   </FormControl>
                 </FormGroup>
@@ -192,21 +202,15 @@ function AccountCard() {
                       width: "100%",
                     }}
                   >
-                    <TextField
+                    <Input
                       type="text"
-                      value={userInfo.lastname || ""}
-                      style={{
-                        ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                      value={currentUser.lastname}
+                      onChange={handleLastnameChange}
+                      readOnly={!editing}
+                      sx={{
+                        ...theme.inputStyle,
+                        backgroundColor: editing ? colors.grey[300] : "#ffffff",
                       }}
-                      inputProps={{
-                        style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
-                      }}
-                      fullWidth
-                      size="small"
-                      variant="outlined"
-                      onChange={(event) => handleInputChange(event, "lastname")}
                     />
                   </FormControl>
                 </FormGroup>
@@ -237,21 +241,15 @@ function AccountCard() {
                       width: "100%",
                     }}
                   >
-                    <TextField
+                    <Input
                       type="text"
-                      value={userInfo.phone || ""}
-                      style={{
-                        ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                      value={currentUser.phone}
+                      onChange={handlePhoneChange}
+                      readOnly={!editing}
+                      sx={{
+                        ...theme.inputStyle,
+                        backgroundColor: editing ? colors.grey[300] : "#ffffff",
                       }}
-                      inputProps={{
-                        style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
-                      }}
-                      fullWidth
-                      size="small"
-                      variant="outlined"
-                      onChange={(event) => handleInputChange(event, "phone")}
                     />
                   </FormControl>
                 </FormGroup>
@@ -274,21 +272,15 @@ function AccountCard() {
                       width: "100%",
                     }}
                   >
-                    <TextField
+                    <Input
                       type="text"
-                      value={userInfo.city || ""}
-                      style={{
-                        ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                      value={currentUser.city}
+                      onChange={handleCityChange}
+                      readOnly={!editing}
+                      sx={{
+                        ...theme.inputStyle,
+                        backgroundColor: editing ? colors.grey[300] : "#ffffff",
                       }}
-                      inputProps={{
-                        style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
-                      }}
-                      fullWidth
-                      size="small"
-                      variant="outlined"
-                      onChange={(event) => handleInputChange(event, "city")}
                     />
                   </FormControl>
                 </FormGroup>
@@ -336,21 +328,15 @@ function AccountCard() {
                       width: "100%",
                     }}
                   >
-                    <TextField
+                    <Input
                       type="text"
-                      value={userInfo.email || ""}
-                      style={{
-                        ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                      value={currentUser.email}
+                      onChange={handleEmailChange}
+                      readOnly={!editing}
+                      sx={{
+                        ...theme.inputStyle,
+                        backgroundColor: editing ? colors.grey[300] : "#ffffff",
                       }}
-                      inputProps={{
-                        style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
-                      }}
-                      fullWidth
-                      size="small"
-                      variant="outlined"
-                      onChange={(event) => handleInputChange(event, "email")}
                     />
                   </FormControl>
                 </FormGroup>
@@ -373,23 +359,15 @@ function AccountCard() {
                       width: "100%",
                     }}
                   >
-                    <TextField
+                    <Input
                       type="text"
-                      value={userInfo.github_page || ""}
-                      style={{
-                        ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                      value={currentUser.github_page}
+                      onChange={handleGithubChange}
+                      readOnly={!editing}
+                      sx={{
+                        ...theme.inputStyle,
+                        backgroundColor: editing ? colors.grey[300] : "#ffffff",
                       }}
-                      inputProps={{
-                        style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
-                      }}
-                      fullWidth
-                      size="small"
-                      variant="outlined"
-                      onChange={(event) =>
-                        handleInputChange(event, "github_page")
-                      }
                     />
                   </FormControl>
                 </FormGroup>
@@ -440,30 +418,25 @@ function AccountCard() {
                   >
                     <TextField
                       sx={{
-                        boxShadow: "0px 1px 3px rgba(50,50,93,0.15)",
+                        boxShadow: "0px 1px 3px  rgba(50,50,93,0.15)",
                         boxSizing: "border-box",
                         position: "relative",
                         display: "flex",
                         flexWrap: "wrap",
                         alignItems: "center",
                         width: "100%",
+                        backgroundColor: editing ? colors.grey[300] : "#ffffff",
                         borderRadius: "5px",
                         cursor: "text",
                         border: "0",
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
                       }}
-                      inputProps={{
-                        style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
-                      }}
-                      value={userInfo.biography || ""}
+                      inputProps={{ style: { color: colors.primary[500] } }}
+                      value={currentUser.biography}
+                      onChange={handleBiographyChange}
                       multiline
                       rows={4}
                       fullWidth
                       variant="outlined"
-                      onChange={(event) =>
-                        handleInputChange(event, "biography")
-                      }
                     />
                   </FormControl>
                 </FormGroup>

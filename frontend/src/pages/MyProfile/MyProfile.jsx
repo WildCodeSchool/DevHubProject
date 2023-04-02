@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Grid, useTheme } from "@mui/material";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+// import axios from "axios";
+// import { useParams } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import { tokens } from "../../theme";
 import ProfileCard from "../../components/MyProfile/ProfileCard/ProfileCard";
@@ -12,10 +12,10 @@ import ProjectsList from "../../components/ProjectsList/ProjectsList";
 function MyProfile() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [projects, setProjects] = useState([]);
+  // const [projects, setProjects] = useState([]);
 
-  const [currentUser, setCurrentUser] = useState([]);
-  const [userUpdate, setUserUpdate] = useState([currentUser]);
+  // const [currentUser, setCurrentUser] = useState([]);
+  // const [userUpdate, setUserUpdate] = useState([currentUser]);
 
   // const [firstname, setFirstname] = useState([currentUser]);
   // const [lastname, setLastname] = useState([currentUser]);
@@ -26,35 +26,35 @@ function MyProfile() {
   // const [biography, setBiography] = useState([currentUser]);
   // const [isEditing, setIsEditing] = useState(false);
 
-  const { id } = useParams();
+  // const { id } = useParams();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get(`http://localhost:5000/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.info(response.data);
-        setCurrentUser(response.data);
-        console.info(currentUser, "current");
-      })
-      .catch((error) => {
-        console.info(error);
-      });
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   axios
+  //     .get(`http://localhost:5000/users/${id}`, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     })
+  //     .then((response) => {
+  //       console.info(response.data);
+  //       setCurrentUser(response.data);
+  //       console.info(currentUser, "current");
+  //     })
+  //     .catch((error) => {
+  //       console.info(error);
+  //     });
 
-    axios
-      .get(`http://localhost:5000/users/${id}/projects`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.info(response.data);
-        setProjects(response.data);
-      })
-      .catch((error) => {
-        console.info(error);
-      });
-  }, [id]);
+  //   axios
+  //     .get(`http://localhost:5000/users/${id}/projects`, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     })
+  //     .then((response) => {
+  //       console.info(response.data);
+  //       setProjects(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.info(error);
+  //     });
+  // }, [id]);
 
   // const handleSaveChanges = (event) => {
   //   event.preventDefault();

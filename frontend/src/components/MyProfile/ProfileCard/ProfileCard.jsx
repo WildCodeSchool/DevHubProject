@@ -71,23 +71,6 @@ function ProfileCard() {
               },
             }}
           >
-            Edit
-          </Button>
-          <Button
-            sx={{
-              cursor: "pointer",
-              textDecoration: "none",
-              position: "relative",
-              letterSpacing: "0.05em",
-              border: `1px solid ${colors.primary[500]} `,
-              background: colors.primary[500],
-              color: colors.grey[200],
-              "&:hover": {
-                background: colors.grey[200],
-                color: colors.primary[500],
-              },
-            }}
-          >
             Message
           </Button>
         </CardContent>
