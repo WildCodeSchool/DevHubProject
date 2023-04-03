@@ -120,12 +120,12 @@ function ProfileCard() {
               {userData
                 ? `${userData.firstname} ${userData.lastname}`
                 : "Loading ..."}
-              <span style={{ fontWeight: "300" }}>, 31</span>
             </Typography>
 
             <Typography
               variant="h5"
               sx={{
+                pt: "0.8em",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -133,11 +133,11 @@ function ProfileCard() {
               }}
             >
               <LocationOnIcon sx={{ color: colors.safran[500], mr: "0.5em" }} />
-              {userData ? userData.city : "Loading ..."}, USA{" "}
+              {userData ? userData.city : "Loading ..."}
             </Typography>
             <Typography
               variant="h5"
-              sx={{ m: "2rem 0 0.5rem 0", color: colors.grey[200] }}
+              sx={{ m: "1.5rem 0 0.5rem 0", color: colors.grey[200] }}
             >
               {userData ? userData.user_role : "Loading ..."}
             </Typography>

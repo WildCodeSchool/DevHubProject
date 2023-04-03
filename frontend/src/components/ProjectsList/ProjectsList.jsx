@@ -11,36 +11,10 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material";
-// import { red, amber, blue, green } from "@mui/material/colors";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import { tokens } from "../../theme";
-
-const rows = [
-  {
-    nomProjet: "Projet 1",
-    description: "Description du projet 1",
-    status: "En cours",
-    progression: 60,
-  },
-  {
-    nomProjet: "Projet 2",
-    description: "Description du projet 2",
-    status: "Terminé",
-    progression: 100,
-  },
-  {
-    nomProjet: "Projet 3",
-    description: "Description du projet 3",
-    status: "En pause",
-    progression: 45,
-  },
-  {
-    nomProjet: "Projet 4",
-    description: "Description du projet 4",
-    status: "En pause",
-    progression: 25,
-  },
-];
 
 function ProgressionBar({ value }) {
   const theme = useTheme();
@@ -78,6 +52,25 @@ function ProjectsList() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [projects, setProjects] = useState([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .get(`http://localhost:5000/users/${id}/projects`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.info(response.data);
+        setProjects(response.data);
+      })
+      .catch((error) => {
+        console.info(error);
+      });
+  }, []);
+
   return (
     <Paper
       elevation="1"
@@ -98,13 +91,21 @@ function ProjectsList() {
         sx={{
           display: "flex",
           alignItems: "center",
-          backgroundColor: "#ffffff",
+          background: `linear-gradient(to left, ${colors.primary[400]}, ${colors.primary[700]})`,
           borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
           letterSpacing: "0.05rem",
+          color: colors.safran[500],
+          textTransform: "uppercase",
+          borderTopLeftRadius: "5px",
+          borderTopRightRadius: "5px",
         }}
       />
       <TableContainer
-        sx={{ backgroundColor: colors.grey[200] }}
+        sx={{
+          backgroundColor: colors.grey[200],
+          borderBottomLeftRadius: "5px",
+          borderBottomRightRadius: "5px",
+        }}
         component={Paper}
       >
         <Table aria-label="simple table">
@@ -125,23 +126,23 @@ function ProjectsList() {
             </TableRow>
           </TableHead>
           <TableBody sx={{ backgroundColor: "#ffffff" }}>
-            {rows.map((row) => (
-              <TableRow key={row.nomProjet}>
+            {projects.map((project) => (
+              <TableRow key={project.name}>
                 <TableCell
                   sx={{ color: colors.primary[500] }}
                   component="th"
                   scope="row"
                 >
-                  {row.nomProjet}
+                  {project.name}
                 </TableCell>
                 <TableCell sx={{ color: colors.primary[500] }}>
-                  {row.description}
+                  {project.description}
                 </TableCell>
                 <TableCell sx={{ color: colors.primary[500] }}>
-                  {row.status}
+                  {project.state}
                 </TableCell>
                 <TableCell sx={{ color: colors.primary[500] }}>
-                  <ProgressionBar value={row.progression} />
+                  <ProgressionBar value={project.progress} />
                 </TableCell>
               </TableRow>
             ))}
