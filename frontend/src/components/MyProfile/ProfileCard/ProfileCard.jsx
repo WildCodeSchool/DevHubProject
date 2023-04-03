@@ -57,7 +57,12 @@ function ProfileCard() {
       >
         <Grid container sx={{ display: "flex", flexWrap: "wrap" }}>
           <Grid xs={12} sx={{ flexGrow: "0", maxWidth: "25%", p: "0 15px" }}>
-            <Box sx={{ position: "relative" }}>
+            <Box
+              sx={{
+                position: "relative",
+                display: { xs: "none", sm: "flex", md: "flex" },
+              }}
+            >
               <img
                 src={user}
                 alt="Profile picture of user"

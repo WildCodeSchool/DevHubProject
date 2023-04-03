@@ -420,7 +420,10 @@ function AccountCard() {
                 flexWrap: "wrap",
               }}
             >
-              <Grid xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
+              <Grid
+                xs={12}
+                sx={{ maxWidth: "50%", p: "0 15px", maxWidth: { xs: "100%" } }}
+              >
                 <FormGroup
                   sx={{
                     display: "flex",

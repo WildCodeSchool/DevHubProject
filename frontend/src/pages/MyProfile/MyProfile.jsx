@@ -26,7 +26,10 @@ function MyProfile() {
             subtitle="Welcome to your profile page"
           />
         </Grid>
-        <Grid xs={12} sx={{ display: "flex" }}>
+        <Grid
+          xs={12}
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
+        >
           <Grid item xs={12} md={7} sx={{ mt: "20px" }}>
             <AccountCard />
           </Grid>
