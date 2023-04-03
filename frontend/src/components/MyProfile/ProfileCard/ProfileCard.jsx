@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Grid,
   useTheme,
@@ -10,12 +10,40 @@ import {
   Button,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import { tokens } from "../../../theme";
 import user from "../../../assets/john-doe.jpg";
 
 function ProfileCard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [userData, setUserData] = useState(null);
+
+  const { id } = useParams();
+
+  const fetchUserData = async () => {
+    const token = localStorage.getItem("token");
+    const url = `http://localhost:5000/users/${id}`;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    try {
+      const response = await axios.get(url, { headers });
+      setUserData(response.data);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des données de l'utilisateur :",
+        error
+      );
+    }
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <Grid xs={12} item sx={{ m: "20px" }}>
       <Paper
@@ -50,7 +78,7 @@ function ProfileCard() {
         </Grid>
         <CardContent
           sx={{
-            p: "1.5rem",
+            p: "1rem",
             display: "flex",
             textAlign: "center",
             border: "0px !important",
@@ -78,7 +106,7 @@ function ProfileCard() {
           <Box
             sx={{
               textAlign: "center",
-              pt: "40px",
+              pt: "60px",
             }}
           >
             <Typography
@@ -89,7 +117,9 @@ function ProfileCard() {
                 color: colors.grey[200],
               }}
             >
-              John Doe
+              {userData
+                ? `${userData.firstname} ${userData.lastname}`
+                : "Loading ..."}
               <span style={{ fontWeight: "300" }}>, 31</span>
             </Typography>
 
@@ -103,13 +133,13 @@ function ProfileCard() {
               }}
             >
               <LocationOnIcon sx={{ color: colors.safran[500], mr: "0.5em" }} />
-              SanFrancisco, USA
+              {userData ? userData.city : "Loading ..."}, USA{" "}
             </Typography>
             <Typography
               variant="h5"
-              sx={{ m: "3rem 0 0.5rem 0", color: colors.grey[200] }}
+              sx={{ m: "2rem 0 0.5rem 0", color: colors.grey[200] }}
             >
-              Gestionnaire de projets - Développeur Full Stack
+              {userData ? userData.user_role : "Loading ..."}
             </Typography>
           </Box>
         </CardContent>
