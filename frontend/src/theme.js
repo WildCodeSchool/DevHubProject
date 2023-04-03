@@ -332,7 +332,7 @@ export const themeSettings = (mode) => {
       background: colors.primary[500],
       color: colors.grey[100],
       "&:hover": {
-        background: colors.grey[200],
+        background: colors.grey[100],
         color: colors.primary[500],
       },
     },
