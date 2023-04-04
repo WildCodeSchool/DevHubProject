@@ -11,10 +11,15 @@ import {
   Paper,
   Select,
   Typography,
+  useTheme,
 } from "@material-ui/core";
 import { ExpandMore, Delete } from "@material-ui/icons";
+import { tokens } from "../../theme";
+import Header from "../../components/Header/Header";
 
 function Mailbox() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [messages, setMessages] = useState([]);
   const [filteredMessages, setFilteredMessages] = useState([]);
   const [filterOption, setFilterOption] = useState("date");
@@ -41,14 +46,25 @@ function Mailbox() {
     switch (event.target.value) {
       case "date":
         setFilteredMessages(
-          [...messages].sort((a, b) => new Date(b.date) - new Date(a.date))
+          [...messages].sort(
+            (a, b) => new Date(b.date_sent) - new Date(a.date_sent)
+          )
         );
         break;
       case "author":
         setFilteredMessages(
-          [...messages].sort((a, b) => a.author.localeCompare(b.author))
+          [...messages].sort((a, b) => {
+            if (
+              typeof a.author_id === "string" &&
+              typeof b.author_id === "string"
+            ) {
+              return a.author_id.localeCompare(b.author_id);
+            }
+            return 0;
+          })
         );
         break;
+
       case "title":
         setFilteredMessages(
           [...messages].sort((a, b) => a.title.localeCompare(b.title))
@@ -65,82 +81,105 @@ function Mailbox() {
       await axios.delete(`http://localhost:5000/messages/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      setFilteredMessages(
+        filteredMessages.filter((message) => message.id !== id)
+      );
       const parentElement = event.currentTarget.closest(".MuiGrid-root");
       parentElement.style.display = "none";
     } catch (error) {
       console.error(error);
     }
   };
-  const getRandomColor = () => {
-    const hue = Math.floor(Math.random() * 360);
-    return `hsl(${hue}, 60%, 90%)`;
-  };
 
   return (
-    <Box py={3} style={{ paddingTop: "5%" }}>
-      <Container maxWidth="sm">
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h3">Mailbox</Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Select
-              fullWidth
-              native
-              value={filterOption}
-              onChange={handleFilterChange}
-            >
-              <option value="date">Date</option>
-              <option value="author">Author</option>
-              <option value="title">Title</option>
-            </Select>
-          </Grid>
+    <>
+      <Grid container style={{ paddingTop: "0.5%" }}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            mt: { xs: "60px", sm: "20px", md: "20px" },
+          }}
+        >
+          <Header title="MAILBOX" subtitle="Welcome to the mailbox" />
         </Grid>
-        <Box my={3}>
-          <Grid container spacing={3}>
-            {filteredMessages.map((message) => (
-              <Grid item key={message.id} xs={12}>
-                <Accordion style={{ background: getRandomColor() }}>
-                  <AccordionSummary expandIcon={<ExpandMore />}>
-                    <Typography variant="h6">{message.title}</Typography>
-                    <Typography variant="caption">
-                      {message.author} - {message.date}
-                    </Typography>
-                  </AccordionSummary>
+      </Grid>
 
-                  <AccordionDetails>
-                    <Paper
-                      elevation={3}
-                      style={{ width: "100%", backgroundColor: "#f5f5f5" }}
-                    >
-                      <Box p={3}>
-                        <Typography variant="body1">
-                          {message.content}
-                        </Typography>
-                        <Box display="flex" justifyContent="space-between">
-                          <Typography variant="caption">
-                            {message.author}
-                          </Typography>
-                          <Typography variant="caption">
-                            {message.date}
-                          </Typography>
-                        </Box>
-                        <IconButton
-                          color="secondary"
-                          onClick={() => handleDeleteMessage(message.id)}
-                        >
-                          <Delete />
-                        </IconButton>
-                      </Box>
-                    </Paper>
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            ))}
+      <Box py={3} style={{ paddingTop: "5%" }}>
+        <Container maxWidth="sm">
+          <Grid container spacing={3} alignItems="center">
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h3">Mailbox</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Select
+                fullWidth
+                native
+                value={filterOption}
+                onChange={handleFilterChange}
+              >
+                <option value="date">Date</option>
+                <option value="author">Author</option>
+                <option value="title">Title</option>
+              </Select>
+            </Grid>
           </Grid>
-        </Box>
-      </Container>
-    </Box>
+          <Box my={3}>
+            <Grid container spacing={3}>
+              {filteredMessages.map((message) => (
+                <Grid item key={message.id} xs={12}>
+                  <Accordion style={{ background: colors.grey[700] }}>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                      <Typography variant="h6">{message.title}</Typography>
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                      <Paper
+                        elevation={3}
+                        style={{ width: "100%", backgroundColor: "#ffffff" }}
+                      >
+                        <Box p={3}>
+                          <Typography variant="body1">
+                            {message.content}
+                          </Typography>
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                          >
+                            <Typography
+                              variant="caption"
+                              style={{ marginLeft: "10px" }}
+                            >
+                              Author: {message.author_id}
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              style={{ marginLeft: "40%" }}
+                            >
+                              Date sent: {message.date_sent}
+                            </Typography>
+                          </Box>
+
+                          <IconButton
+                            color="secondary"
+                            onClick={(event) =>
+                              handleDeleteMessage(message.id, event)
+                            }
+                          >
+                            <Delete />
+                          </IconButton>
+                        </Box>
+                      </Paper>
+                    </AccordionDetails>
+                  </Accordion>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 }
 
