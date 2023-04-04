@@ -47,15 +47,12 @@ function SendMessage(props) {
   const [message, setMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const { onSendMessage, firstname, lastname } = props;
-  console.info(firstname, lastname, "nom et prénom");
 
-  const handleOpen = (event) => {
+  const handleOpen = () => {
     setOpen(true);
-    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -64,13 +61,19 @@ function SendMessage(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!subject || !message || !onSendMessage) {
+      return;
+    }
     console.info(`Sending message ${message} to "${firstname} ${lastname}"`);
     onSendMessage(subject, message);
+    setSubject("");
+    setMessage("");
     handleClose();
     setSnackbarMessage("Message sent with success");
     setSnackbarSeverity("success");
-    setSnackbarOpen(true);
+    setSnackbarOpen(true); // ouverture de la snackbar
   };
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -94,7 +97,6 @@ function SendMessage(props) {
         aria-labelledby="send-message-modal-title"
         aria-describedby="send-message-modal-description"
         className={classes.modal}
-        anchorEl={anchorEl}
       >
         <div className={classes.paper}>
           <Typography variant="h6" className={classes.title}>
@@ -103,17 +105,25 @@ function SendMessage(props) {
           <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               id="subject"
-              label="Object"
-              variant="outlined"
+              name="subject"
+              label="Subject"
               value={subject}
               onChange={(event) => setSubject(event.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
             />
             <TextField
               id="message"
+              name="message"
               label="Message"
-              variant="outlined"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
               multiline
               rows={4}
             />
@@ -140,6 +150,7 @@ function SendMessage(props) {
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
         message={snackbarMessage}
+        severity={snackbarSeverity}
         action={
           <IconButton
             size="small"
@@ -150,7 +161,6 @@ function SendMessage(props) {
             <CloseIcon fontSize="small" />
           </IconButton>
         }
-        severity={snackbarSeverity}
       />
     </div>
   );

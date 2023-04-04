@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import Informations from "../../components/Informations/Informations";
 import ProjectsList from "../../components/ProjectsList/ProjectsList";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
+import SendMessage from "../../components/SendMessage/SendMessage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +68,12 @@ function UserProfile() {
   }, [id]);
 
   console.info(projects);
+  const handleSendMessage = (subject, message) => {
+    // Envoyer le message ici
+    console.info(
+      `Sending message with subject "${subject}" and content "${message}"`
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -95,6 +102,17 @@ function UserProfile() {
               </Grid>
             </Grid>
           </Paper>
+          <Grid
+            container
+            justifyContent="center"
+            className={classes.sendMessageContainer}
+          >
+            <SendMessage
+              onSendMessage={handleSendMessage}
+              firstname={user.firstname}
+              lastname={user.lastname}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </div>
