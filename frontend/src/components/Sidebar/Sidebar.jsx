@@ -27,6 +27,7 @@ import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomi
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { useNavigate } from "react-router-dom";
+import Image from "mui-image";
 import { tokens } from "../../theme";
 
 const drawerWidth = 240;
@@ -243,6 +244,7 @@ export default function MiniDrawer() {
                   )}
                 </IconButton>
               </Box>
+
               <Typography
                 variant="h4"
                 color={colors.safran[500]}
@@ -250,6 +252,11 @@ export default function MiniDrawer() {
               >
                 DevHub Project
               </Typography>
+              <Image
+                src="../../src/assets/logo/DevHubLogo.png"
+                height={40}
+                width={40}
+              />
             </Box>
           </MenuItem>
           {/* USER */}
@@ -455,6 +462,7 @@ export default function MiniDrawer() {
             </ListItemButton>
           </ListItem>
         </List>
+
         <Divider sx={{ backgroundColor: colors.safran[400] }} />
         <List
           sx={{

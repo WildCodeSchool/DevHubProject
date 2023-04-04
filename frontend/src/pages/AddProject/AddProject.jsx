@@ -11,7 +11,10 @@ function AddProject() {
   const [projectName, setProjectName] = useState("");
 
   return (
-    <Box m="20px" sx={{ marginTop: { xs: "60px", sm: "40px", md: "40px" } }}>
+    <Box
+      mr="20px"
+      sx={{ marginTop: { xs: "50px", sm: "40px", md: "40px", lg: "20px" } }}
+    >
       <Header title="CREATE PROJECT" subtitle="Create your new project here" />
       <Box display="flex" flexDirection="column" height="100%" my="12px">
         <Box

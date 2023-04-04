@@ -27,31 +27,31 @@ function TaskCard(props) {
   return (
     <Card>
       <CardContent sx={{ maxWidth: "30em" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography sx={{ fontWeight: "bold", color: colors.primary[200] }}>
+        <Box style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography sx={{ color: colors.primary[200] }}>
             Task name : {name}
           </Typography>
           <Typography color="secondary">Status : {state}</Typography>
-        </div>
-        <div
+        </Box>
+        <Box
           style={{
             display: "flex",
             justifyContent: "space-between",
-            color: "grey",
+            color: colors.primary[500],
           }}
         >
           <Typography maxwidth="120">{description}</Typography>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        </Box>
+        <Box style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography>Type : {type}</Typography>
-        </div>
+        </Box>
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Box style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography>Start : {startDate}</Typography>
           <Typography>End : {endDate}</Typography>
-        </div>
+        </Box>
 
-        <div
+        <Box
           style={{
             display: "flex",
             flexDirection: "column",
@@ -60,7 +60,7 @@ function TaskCard(props) {
             mt: 1,
           }}
         >
-          <div
+          <Box
             style={{
               display: "flex",
               flexDirection: "row",
@@ -71,7 +71,7 @@ function TaskCard(props) {
           >
             <Typography>Progress :</Typography>
             <Typography>{progress}%</Typography>
-          </div>
+          </Box>
 
           <Box
             sx={{
@@ -95,13 +95,13 @@ function TaskCard(props) {
             />
             <Box sx={{ ml: 1, Width: 70 }} />
             <Typography
-              variant="body2"
+              variant="h6"
               sx={{ textAlign: "right", color: getColor(progress) }}
             >
               {`${progress}%`}
             </Typography>
           </Box>
-        </div>
+        </Box>
       </CardContent>
     </Card>
   );

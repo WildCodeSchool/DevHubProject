@@ -3,7 +3,7 @@ import { Box, useTheme, Typography } from "@mui/material";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-function ProjectTaskList({ idProject }) {
+function UserTaskList({ idProject }) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -14,7 +14,7 @@ function ProjectTaskList({ idProject }) {
       const token = localStorage.getItem("token");
       const response = await axios.get(
         `http://localhost:5000/projects/${idProject}/tasks`,
-        console.info(idProject, "project id"),
+        console.info(idProject, "projet id"),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,20 +38,6 @@ function ProjectTaskList({ idProject }) {
   }, [idProject]);
 
   return (
-    // <Box
-    //   sx={{
-    //     height: "100%",
-    //     borderRadius: "5px",
-    //     width: "90%",
-    //     marginTop: "10px",
-    //     textAlign: "center",
-    //     display: "flex",
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "center",
-    //     pt: "0.5em",
-    //   }}
-    // >
     <Box
       sx={{
         width: "100%",
@@ -86,8 +72,6 @@ function ProjectTaskList({ idProject }) {
         </Box>
       ))}
     </Box>
-    // </Box>
   );
 }
-
-export default ProjectTaskList;
+export default UserTaskList;

@@ -66,6 +66,7 @@ function SelectProject({
           border: "none",
           width: "100%",
           borderRadius: "5px",
+          color: colors.grey[200],
         }}
       >
         {projectList.map((project) => (

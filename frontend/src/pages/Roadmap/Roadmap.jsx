@@ -4,9 +4,10 @@ import { Box } from "@mui/material";
 // import AddTaskRoadmap from "@components/TodoList/HandleSubmitTaskRoadmap";
 import UserTask from "@components/UserTask/UserTask";
 import SelectProject from "@components/SelectProject/SelectProject";
-import ProjectTaskList from "@components/ProjectTaskList/ProjectTaskList";
+// import ProjectTaskList from "@components/ProjectTaskList/ProjectTaskList";
 import Header from "../../components/Header/Header";
-// import Task from "../../components/Task/Task";
+// import ProjectsList from "@components/ProjectsList/ProjectsList";
+// import UserTaskList from "@components/TaskList/TaskList";
 
 function Roadmap() {
   const [selectedProjectName, setSelectedProjectName] = useState("");
@@ -17,7 +18,10 @@ function Roadmap() {
   };
 
   return (
-    <Box m="20" sx={{ marginTop: { xs: "60px", sm: "40px", md: "40px" } }}>
+    <Box
+      mr="10px"
+      sx={{ marginTop: { xs: "50px", sm: "40px", md: "40px", lg: "20px" } }}
+    >
       <Header title="ROADMAP" subtitle="Tasks list" />
       <Box display="flex" flexDirection="column" height="100%" my="16px">
         <SelectProject
@@ -25,11 +29,10 @@ function Roadmap() {
           setIdProject={setIdProject}
           setSelectedProjectName={setSelectedProjectName}
         />
-        <UserTask />
-        <ProjectTaskList idProject={idProject} />
+        <UserTask idProject={idProject} />
+        {/* <UserTaskList idProject={idProject}/> */}
       </Box>
     </Box>
   );
 }
-
 export default Roadmap;

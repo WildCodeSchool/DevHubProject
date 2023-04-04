@@ -1,5 +1,6 @@
 import { Typography, Paper, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
+import LogoDevHub from "@assets/logo/DevHubLogo.png";
 import { tokens } from "../../theme";
 
 function Header({ title, subtitle }) {
@@ -14,6 +15,7 @@ function Header({ title, subtitle }) {
         p: "0.5rem 2rem",
       }}
     >
+      <img src={LogoDevHub} alt="logo DevHub" width="100px" height="100px" />
       <Typography
         variant="h2"
         color={colors.grey[100]}

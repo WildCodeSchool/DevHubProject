@@ -22,7 +22,6 @@ function ProjectsList({ projects }) {
         <Box sx={{ mt: 3 }}>
           {projects &&
             projects.map((project) => {
-              console.info(project);
               return (
                 <Box
                   key={project.id}
