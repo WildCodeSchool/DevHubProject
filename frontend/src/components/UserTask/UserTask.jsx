@@ -13,7 +13,7 @@ function UserTask({ idProject }) {
     console.info(idProject, "PROJECT ID ON getTaskByUserId");
     axios
       .get(
-        `http://localhost:5000/users/${userId}/projects/${idProject}/tasks`,
+        `http://localhost:5000/users/${userId}/projects/${idProject}/tasks/`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -54,6 +54,7 @@ function UserTask({ idProject }) {
           <CardContent sx={{ marginBottom: "5px" }}>
             <TaskList
               key={task.id}
+              id={task.id}
               name={task.name}
               state={task.state}
               progress={task.progress}
