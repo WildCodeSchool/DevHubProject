@@ -11,17 +11,16 @@ import {
   FormControl,
   Divider,
   TextField,
-  Button,
 } from "@mui/material";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { tokens } from "../../../theme";
 
-function AccountCard() {
+function UserAccountCard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     firstname: "",
@@ -49,40 +48,6 @@ function AccountCard() {
   useEffect(() => {
     fetchUserInfo();
   }, []);
-
-  const saveProfileChanges = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const url = `http://localhost:5000/users/${id}`;
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.put(url, userInfo, { headers });
-      setUserInfo(response.data);
-    } catch (error) {
-      console.error("Error saving profile changes:", error);
-    }
-  };
-  useEffect(() => {
-    if (!isEditing) {
-      fetchUserInfo();
-    }
-  }, [isEditing]);
-
-  const handleEditClick = () => {
-    if (isEditing) {
-      saveProfileChanges();
-    }
-    setIsEditing(!isEditing);
-  };
-
-  const handleInputChange = (event, field) => {
-    setUserInfo({ ...userInfo, [field]: event.target.value });
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
 
   return (
     <Grid xs={12} item sx={{ mt: "20px" }}>
@@ -115,16 +80,6 @@ function AccountCard() {
             >
               USER INFORMATION
             </Typography>
-
-            {isEditing ? (
-              <Button sx={theme.cancelButton} onClick={handleCancelEdit}>
-                Cancel
-              </Button>
-            ) : null}
-
-            <Button sx={theme.editButton} onClick={handleEditClick}>
-              {isEditing ? "Save" : "Edit"}
-            </Button>
           </Box>
 
           <Box sx={{ pl: "1.5rem" }}>
@@ -135,7 +90,7 @@ function AccountCard() {
                 flexWrap: "nowrap",
               }}
             >
-              <Grid xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
+              <Grid item xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
                 <FormGroup
                   sx={{
                     display: "flex",
@@ -167,14 +122,11 @@ function AccountCard() {
                       fullWidth
                       size="small"
                       variant="outlined"
-                      onChange={(event) =>
-                        handleInputChange(event, "firstname")
-                      }
                     />
                   </FormControl>
                 </FormGroup>
               </Grid>
-              <Grid xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
+              <Grid item xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
                 <FormGroup
                   sx={{
                     display: "flex",
@@ -206,7 +158,6 @@ function AccountCard() {
                       fullWidth
                       size="small"
                       variant="outlined"
-                      onChange={(event) => handleInputChange(event, "lastname")}
                     />
                   </FormControl>
                 </FormGroup>
@@ -251,12 +202,11 @@ function AccountCard() {
                       fullWidth
                       size="small"
                       variant="outlined"
-                      onChange={(event) => handleInputChange(event, "phone")}
                     />
                   </FormControl>
                 </FormGroup>
               </Grid>
-              <Grid xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
+              <Grid item xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
                 <FormGroup
                   sx={{
                     display: "flex",
@@ -288,7 +238,6 @@ function AccountCard() {
                       fullWidth
                       size="small"
                       variant="outlined"
-                      onChange={(event) => handleInputChange(event, "city")}
                     />
                   </FormControl>
                 </FormGroup>
@@ -318,7 +267,7 @@ function AccountCard() {
                 flexWrap: "nowrap",
               }}
             >
-              <Grid xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
+              <Grid item xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
                 <FormGroup
                   sx={{
                     display: "flex",
@@ -350,12 +299,11 @@ function AccountCard() {
                       fullWidth
                       size="small"
                       variant="outlined"
-                      onChange={(event) => handleInputChange(event, "email")}
                     />
                   </FormControl>
                 </FormGroup>
               </Grid>
-              <Grid xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
+              <Grid item xs={12} sx={{ maxWidth: "50%", p: "0 15px" }}>
                 <FormGroup
                   sx={{
                     display: "flex",
@@ -387,9 +335,6 @@ function AccountCard() {
                       fullWidth
                       size="small"
                       variant="outlined"
-                      onChange={(event) =>
-                        handleInputChange(event, "github_page")
-                      }
                     />
                   </FormControl>
                 </FormGroup>
@@ -421,6 +366,7 @@ function AccountCard() {
               }}
             >
               <Grid
+                item
                 xs={12}
                 sx={{ Width: "50%", p: "0 15px", maxWidth: { xs: "100%" } }}
               >
@@ -464,9 +410,6 @@ function AccountCard() {
                       rows={4}
                       fullWidth
                       variant="outlined"
-                      onChange={(event) =>
-                        handleInputChange(event, "biography")
-                      }
                     />
                   </FormControl>
                 </FormGroup>
@@ -479,4 +422,4 @@ function AccountCard() {
   );
 }
 
-export default AccountCard;
+export default UserAccountCard;

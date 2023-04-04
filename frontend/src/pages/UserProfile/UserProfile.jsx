@@ -1,117 +1,43 @@
-import { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper } from "@material-ui/core";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import Informations from "../../components/Informations/Informations";
-import ProjectsList from "../../components/ProjectsList/ProjectsList";
-import UserAvatar from "../../components/UserAvatar/UserAvatar";
-import SendMessage from "../../components/SendMessage/SendMessage";
+/* eslint-disable no-unused-vars */
+// import { useState, useEffect } from "react";
+import { Grid, useTheme } from "@mui/material";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    paddingTop: "2%",
-    marginBottom: 0,
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    height: "75vh",
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  },
-  userImageContainer: {
-    marginBottom: theme.spacing(5),
-  },
-  sendMessageContainer: {
-    marginTop: theme.spacing(2),
-    display: "flex",
-    justifyContent: "center",
-  },
-}));
+import Header from "../../components/Header/Header";
+import { tokens } from "../../theme";
+import UserProfileCard from "../../components/UserProfile/UserProfileCard/UserProfilCard";
+import UserAccountCard from "../../components/UserProfile/UserAccountCard/UserAccountCard";
+import ProjectsList from "../../components/ProjectsList/ProjectsList";
 
 function UserProfile() {
-  const classes = useStyles();
-  const [user, setUser] = useState({});
-  const [projects, setProjects] = useState([]);
-
-  const { id } = useParams();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get(`http://localhost:5000/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.info(response.data);
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.info(error);
-      });
-
-    axios
-      .get(`http://localhost:5000/users/${id}/projects`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.info(response.data);
-        setProjects(response.data);
-      })
-      .catch((error) => {
-        console.info(error);
-      });
-  }, [id]);
-
-  console.info(projects);
-  const handleSendMessage = (subject, message) => {
-    // Envoyer le message ici
-    console.info(
-      `Sending message with subject "${subject}" and content "${message}"`
-    );
-  };
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <Grid container direction="column" spacing={3}>
-            <Grid item>
-              <UserAvatar />
-              <Informations
-                firstname={user.firstname}
-                lastname={user.lastname}
-                phone={user.phone}
-                city={user.city}
-                email={user.email}
-                githubPage={user.github_page}
-                biography={user.biography}
-              />
-            </Grid>
-          </Grid>
+    <div>
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            mt: { xs: "60px", sm: "20px", md: "20px" },
+          }}
+        >
+          <Header
+            title="USER PROFILE"
+            subtitle="Welcome to User profile page"
+          />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper className={classes.paper}>
-            <Grid container direction="column" spacing={3}>
-              <Grid item>
-                <ProjectsList projects={projects} />
-              </Grid>
-            </Grid>
-          </Paper>
-          <Grid
-            container
-            justifyContent="center"
-            className={classes.sendMessageContainer}
-          >
-            <SendMessage
-              onSendMessage={handleSendMessage}
-              firstname={user.firstname}
-              lastname={user.lastname}
-            />
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
+        >
+          <Grid item xs={12} md={7} sx={{ mt: "20px" }}>
+            <UserAccountCard />
+          </Grid>
+          <Grid item xs={12} md={5} sx={{ mt: "20px" }}>
+            <UserProfileCard />
+            <ProjectsList />
           </Grid>
         </Grid>
       </Grid>
