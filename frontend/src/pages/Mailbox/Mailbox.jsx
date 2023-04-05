@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -157,7 +158,10 @@ function Mailbox() {
                               variant="caption"
                               style={{ marginLeft: "40%" }}
                             >
-                              Date sent: {message.date_sent}
+                              Date sent:{" "}
+                              {new Date(message.date_sent).toLocaleDateString(
+                                "fr-FR"
+                              )}
                             </Typography>
                           </Box>
 
