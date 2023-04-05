@@ -4,13 +4,16 @@ import { Box } from "@mui/material";
 // import AddTaskRoadmap from "@components/TodoList/HandleSubmitTaskRoadmap";
 import UserTask from "@components/UserTask/UserTask";
 import SelectProject from "@components/SelectProject/SelectProject";
-// import ProjectTaskList from "@components/ProjectTaskList/ProjectTaskList";
-import Header from "../../components/Header/Header";
+import ProjectTaskList from "@components/ProjectTaskList/ProjectTaskList";
 // import ProjectsList from "@components/ProjectsList/ProjectsList";
-// import UserTaskList from "@components/TaskList/TaskList";
+// import PieChart from "@components/PieChart/PieChart";
+import SliderTeam from "@components/SliderTeam/SliderTeam";
+import SelectRole from "@components/SelectRole/SelectRole";
+import Header from "../../components/Header/Header";
 
 function Roadmap() {
   const [selectedProjectName, setSelectedProjectName] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
   const [idProject, setIdProject] = useState("");
   console.info(selectedProjectName);
   const handleProjectSelect = (ProjectName) => {
@@ -30,6 +33,10 @@ function Roadmap() {
           setSelectedProjectName={setSelectedProjectName}
         />
         <UserTask idProject={idProject} />
+        {/* <PieChart idProject={idProject} /> */}
+        <ProjectTaskList idProject={idProject} />
+        <SelectRole setSelectedRole={setSelectedRole} />
+        <SliderTeam selectedRole={selectedRole} idProject={idProject} />
         {/* <UserTaskList idProject={idProject}/> */}
       </Box>
     </Box>

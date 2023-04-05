@@ -89,9 +89,7 @@ function TaskList(props) {
                     p: "1%",
                   },
                 }}
-              >
-                {name}
-              </TextField>
+              />
               <TextField
                 defaultValue={state}
                 placeholder={state}
@@ -99,9 +97,7 @@ function TaskList(props) {
                 variant="outlined"
                 disabled
                 isEditable={false}
-              >
-                {state}
-              </TextField>
+              />
             </Box>
             <Box
               style={{
@@ -124,9 +120,7 @@ function TaskList(props) {
                     color: colors.primary[500],
                   },
                 }}
-              >
-                {description}
-              </TextField>
+              />
             </Box>
             <Box
               style={{
@@ -148,9 +142,7 @@ function TaskList(props) {
                     color: colors.primary[500],
                   },
                 }}
-              >
-                {type}
-              </TextField>
+              />
               <TextField
                 defaultValue={startDate}
                 placeholder={startDate}
@@ -163,9 +155,7 @@ function TaskList(props) {
                     color: colors.primary[500],
                   },
                 }}
-              >
-                {startDate}
-              </TextField>
+              />
               <TextField
                 defaultValue={endDate}
                 placeholder={endDate}
@@ -178,9 +168,7 @@ function TaskList(props) {
                     color: colors.primary[500],
                   },
                 }}
-              >
-                {endDate}
-              </TextField>
+              />
               <TextField
                 defaultValue={`${progress}%`}
                 placeholder={`${progress}%`}
