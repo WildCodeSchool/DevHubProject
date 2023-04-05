@@ -96,7 +96,6 @@ function TaskList(props) {
                 label="State"
                 variant="outlined"
                 disabled
-                isEditable={false}
               />
             </Box>
             <Box
