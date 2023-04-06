@@ -49,7 +49,7 @@ function SendMessage({ open, onClose, onSendMessage, firstname, lastname }) {
       >
         <div
           style={{
-            backgroundColor: colors.primary[400],
+            backgroundColor: colors.grey[400],
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
             outline: "none",
@@ -62,7 +62,10 @@ function SendMessage({ open, onClose, onSendMessage, firstname, lastname }) {
           <Typography
             variant="h5"
             component="h2"
-            style={{ marginBottom: theme.spacing(2), color: colors.grey[200] }}
+            style={{
+              marginBottom: theme.spacing(2),
+              color: colors.primary[400],
+            }}
           >
             Send a message to {firstname} {lastname}
           </Typography>
@@ -82,8 +85,17 @@ function SendMessage({ open, onClose, onSendMessage, firstname, lastname }) {
               variant="outlined"
               margin="normal"
               required
+              style={{
+                backgroundColor: "#f5f5f5",
+              }}
               fullWidth
-              style={{ color: colors.grey[200] }}
+              InputLabelProps={{ style: { color: colors.black[700] } }}
+              InputProps={{
+                style: {
+                  color: colors.primary[700],
+                  borderColor: colors.primary[700],
+                },
+              }}
             />
             <TextField
               id="message"
@@ -97,8 +109,15 @@ function SendMessage({ open, onClose, onSendMessage, firstname, lastname }) {
               fullWidth
               multiline
               minRows={4}
+              InputLabelProps={{ style: { color: colors.black[700] } }}
               style={{
-                color: colors.grey[200],
+                backgroundColor: "#f5f5f5",
+              }}
+              InputProps={{
+                style: {
+                  color: colors.black[700],
+                  borderColor: colors.primary[700],
+                },
               }}
             />
             <Button
@@ -118,7 +137,11 @@ function SendMessage({ open, onClose, onSendMessage, firstname, lastname }) {
               variant="outlined"
               color="secondary"
               onClick={handleClose}
-              style={{ marginTop: theme.spacing(1), color: colors.grey[200] }}
+              style={{
+                marginTop: theme.spacing(1),
+                color: colors.black[700],
+                backgroundColor: colors.safran[400],
+              }}
             >
               Cancel
             </Button>

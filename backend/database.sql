@@ -967,121 +967,121 @@ INSERT INTO
         author_id
     )
 VALUES (
-        "Titre 1",
-        "Contenu 1",
+        "Réunion annuelle",
+        "La réunion annuelle aura lieu le 15 juin à 10h dans la salle de conférence.",
         "2023-02-02",
         "Lu",
         1
     ), (
-        "Titre 2",
+        "Mise à jour du système",
         "Contenu 2",
         "2023-02-02",
         "Lu",
         2
     ), (
-        "Titre 3",
+        "Modification des horaires",
         "Contenu 3",
         "2023-02-02",
         "Non Lu",
         3
     ), (
-        "Titre 4",
+        "Nouvelle politique de sécurité",
         "Contenu 4",
         "2023-02-02",
         "Lu",
         4
     ), (
-        "Titre 5",
+        "Fête d'été",
         "Contenu 5",
         "2023-02-02",
         "Non Lu",
         5
     ), (
-        "Titre 6",
+        "Nouvelle embauche",
         "Contenu 6",
         "2023-02-02",
         "Lu",
         6
     ), (
-        "Titre 7",
+        "Vacances d'été",
         "Contenu 7",
         "2023-02-02",
         "Lu",
         7
     ), (
-        "Titre 8",
+        "Formation sur les nouvelles technologies",
         "Contenu 8",
         "2023-02-02",
         "Non Lu",
         8
     ), (
-        "Titre 9",
+        "Nouvelle procédure de commande",
         "Contenu 9",
         "2023-02-02",
         "Lu",
         9
     ), (
-        "Titre 10",
+        "Maintenance du serveur",
         "Contenu 10",
         "2023-02-02",
         "Non Lu",
         10
     ), (
-        "Titre 11",
+        "Réunion de planification",
         "Contenu 11",
         "2023-02-02",
         "Lu",
         11
     ), (
-        "Titre 12",
+        "Nouveau sprint",
         "Contenu 12",
         "2023-02-02",
         "Lu",
         12
     ), (
-        "Titre 13",
+        "Changements dans les exigences du projet",
         "Contenu 13",
         "2023-02-02",
         "Non Lu",
         13
     ), (
-        "Titre 14",
+        "Réunion de suivi du projet",
         "Contenu 14",
         "2023-02-02",
         "Lu",
         14
     ), (
-        "Titre 15",
+        "Nouvelle fonctionnalité pour le projet",
         "Contenu 15",
         "2023-02-02",
         "Non Lu",
         15
     ), (
-        "Titre 16",
+        "Bug critique",
         "Contenu 16",
         "2023-02-02",
         "Lu",
         16
     ), (
-        "Titre 17",
+        "Retard dans le calendrier du projet",
         "Contenu 17",
         "2023-02-02",
         "Lu",
         17
     ), (
-        "Titre 18",
+        "Nouvelle ressource pour le projet",
         "Contenu 18",
         "2023-02-02",
         "Non Lu",
         18
     ), (
-        "Titre 19",
+        "Réunion de fin de projet",
         "Contenu 19",
         "2023-02-02",
         "Lu",
         19
     ), (
-        "Titre 20",
+        "Mise à jour de la documentation du projet",
         "Contenu 20",
         "2023-02-02",
         "Lu",

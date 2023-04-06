@@ -20,8 +20,6 @@ function UserAccountCard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [isEditing] = useState(false);
-
   const [userInfo, setUserInfo] = useState({
     firstname: "",
     lastname: "",
@@ -113,11 +111,11 @@ function UserAccountCard() {
                       value={userInfo.firstname || ""}
                       style={{
                         ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                        backgroundColor: "#ffffff",
                       }}
                       inputProps={{
                         style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
+                        readOnly: true,
                       }}
                       fullWidth
                       size="small"
@@ -149,11 +147,11 @@ function UserAccountCard() {
                       value={userInfo.lastname || ""}
                       style={{
                         ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                        backgroundColor: "#ffffff",
                       }}
                       inputProps={{
                         style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
+                        readOnly: true,
                       }}
                       fullWidth
                       size="small"
@@ -193,11 +191,11 @@ function UserAccountCard() {
                       value={userInfo.phone || ""}
                       style={{
                         ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                        backgroundColor: "#ffffff",
                       }}
                       inputProps={{
                         style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
+                        readOnly: true,
                       }}
                       fullWidth
                       size="small"
@@ -229,11 +227,11 @@ function UserAccountCard() {
                       value={userInfo.city || ""}
                       style={{
                         ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                        backgroundColor: "#ffffff",
                       }}
                       inputProps={{
                         style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
+                        readOnly: true,
                       }}
                       fullWidth
                       size="small"
@@ -290,11 +288,11 @@ function UserAccountCard() {
                       value={userInfo.email || ""}
                       style={{
                         ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                        backgroundColor: "#ffffff",
                       }}
                       inputProps={{
                         style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
+                        readOnly: true,
                       }}
                       fullWidth
                       size="small"
@@ -326,11 +324,11 @@ function UserAccountCard() {
                       value={userInfo.github_page || ""}
                       style={{
                         ...theme.TextFieldStyle,
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                        backgroundColor: "#ffffff",
                       }}
                       inputProps={{
                         style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
+                        readOnly: true,
                       }}
                       fullWidth
                       size="small"
@@ -399,11 +397,11 @@ function UserAccountCard() {
                         borderRadius: "5px",
                         cursor: "text",
                         border: "0",
-                        backgroundColor: isEditing ? "#f5f5f5" : "#ffffff",
+                        backgroundColor: "#ffffff",
                       }}
                       inputProps={{
                         style: { color: colors.primary[500] },
-                        readOnly: !isEditing,
+                        readOnly: true,
                       }}
                       value={userInfo.biography || ""}
                       multiline
