@@ -40,6 +40,7 @@
     "@mui/styled-engine-sc": "^5.11.9",
     "formik": "^2.2.9",
     "material-ui-image": "^3.3.2",
+    "moment": "^2.29.4",
     "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
     "react-router-dom": "^6.9.0",
