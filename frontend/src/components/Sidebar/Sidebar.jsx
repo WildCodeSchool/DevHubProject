@@ -179,7 +179,6 @@ export default function MiniDrawer() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            
             sx={{
               marginRight: 5,
               ...(open && { display: "none" }),

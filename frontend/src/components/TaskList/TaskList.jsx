@@ -6,54 +6,50 @@ import {
   //   FormControl,
   //   InputLabel,
   //   Select,
-  //   FormHelperText,  
+  //   FormHelperText,
   Stack,
-  Button,  
-  Card, 
+  Button,
+  Card,
   CardContent,
   TextField,
-  Paper
+  Paper,
 } from "@mui/material";
+import { styled } from "@mui/system";
 import { tokens } from "../../theme";
 // import Dialog from "@mui/material/Dialog";
 // import DialogActions from "@mui/material/DialogActions";
 // import DialogContent from "@mui/material/DialogContent";
 // import DialogContentText from "@mui/material/DialogContentText";
 // import DialogTitle from "@mui/material/DialogTitle";
-import { styled } from "@mui/system";
-
 
 function TaskList(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isEditable, setIsEditable] = useState(true);
   console.info(isEditable);
-  
+
   const UpdateButton = styled(Button)({
     backgroundColor: colors.safran[500],
-    variant:"contained",
-    color:"black",
+    variant: "contained",
+    color: "black",
   });
   const SaveButton = styled(Button)({
     backgroundColor: colors.red[600],
-    variant:"contained",
-    color:"black",
+    variant: "contained",
+    color: "black",
   });
   const TaskListPaper = styled(Paper)({
-    elevation:"10",
-    marginBottom:"10px",
+    elevation: "10",
+    marginBottom: "10px",
     background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
-        p: "1%",
-      }
-  );
+    p: "1%",
+  });
   const TaskListCardContend = styled(CardContent)({
-    marginBottom:"10px",
+    marginBottom: "10px",
     background: colors.grey[100],
     fontFamily: ["Roboto, Arial", "sans-serif"],
-    width:"100%",
-  }       
-  );
-  
+    width: "100%",
+  });
 
   const {
     name,
@@ -80,7 +76,7 @@ function TaskList(props) {
   };
 
   return (
-    <TaskListPaper >
+    <TaskListPaper>
       <Stack
         sx={{
           justifyContent: "center",
@@ -89,23 +85,27 @@ function TaskList(props) {
           borderRadius: "5px",
           backgroundColor: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
           p: "8px",
-          width:"100%",
+          width: "100%",
         }}
       >
-        <Card 
-        sx={{
-          bgcolor:colors.grey[500],
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          justifyContent: "space-around",
-          alignItems: { xs: "center", md: "space-around" },
-          marginBottom: "1%",
-          width:"100%",
-        }}>
+        <Card
+          sx={{
+            bgcolor: colors.grey[500],
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-around",
+            alignItems: { xs: "center", md: "space-around" },
+            marginBottom: "1%",
+            width: "100%",
+          }}
+        >
           <TaskListCardContend>
             <Box
               style={{ display: "flex", justifyContent: "space-around" }}
-              sx={{ marginBottom: 3, flexDirection: { xs: "column", sm: "row", md: "row" } }}
+              sx={{
+                marginBottom: 3,
+                flexDirection: { xs: "column", sm: "row", md: "row" },
+              }}
             >
               <TextField
                 defaultValue={name}
@@ -115,13 +115,18 @@ function TaskList(props) {
                 fullWidth
                 fontFamily="Roboto, Arial"
                 variant="filled"
-                InputLabelProps={{ style: { color: colors.grey[100],fontFamily:"Roboto, Arial", } }}
+                InputLabelProps={{
+                  style: {
+                    color: colors.grey[100],
+                    fontFamily: "Roboto, Arial",
+                  },
+                }}
                 InputProps={{
                   style: {
                     color: colors.grey[100],
                     background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
                     p: "1%",
-                    fontFamily:"Roboto, Arial",
+                    fontFamily: "Roboto, Arial",
                   },
                 }}
               />
@@ -129,16 +134,16 @@ function TaskList(props) {
                 defaultValue={state}
                 placeholder={state}
                 label="State"
-                variant="outlined"                
+                variant="outlined"
                 disabled
                 fontFamily="Roboto, Arial"
                 InputLabelProps={{ style: { color: colors.primary[500] } }}
                 InputProps={{
                   style: {
-                    color:"colors.grey[100]",
-                    backgroundColor:colors.grey[600],                   
+                    color: "colors.grey[100]",
+                    backgroundColor: colors.grey[600],
                     p: "1%",
-                    fontFamily:"Roboto, Arial",
+                    fontFamily: "Roboto, Arial",
                   },
                 }}
               />
@@ -172,7 +177,7 @@ function TaskList(props) {
                 display: "flex",
                 justifyContent: "space-between",
                 p: "1",
-              }}              
+              }}
               sx={{
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row", md: "row" },
@@ -293,16 +298,18 @@ function TaskList(props) {
                 justifyContent: "space-around",
                 p: "1",
               }}
-              sx={{ marginBottom: 1, flexDirection: { xs: "column", sm: "row", md: "row" } }}
+              sx={{
+                marginBottom: 1,
+                flexDirection: { xs: "column", sm: "row", md: "row" },
+              }}
             >
-               <UpdateButton variant="contained"              
-                onClick={() => setIsEditable(true)}                
+              <UpdateButton
+                variant="contained"
+                onClick={() => setIsEditable(true)}
               >
                 Update
               </UpdateButton>
-              <SaveButton variant="contained">
-                Save Update
-              </SaveButton>
+              <SaveButton variant="contained">Save Update</SaveButton>
             </Box>
           </TaskListCardContend>
         </Card>

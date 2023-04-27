@@ -99,15 +99,20 @@ function Dashboard() {
   };
   const [selectedRole, setSelectedRole] = useState("");
   return (
-    <Grid container sx={{ justifyContent: "space-evenly",
-    marginTop: { xs: "50px", sm: "40px", md: "40px", lg: "20px" } }}>
+    <Grid
+      container
+      sx={{
+        justifyContent: "space-evenly",
+        marginTop: { xs: "50px", sm: "40px", md: "40px", lg: "20px" },
+      }}
+    >
       <Grid
         xs={12}
-        style={{          
+        style={{
           borderRadius: "5px",
-          marginRight:"50px",
-          marginLeft:"40px"         
-        }}        
+          marginRight: "50px",
+          marginLeft: "40px",
+        }}
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
       </Grid>
@@ -117,7 +122,7 @@ function Dashboard() {
           sx={{
             flexDirection: "column",
             justifyContent: "flex-start",
-            mr:"10px",
+            mr: "10px",
           }}
         >
           <Box
@@ -134,7 +139,7 @@ function Dashboard() {
                 flex: 1,
                 margin: "0 5px",
               },
-              flexDirection: { xs:"column", sm:"row"}
+              flexDirection: { xs: "column", sm: "row" },
             }}
           >
             <TeamTitle selectedRole={selectedRole} />
@@ -243,9 +248,8 @@ function Dashboard() {
           </Paper>
         </Grid>
       </Grid>
-      
-      <Grid xs={12} lg={3} md={12} sm={12}
-      >
+
+      <Grid xs={12} lg={3} md={12} sm={12}>
         <Box
           sx={{
             mt: "10px",
@@ -317,7 +321,6 @@ function Dashboard() {
             <ProjectTaskList idProject={idProject} />
           </Box>
         </Box>
-        
       </Grid>
       <Grid xs={12} lg={3} md={12} sm={12}>
         <DashBoardCalendar />

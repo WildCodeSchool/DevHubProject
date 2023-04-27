@@ -66,7 +66,7 @@ function SelectProject({
           width: "100%",
           borderRadius: "5px",
           color: colors.grey[200],
-          padding:"0",
+          padding: "0",
         }}
       >
         {projectList.map((project) => (

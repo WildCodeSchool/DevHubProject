@@ -38,6 +38,7 @@
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.10",
     "@mui/styled-engine-sc": "^5.11.9",
+    "@mui/system": "^5.12.1",
     "formik": "^2.2.9",
     "material-ui-image": "^3.3.2",
     "moment": "^2.29.4",

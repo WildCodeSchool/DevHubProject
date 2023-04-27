@@ -56,7 +56,6 @@ function UserCard(props) {
           <Box display="flex" justifyContent="center">
             <CardMedia
               sx={{
-                
                 cursor: "pointer",
                 borderRadius: "50%",
                 width: "70%",

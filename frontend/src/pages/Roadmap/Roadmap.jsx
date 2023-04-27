@@ -24,7 +24,7 @@ function Roadmap() {
           setIdProject={setIdProject}
           setSelectedProjectName={setSelectedProjectName}
         />
-        <UserTask idProject={idProject} />        
+        <UserTask idProject={idProject} />
       </Box>
     </Box>
   );
