@@ -99,22 +99,25 @@ function Dashboard() {
   };
   const [selectedRole, setSelectedRole] = useState("");
   return (
-    <Grid container sx={{ mt: "10px" }}>
+    <Grid container sx={{ justifyContent: "space-evenly",
+    marginTop: { xs: "50px", sm: "40px", md: "40px", lg: "20px" } }}>
       <Grid
         xs={12}
-        style={{
-          mt: "10px",
+        style={{          
           borderRadius: "5px",
-        }}
+          marginRight:"50px",
+          marginLeft:"40px"         
+        }}        
       >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
       </Grid>
 
-      <Grid lg={5} md={6} sm={12} xs={12}>
+      <Grid lg={5} md={12} sm={12} xs={12}>
         <Grid
           sx={{
             flexDirection: "column",
             justifyContent: "flex-start",
+            mr:"10px",
           }}
         >
           <Box
@@ -131,6 +134,7 @@ function Dashboard() {
                 flex: 1,
                 margin: "0 5px",
               },
+              flexDirection: { xs:"column", sm:"row"}
             }}
           >
             <TeamTitle selectedRole={selectedRole} />
@@ -139,7 +143,7 @@ function Dashboard() {
 
           <Box
             sx={{
-              height: "280px",
+              height: "300px",
               backgroundColor: colors.grey[200],
               borderRadius: "5px",
               margin: "15px 0",
@@ -153,7 +157,7 @@ function Dashboard() {
             display="flex"
             justifyContent="flexStart"
             flexDirection="column"
-            height="200px"
+            height="20%"
             sx={{ paddingTop: "0.2em" }}
           >
             <Paper
@@ -239,10 +243,9 @@ function Dashboard() {
           </Paper>
         </Grid>
       </Grid>
-      <Grid xs={12} lg={4} md={6} sm={12}>
-        <DashBoardCalendar />
-      </Grid>
-      <Grid xs={12} lg={3} sm={12}>
+      
+      <Grid xs={12} lg={3} md={12} sm={12}
+      >
         <Box
           sx={{
             mt: "10px",
@@ -314,6 +317,10 @@ function Dashboard() {
             <ProjectTaskList idProject={idProject} />
           </Box>
         </Box>
+        
+      </Grid>
+      <Grid xs={12} lg={3} md={12} sm={12}>
+        <DashBoardCalendar />
       </Grid>
     </Grid>
   );

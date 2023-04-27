@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent, TextField, Button } from "@material-ui/core";
 import { amber, blue, green, red } from "@mui/material/colors";
 import {
   Box,
@@ -7,9 +6,13 @@ import {
   //   FormControl,
   //   InputLabel,
   //   Select,
-  //   FormHelperText,
-  Paper,
+  //   FormHelperText,  
   Stack,
+  Button,  
+  Card, 
+  CardContent,
+  TextField,
+  Paper
 } from "@mui/material";
 import { tokens } from "../../theme";
 // import Dialog from "@mui/material/Dialog";
@@ -17,12 +20,40 @@ import { tokens } from "../../theme";
 // import DialogContent from "@mui/material/DialogContent";
 // import DialogContentText from "@mui/material/DialogContentText";
 // import DialogTitle from "@mui/material/DialogTitle";
+import { styled } from "@mui/system";
+
 
 function TaskList(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isEditable, setIsEditable] = useState(true);
   console.info(isEditable);
+  
+  const UpdateButton = styled(Button)({
+    backgroundColor: colors.safran[500],
+    variant:"contained",
+    color:"black",
+  });
+  const SaveButton = styled(Button)({
+    backgroundColor: colors.red[600],
+    variant:"contained",
+    color:"black",
+  });
+  const TaskListPaper = styled(Paper)({
+    elevation:"10",
+    marginBottom:"10px",
+    background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
+        p: "1%",
+      }
+  );
+  const TaskListCardContend = styled(CardContent)({
+    marginBottom:"10px",
+    background: colors.grey[100],
+    fontFamily: ["Roboto, Arial", "sans-serif"],
+    width:"100%",
+  }       
+  );
+  
 
   const {
     name,
@@ -49,29 +80,32 @@ function TaskList(props) {
   };
 
   return (
-    <Paper
-      elevation="10"
-      mb="10px"
-      sx={{
-        background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
-        p: "1%",
-      }}
-    >
+    <TaskListPaper >
       <Stack
         sx={{
           justifyContent: "center",
           flexDirection: "column",
           borderColor: "primary",
           borderRadius: "5px",
-          backgroundColor: colors.grey[100],
+          backgroundColor: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
           p: "8px",
+          width:"100%",
         }}
       >
-        <Card>
-          <CardContent>
+        <Card 
+        sx={{
+          bgcolor:colors.grey[500],
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-around",
+          alignItems: { xs: "center", md: "space-around" },
+          marginBottom: "1%",
+          width:"100%",
+        }}>
+          <TaskListCardContend>
             <Box
               style={{ display: "flex", justifyContent: "space-around" }}
-              sx={{ marginBottom: 3 }}
+              sx={{ marginBottom: 3, flexDirection: { xs: "column", sm: "row", md: "row" } }}
             >
               <TextField
                 defaultValue={name}
@@ -79,14 +113,15 @@ function TaskList(props) {
                 label="Task Name"
                 disabled
                 fullWidth
-                color="primary"
+                fontFamily="Roboto, Arial"
                 variant="filled"
-                InputLabelProps={{ style: { color: colors.grey[100] } }}
-                inputProps={{
+                InputLabelProps={{ style: { color: colors.grey[100],fontFamily:"Roboto, Arial", } }}
+                InputProps={{
                   style: {
                     color: colors.grey[100],
                     background: `linear-gradient(to left, ${colors.primary[700]}, ${colors.primary[400]})`,
                     p: "1%",
+                    fontFamily:"Roboto, Arial",
                   },
                 }}
               />
@@ -94,8 +129,18 @@ function TaskList(props) {
                 defaultValue={state}
                 placeholder={state}
                 label="State"
-                variant="outlined"
+                variant="outlined"                
                 disabled
+                fontFamily="Roboto, Arial"
+                InputLabelProps={{ style: { color: colors.primary[500] } }}
+                InputProps={{
+                  style: {
+                    color:"colors.grey[100]",
+                    backgroundColor:colors.grey[600],                   
+                    p: "1%",
+                    fontFamily:"Roboto, Arial",
+                  },
+                }}
               />
             </Box>
             <Box
@@ -113,10 +158,11 @@ function TaskList(props) {
                 disabled
                 fullWidth
                 variant="outlined"
-                inputProps={{
+                InputLabelProps={{ style: { color: colors.primary[500] } }}
+                InputProps={{
                   style: {
-                    backgroundColor: colors.grey[300],
-                    color: colors.primary[500],
+                    backgroundColor: colors.grey[600],
+                    color: colors.grey[100],
                   },
                 }}
               />
@@ -126,8 +172,15 @@ function TaskList(props) {
                 display: "flex",
                 justifyContent: "space-between",
                 p: "1",
+              }}              
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row", md: "row" },
+                justifyContent: "space-around",
+                alignItems: { xs: "center", md: "space-around" },
+                marginBottom: 3,
+                marginTop: "4%",
               }}
-              sx={{ marginBottom: 3 }}
             >
               <TextField
                 defaultValue={type}
@@ -135,10 +188,11 @@ function TaskList(props) {
                 disabled
                 label="Type"
                 variant="outlined"
-                inputProps={{
+                InputLabelProps={{ style: { color: colors.primary[500] } }}
+                InputProps={{
                   style: {
-                    backgroundColor: colors.grey[300],
-                    color: colors.primary[500],
+                    backgroundColor: colors.grey[600],
+                    color: colors.grey[100],
                   },
                 }}
               />
@@ -148,10 +202,11 @@ function TaskList(props) {
                 label="Start Date"
                 variant="outlined"
                 disabled
-                inputProps={{
+                InputLabelProps={{ style: { color: colors.primary[500] } }}
+                InputProps={{
                   style: {
-                    backgroundColor: colors.grey[300],
-                    color: colors.primary[500],
+                    backgroundColor: colors.grey[600],
+                    color: colors.grey[100],
                   },
                 }}
               />
@@ -161,10 +216,11 @@ function TaskList(props) {
                 label="End Date"
                 variant="outlined"
                 disabled
-                inputProps={{
+                InputLabelProps={{ style: { color: colors.primary[500] } }}
+                InputProps={{
                   style: {
-                    backgroundColor: colors.grey[300],
-                    color: colors.primary[500],
+                    backgroundColor: colors.grey[600],
+                    color: colors.grey[100],
                   },
                 }}
               />
@@ -174,10 +230,11 @@ function TaskList(props) {
                 label="Progress"
                 disabled
                 variant="outlined"
-                inputProps={{
+                InputLabelProps={{ style: { color: colors.primary[500] } }}
+                InputProps={{
                   style: {
-                    backgroundColor: colors.grey[300],
-                    color: colors.primary[500],
+                    backgroundColor: colors.grey[600],
+                    color: colors.grey[100],
                   },
                 }}
               >
@@ -236,23 +293,21 @@ function TaskList(props) {
                 justifyContent: "space-around",
                 p: "1",
               }}
-              sx={{ marginBottom: 1 }}
+              sx={{ marginBottom: 1, flexDirection: { xs: "column", sm: "row", md: "row" } }}
             >
-              <Button
-                variant="contained"
-                style={{ backgroundColor: colors.safran[500] }}
-                onClick={() => setIsEditable(true)}
+               <UpdateButton variant="contained"              
+                onClick={() => setIsEditable(true)}                
               >
                 Update
-              </Button>
-              <Button variant="contained" color="secondary">
+              </UpdateButton>
+              <SaveButton variant="contained">
                 Save Update
-              </Button>
+              </SaveButton>
             </Box>
-          </CardContent>
+          </TaskListCardContend>
         </Card>
       </Stack>
-    </Paper>
+    </TaskListPaper>
   );
 }
 export default TaskList;

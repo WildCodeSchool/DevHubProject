@@ -72,7 +72,6 @@ function ProjectTaskList({ idProject }) {
         </Box>
       ))}
     </Box>
-    // </Box>
   );
 }
 

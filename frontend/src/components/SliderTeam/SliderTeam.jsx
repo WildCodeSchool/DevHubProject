@@ -55,6 +55,7 @@ function SliderTeam({ selectedRole, idProject }) {
         }}
         modules={[Pagination]}
         className="mySwiper"
+        
       >
         {filteredUsers.map((user) => {
           return (
