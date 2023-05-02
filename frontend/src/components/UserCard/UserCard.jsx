@@ -35,7 +35,7 @@ function UserCard(props) {
     <Box
       sx={{
         width: "100%",
-        height: "250px",
+        height: "20em",
         p: "0.8em",
         display: "flex",
         justifyContent: "center",
@@ -56,11 +56,10 @@ function UserCard(props) {
           <Box display="flex" justifyContent="center">
             <CardMedia
               sx={{
-                p: "0.5em",
                 cursor: "pointer",
                 borderRadius: "50%",
-                width: "60%",
-                height: "60%",
+                width: "70%",
+                height: "70%",
               }}
               component="img"
               image={userProfileImage}

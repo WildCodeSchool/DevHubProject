@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, CardContent } from "@mui/material";
 import axios from "axios";
-import TaskCard from "../TaskCard/TaskCard";
+import TaskList from "@components/TaskList/TaskList";
 
 const token = localStorage.getItem("token");
 function UserTask({ idProject }) {
@@ -13,7 +13,7 @@ function UserTask({ idProject }) {
     console.info(idProject, "PROJECT ID ON getTaskByUserId");
     axios
       .get(
-        `http://localhost:5000/users/${userId}/projects/${idProject}/tasks`,
+        `http://localhost:5000/users/${userId}/projects/${idProject}/tasks/`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -43,25 +43,25 @@ function UserTask({ idProject }) {
       })
       .catch((error) => console.error(error));
   };
-
   useEffect(() => {
     getTaskByUserId();
   }, [userId, idProject]); // added dependencies
 
   return (
     <Box>
-      {userTasks.map((taskMap) => (
+      {userTasks.map((task) => (
         <Box>
-          <CardContent sx={{ marginBottom: "1%", backgroundColor: "grey" }}>
-            <TaskCard
-              key={taskMap.id}
-              name={taskMap.name}
-              state={taskMap.state}
-              progress={taskMap.progress}
-              description={taskMap.description}
-              startDate={taskMap.task_start_date}
-              endDate={taskMap.task_end_date}
-              type={taskMap.type}
+          <CardContent sx={{ marginBottom: "5px" }}>
+            <TaskList
+              key={task.id}
+              id={task.id}
+              name={task.name}
+              state={task.state}
+              progress={task.progress}
+              description={task.description}
+              startDate={task.task_start_date}
+              endDate={task.task_end_date}
+              type={task.type}
             />
           </CardContent>
         </Box>
