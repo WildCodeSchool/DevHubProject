@@ -74,7 +74,7 @@ function BGHome() {
           <Button
             variant="contained"
             href="/register"
-            sx={{ fontSize: "16px", mr: { md: 2 }, backgroundColor: "#FDB813" }}
+            sx={{ fontSize: "100%", mr: { md: 2 }, backgroundColor: "#FDB813" }}
           >
             S'inscrire
           </Button>
