@@ -14,7 +14,7 @@ function ProjectTaskList({ idProject }) {
       const token = localStorage.getItem("token");
       const response = await axios.get(
         `http://localhost:5000/projects/${idProject}/tasks`,
-        console.info(idProject, "project id"),
+
         {
           headers: {
             Authorization: `Bearer ${token}`,
