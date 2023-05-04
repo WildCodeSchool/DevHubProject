@@ -432,13 +432,9 @@ export default function MiniDrawer() {
               />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            key="Project Progress"
-            disablePadding
-            sx={{ display: "block" }}
-          >
+          <ListItem key="Roadmap" disablePadding sx={{ display: "block" }}>
             <ListItemButton
-              to="/progress"
+              to="/roadmap"
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
@@ -457,7 +453,7 @@ export default function MiniDrawer() {
                 />
               </ListItemIcon>
               <ListItemText
-                primary="Project Progress"
+                primary="Roadmap"
                 sx={{ opacity: open ? 1 : 0, color: colors.grey[200] }}
               />
             </ListItemButton>
