@@ -83,7 +83,6 @@ function AddProjectForm({ setProjectName }) {
   const handleClose = () => {
     setOpen(false);
   };
-
   const [openDelete, setOpenDelete] = useState(false);
   const handleDeleteOpen = () => {
     setOpenDelete(true);
