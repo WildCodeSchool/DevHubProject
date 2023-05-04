@@ -26,7 +26,6 @@ function AddProject() {
         >
           <AddProjectForm setProjectName={setProjectName} />
         </Box>
-
         <Box
           display="flex"
           flexDirection="column"
@@ -42,5 +41,4 @@ function AddProject() {
     </Box>
   );
 }
-
 export default AddProject;
